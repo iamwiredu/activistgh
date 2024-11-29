@@ -9,6 +9,9 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+import os
+
+from google.oauth2 import service_account
 
 from pathlib import Path
 
@@ -131,12 +134,27 @@ USE_I18N = True
 USE_TZ = True
 
 
+GS_PROJECT_ID = 'precise-line-437900-m9'
+GS_BUCKET_NAME = 'gboys-bucket'
+
+# settings.py
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    'precise-line-437900-m9-226759e7e5f2.json'
+)
+# Media files (uploads)
+GS_MEDIA_BUCKET_NAME = GS_BUCKET_NAME
+MEDIA_URL = f'https://storage.googleapis.com/{GS_MEDIA_BUCKET_NAME}/'
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
 STATIC_ROOT = 'productionFiles'
 
+MEDIA_ROOT = 'media/'
+MEDIA_URL = '/media/'
 
 
 # Default primary key field type
