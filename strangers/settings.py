@@ -76,12 +76,28 @@ WSGI_APPLICATION = 'strangers.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': "neondb",
+        'URL_NO_SSL':"postgres://neondb_owner:1lBFILdTEKZ3@ep-misty-band-a51s70xm-pooler.us-east-2.aws.neon.tech/neondb",
+        "URL":"postgres://neondb_owner:1lBFILdTEKZ3@ep-misty-band-a51s70xm-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require",
+        "PRISMA_URL":"postgres://neondb_owner:1lBFILdTEKZ3@ep-misty-band-a51s70xm-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=15",
+        "URL_NON_POOLING":"postgresql://neondb_owner:1lBFILdTEKZ3@ep-misty-band-a51s70xm.us-east-2.aws.neon.tech/neondb?sslmode=require",
+        'USER': "defaulneondb_owner",
+        'PASSWORD':"1lBFILdTEKZ3",
+        "HOST":"ep-misty-band-a51s70xm.us-east-2.aws.neon.tech",
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
