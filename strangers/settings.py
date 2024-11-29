@@ -85,7 +85,7 @@ DATABASES = {
         "URL":"postgres://neondb_owner:1lBFILdTEKZ3@ep-misty-band-a51s70xm-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require",
         "PRISMA_URL":"postgres://neondb_owner:1lBFILdTEKZ3@ep-misty-band-a51s70xm-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=15",
         "URL_NON_POOLING":"postgresql://neondb_owner:1lBFILdTEKZ3@ep-misty-band-a51s70xm.us-east-2.aws.neon.tech/neondb?sslmode=require",
-        'USER': "defaulneondb_owner",
+        'USER': "neondb_owner",
         'PASSWORD':"1lBFILdTEKZ3",
         "HOST":"ep-misty-band-a51s70xm.us-east-2.aws.neon.tech",
     }
