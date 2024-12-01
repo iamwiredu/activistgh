@@ -154,8 +154,7 @@ MEDIA_URL = f'https://storage.googleapis.com/{GS_MEDIA_BUCKET_NAME}/'
 STATIC_URL = 'static/'
 STATIC_ROOT = 'productionFiles'
 
-MEDIA_ROOT = 'media/'
-MEDIA_URL = '/media/'
+MEDIA_ROOT = ''
 
 
 # Default primary key field type

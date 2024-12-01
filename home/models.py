@@ -6,7 +6,7 @@ from django.db import models
 class Product(models.Model):
     name = models.CharField(max_length=255)
     unique_id = models.UUIDField(editable=False,unique=True,default=uuid.uuid4)
-    image = models.ImageField(upload_to='strangers/productImages/',null=True,blank=True)
+    image = models.ImageField(upload_to='productImages/',null=True,blank=True)
     category = models.CharField(max_length=255,null=True,blank=True)
     color_tag = models.CharField(max_length=255,null=True,blank=True)
     description = models.TextField(null=True,blank=True)
