@@ -30,6 +30,7 @@
 
 
     <style>
+
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     
         * {
@@ -42,6 +43,10 @@
             font-family: "Inter", sans-serif;
         }
     
+        #img-container img{
+            width: 100%; 
+            height: auto;
+        }
         .formbold-main-wrapper {
             display: flex;
             align-items: center;
@@ -254,7 +259,16 @@
                 transform: translateX(-20px);
             }
         }
-
+        @media screen and (min-width:800px){
+         #mainbox{
+            display: flex;
+            justify-content: center;
+         }   
+         #img-container img{
+            width: 400px;
+            height: 400px;
+         }
+        }
     </style>
 </head>
 
@@ -337,9 +351,9 @@
         </div>
     </header>
     <!-- Header Section End -->
-     <div>
-            <div style="top:0; left: 0; right: 0; position: relative;">
-                <img src="{% static  'img/strangers.jpg' %}" alt="" style="width: 100%; height: auto; margin-bottom: 50px;">
+     <div id="mainbox">
+            <div style="top:0; left: 0; right: 0; position: relative;" id="img-container">
+                <img src="{% static  'img/strangers.jpg' %}" alt="" style="margin-bottom: 50px;">
             </div>
             <div class="formbold-main-wrapper" style="display: flex; align-items: center; justify-content: center; margin: 0;">
                 <div class="formbold-form-wrapper">
