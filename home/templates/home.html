@@ -1,1402 +1,199 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
+    <title>FullScreenLandingPage</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+        *
+{
+padding: 0px;
+margin: 0px;
+font-family: monospace;
+}
 
-:root {
-    --brand-color:#FFF;
-}
-body,html {
-    height:100%;
-    font-size:16px;
-}
-body {
-    margin:0;
-    font-family:'Nunito';
-    overflow-x:hidden;
-}
-button {
-    font-family:'Nunito';
-}
-h3 {
-    display:block;
-    font-size:2rem;
-    margin:1rem 0;
-}
-h3,h4 {
-    font-weight:400;
-}
-p {
-    font-weight:300;
-    text-align:left;
-}
-a {
-    text-decoration:none;
-    color:inherit;
-}
-button {
-    display:block;
-    margin:15px 0;
-    position:relative;
-    background:none;
-    border:none;    
-    font-size:1rem;
-    padding:0;
-    cursor:pointer;
-}
-img {
-   width:100%; 
-   display:block;
-}
-/* LAYOUT */ 
-.grid-container {
-    max-width:1170px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(365px,1fr));
-    grid-gap:35px;
-    text-align:center;
-    margin:35px auto;
-    padding: 0 15px;
-}
-.grid-item {
-    overflow: hidden;
-}
-.centered {
-    display: flex;
-    align-items:start;
-    justify-content: center;
-    flex-direction: column; 
-}
-@media screen and (max-width:768px) {
-    .grid-container {
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-}
-}
-/* BUTTONS */
-.arrow-btn {
-    position:relative;
-    text-align:left;
-}
-.arrow-btn span {
-    position:relative; 
-}
-.arrow-btn:hover span:before {
-    transform:translateX(10px);
-}
-.arrow-btn:hover span:after {
-    transform:translateX(10px) rotate(-135deg);
-}
-.arrow-btn span:before {
-    content: "";
-    position: absolute;
-    top: 10px;
-    height: 2px;
-    width: 22px;
-    background: #000;
-    left: 11px;
-    transition:0.16s ease;
-}
-.arrow-btn span:after {
-    content:"";
-    position:absolute;
-    top:8px;
-    right:-36px;
-    border-width:3px;
-    border-style:solid;
-    border-color:transparent transparent #000 #000;
-    transform:rotate(-135deg);
-    transition:0.16s ease;
-}
-/* SECTIONS */ 
-.arrivals,.quote,.fashion,.modern {
-    padding:45px 0px;
-}
-.info h3, .arrivals h3, .fashion h3, .quote h3 {
-    color: #000;
-    font-size: 1.5rem;
-    width: 100%;
-    text-align: left;
-}
-/* PRELOADER */
-.preloader {
-    position:fixed;
-    top:0;
-    left:0;
-    height:100%;
-    width:100%;
-    z-index:2;
-    display:flex;
-    align-items:center;
-    justify-content: center;
-    flex-direction:column;
-}
-.preloader:before {
-    content:"";
-    position:fixed;
-    width:50%;
-    height:100%;
-    background:#FFF;
-    z-index:2;
-    left:0;
-    top:0;
-    transition:0.72s ease transform 0.16s;
-}
-.preloader:after {
-    content:"";
-    position:fixed;
-    width:50%;
-    height:100%;
-    background:#FFF;
-    z-index:2;
-    right:0;
-    top:0;
-    transition:0.72s ease transform 0.16s;
-}
-body[data-loading="false"] .preloader {
-    visibility:hidden;
-    transition:0.01s visibility 0.88s;
-}
-body[data-loading="false"] .preloader:before {
-    transform:translateX(-100%);
-}
-body[data-loading="false"] .preloader:after {
-    transform:translateX(100%);
-}
-.preloader-icon {
-  width:52px;
-  height:52px;
-  z-index:3;
-  transition:0.16s ease opacity;
-}
-body[data-loading="false"] #g1 line {
-    animation-play-state:paused;
-}
-body[data-loading="false"] #g2 line {
-    animation-play-state:paused;
-}
-body[data-loading="false"] .preloader-icon {
-    animation-play-state:paused;
-    opacity:0;
-}
-.preloader-icon line {
-  stroke-dasharray:40px;
-  stroke-dashoffset:40px;
-}
-#g1 line {
-  animation:2s animateLoader infinite;
-}
-#g2 line {
-  animation:2s animateLoader infinite 1s;
-}
-.preloader-icon {
-  animation:4s rotate infinite;
-}
-@keyframes animateLoader {
-  0% {
-    stroke-dashoffset:40px;
-    stroke-dasharray:40px;
+header
+{
 
-  }
-  50% {
-    stroke-dashoffset:0px;
-    stroke-dasharray:40px;
+	height: 100vh;
+	background-image: url('{% static 'cover1.jpg' %}');
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-size: cover;
+	justify-content: center;
+	}
+.main
+{
+	width: 90%;
+	max-width: 100%;
+	margin: 10px 5% 0 5%;
+	font-size: 1.4em;
+	line-height: 1.4em;
+	/*padding: 15px;*/
+	background-color: #eee;
+	height: 100vh;
+}
 
-  }
-  100% {
-    stroke-dashoffset:80px;
-    stroke-dasharray:40px;
+.main p
+{
+	padding: 10px;
+}
+#down
+{
+	position: absolute;
+	top:85vh;
+	size: 40px;
+	padding: 20px;
+	font-size: 2.5em;
+}
 
-  }
+#down:hover
+{
+	cursor: pointer;
+	background-color: #eee;
+	opacity: 0.8;
 }
-@keyframes rotate {
-  0% {
-    transform:rotate(0deg)
-  }
-  50% {
-    transform:rotate(90deg)
-  }
-  100% {
-    transform:rotate(180deg)
-  }
+#wordlogo{
+    width: 500px;
 }
-/* NAVIGATION */
-nav {
-    display:flex;
-    justify-content: space-between;
-    align-items:center;
-    height:70px;
-    width:100%;
-    position:absolute;
-    z-index:1;
-    transition:0.3s ease transform;
+@media screen and (max-width:600px) {
+    #wordlogo{
+        width: 350px;
+    }
 }
-.fixed-top {
+.marquee {
+    transform: translateY(-120px);
     position: fixed;
-    background: #FFF;
-    box-shadow: 0px 0px 15px 3px rgba(0,0,0,0.05);
-    width: 100%;
-}
-ul {
-    list-style-type: none;
-    width: 30%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    padding-left:30px;
-    height:70px;
-}
-li {
-    display:inline-block;
-}
-.nav-link {
-    position:relative;
-    padding:15px 0px;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-}
-.active {
-    font-weight:700;
-}
-.navbar-left {
-    background:#FFF;
-}
-@media screen and (min-width:769px) {
-    .nav-link:before,.nav-link:after {
-        content:"";
-        position:absolute;
-        width:50%;
-        top:57px;    
-        height:2px;
-        background:#000;
-        width:0%;
-        opacity:0;
-        transition:0.16s ease;
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        box-sizing: border-box;
+       
+        margin: 0;
+        z-index: 10;
+        color:#ff4325;
+        font-weight: bold;
+        background-color: transparent;
+
+        
     }
-    .nav-link:before {
-        right:50%;
-    }
-    .nav-link:after {
-        left:50%;
-    }
-    .navbar-left .nav-link:hover:before {
-        width:50%;
-        opacity:1;
-    }
-    .navbar-left .nav-link:hover:after {
-        width:50%;
-        opacity:1;
-    }
-}
-.navbar-right {
-    background: transparent;
-    width:20%;
-    padding-left:0px;
-}
-.brand {
-    display:block;
-    color: var(--brand-color);
-}
-svg {
-    width: 1.25rem;
-    height: 1.25rem;  
-}
-#shop-icon,#user-icon {
-    fill:var(--brand-color);
-}
-.navbar-burger-btn span {
-    position: absolute;
-    left:0px;
-    width: 20px;
-    height: 2px;
-    background: #000;
-    border-radius:2px;
-    transition:0.24s ease all; 
-}
-.navbar-burger-btn span:first-child {
-    top:3px;
-}
-.navbar-burger-btn span:nth-child(2) {
-    top:9px;
-}
-.navbar-burger-btn span:nth-child(3) {
-    top:15px;
-}
-.navbar-burger-btn {
-    display:none;
-    position: absolute;
-    top: 25px;
-    left: 30px;
-    width: 20px;
-    height: 20px;
-    padding:0;
-    margin:0;
-    z-index:1;
-}
-@media screen and (max-width:768px) {
-    :root {
-        --brand-color:#000 !important;
-    }
-    nav {
-        background: white;
-        box-shadow: 0px 0px 15px 3px rgba(0,0,0,0.05);
-        transition: 0.24s ease height,0.3s ease transform;
-    }
-    .navbar-burger-btn {
-        display:block;
-    }
-    .navbar-left {
-        display: flex;
-        flex-direction: column;
-        justify-content: start;
-        align-items: start;
-        background:transparent;
-        height:auto;
-    }
-    .navbar-right {
-        width: auto;
-        padding-left: 0px;
-        position: absolute;
+
+    .marquee-content {
         display: inline-block;
-        right: 20px;
-        top: 8px;
-        height: auto;
-        margin:0;
+        white-space: nowrap;
+        animation: scroll-text 20s linear infinite;
     }
-    .brand {
-        display:none;
+
+    .marquee-content span {
+        display: inline-block;
+        margin: 0;
+        padding-right: 10px;
     }
-    .navbar-right>li {
-        margin:0px 5px;
+
+    @keyframes scroll-text {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
     }
-    nav[data-state="closed"] {
-        height:70px;
-    }
-    nav[data-state="open"] {
-        height:260px;
-    }
-    nav[data-state="closed"] .navbar-left {
-        visibility:hidden;
-        opacity:0;
-    }
-    nav[data-state="open"] .navbar-left {
-        visibility:visible;
-        opacity:1;
-        transition:0.01s ease visibility, 0.16s ease-in-out opacity 0.08s; 
-    }
-    nav[data-state="open"] .navbar-burger-btn span:first-child {
-        transform:rotate(225deg);
-        top:9px;
-    }
-    nav[data-state="open"] .navbar-burger-btn span:nth-child(2) {
-        opacity:0;
-        width:0%;
-    }
-    nav[data-state="open"] .navbar-burger-btn span:nth-child(3) {
-        transform:rotate(-225deg);
-        top:9px;
-    }
-}
-/* HERO */
-canvas {
-    position:absolute;
-    top:0;
-    left:0;
-    right: 0;
-    bottom: 0;
-    width:100%;
-    height:100%;
-    z-index:-1;
-}
-.hero {
-    position:relative;
-    height:100vh;
-    width: 100vw;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    grid-template-rows:1fr;
-}
-.container-prev, .container-next {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-direction: column;
-    height: calc(100% - 4em);
-    padding-bottom: 4em;
-}
-.container-prev h3, .container-next h3 {
-    color: #FFF;
-    margin-left: 45px;
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size:1.75rem;
-    z-index:1;
-    opacity:0;
-    transform:translateY(20px);
-}
-.container-prev h3 {
-    margin-left: -45px;
-}
-.container-prev button,.container-next button {
-    color:#FFF;
-    font-size:1.75rem;
-    opacity:0;
-    transform:translateY(20px);
-}
-.container-prev button:before,.container-next button:before {
-    content:"";
-    position:absolute;
-    top:16px;
-    width:30px;
-    height:3px;
-    background:#FFF;
-    transition:0.16s ease;
-}
-.container-prev button:before {
-    left:-50px;
-}
-.container-next button:before {
-    right:-50px;
-}
-.container-prev button:after,.container-next button:after {
-    content:"";
-    position:absolute;
-    top:11px;
-    width:7px;
-    height:7px;
-    border-width:3px;
-    border-style:solid;
-    border-color:transparent transparent #FFF #FFF;
-    transform:rotate(45deg);
-    border-radius:4px;
-    transition:0.16s ease;
-}
-.container-prev button:after {
-    left:-50px;
-}
-.container-next button:after {
-    right:-50px;
-    transform:rotate(-135deg);
-}
-.container-prev button:hover:before {
-    transform:translateX(-10px);
-}
-.container-prev button:hover:after {
-    transform:translateX(-10px) rotate(45deg);
-}
-.container-next button:hover:before {
-    transform:translateX(10px);
-}
-.container-next button:hover:after {
-    transform:translateX(10px) rotate(-135deg);
-}
-body[data-loading="false"] .container-prev h3,body[data-loading="false"] .container-next h3 {
-    opacity:1;
-    transform:translateY(0px);
-    transition:0.32s cubic-bezier(0.4, 0, 0.2, 1) all .56s;
-}
-body[data-loading="false"] .container-prev button,body[data-loading="false"] .container-next button {
-    opacity:1;
-    transform:translateY(0px);
-    transition:0.32s cubic-bezier(0.4, 0, 0.2, 1) all .56s;
-}
-/* INFO */
-.info {
-    padding-top:90px;
-    padding-bottom:45px;
-}
-.info h3 {
-    text-align:center;
-}
-.info-text-dots {
-    margin:1.5rem auto;
-    letter-spacing:1.7px;
-    font-size:1.25rem;
-    text-align:center;
-}
-.info-text-small {
-    font-size:1rem;
-    text-align:center;
-}
-.info-ul {
-    margin: auto;
-    padding-left: 0;
-    height:auto;
-}
-.info-ul>li>a>svg {
-    width:1.25rem;
-    height:1.25rem;
-}
-#share-icon,#fb-icon,#ig-icon {
-    fill:#000;
-}
-.border-right {
-    border-right:2px solid black;
-}
-@media screen and (max-width:795px) {
-    .border-right {
-        border-right:none;
-    }
-}
-/* ARRIVALS*/
-.arrivals-grid {
-    grid-template-areas: 
-    'arrival-text arrival-img1 arrival-img2'
-    'arrival-text arrival-img1 arrival-img3';
-    grid-template-columns: repeat(auto-fit,minmax(365px,0.5fr));
-}
-.arrivals-grid .grid-item:first-child {
-    grid-area:arrival-text;
-}
-.arrivals-grid .grid-item:nth-child(2) {
-    grid-area:arrival-img1;
-}
-.arrivals-grid .grid-item:nth-child(3) {
-    grid-area:arrival-img2;
-}
-.arrivals-grid .grid-item:nth-child(4) {
-    grid-area:arrival-img3;
-}
-@media screen and (max-width:810px) {
-    .arrivals-grid {
-        grid-template-areas:
-            'arrival-img1'
-            'arrival-text'
-            'arrival-img2'
-            'arrival-img3';
-        grid-template-columns: repeat(auto-fit,minmax(365px,1fr));
-    }
-}
-@media screen and (max-width:768px) {
-    .arrivals-grid {
-        grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-    }
-}
-/* FAHSION */
-/* QUOTE */
-.quote .container {
-    text-align:left;
-}
-.quote h3 {
-    position: relative;
-    text-indent:30px;
-}
-.quote h3:before {
-    content: "";
-    position: absolute;
-    width: 300px;
-    height: 2px;
-    background: lightgrey;
-    top: 60px;
-    left:0;
-}
-.quote h3:after {
-    content: "";
-    position: absolute;
-    width: 20px;
-    background: #000;
-    height: 2px;
-    left: 0;
-    top: 12px;
-}
-.quote p {
-    margin:4em 0;
-    font-style:italic;
-    font-size:1.25rem;
-    line-height:1.8;
-}
-/* MODERN */
-.modern h3 {
-    text-align: left;
-}
-.modern-grid {
-    grid-template-areas:
-        'img1 img2 img2'
-        'img1 text text';
-}
-.modern-grid .grid-item:first-child {
-    grid-area:img1;
-}
-.modern-grid .grid-item:nth-child(2) {
-    grid-area:img2;
-}
-.modern-grid .grid-item:nth-child(3) {
-    grid-area:text;
-}
-@media screen and (max-width:810px) {
-    .modern-grid {
-    grid-template-areas:
-        'img1'
-        'text'
-        'img2';
-}
-}
-/* ANIMATION / OBSERVER STYLES */ 
-.fade-in {
-    opacity:0;
-    transform:translateY(50px);
-    transition:0.35s ease-in-out opacity,0.45s ease-in transform;
-}
-.visible {
-    transform:translateY(0px);
-    opacity:1
-}
-/* lazy load */
-.img-lazy {
-    object-fit: cover; 
-    transition:0.2s ease transform,0.2s ease filter,0.32s ease opacity;
-    width:100%;  
-    position:absolute;
-    z-index:1;  
-    opacity:0;
-}
-.loaded {
-    opacity:1;
-}
-.img-container {
-  position:relative;
-  overflow:hidden;
-  display: flex;
-  width:100%;
-  height:100%;
-}
-.img-container:hover .img-lazy {
-    transform:scale3d(1.1,1.1,1.1);
-    filter:blur(10px);
-}
-.placeholder-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 3;
-}
-.img-placeholder {
-    z-index:3;
-}
-.placeholder-container:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left:0;
-    height:100%;
-    width:50%;
-    background: #FFFFFF;
-    transition: 0.4s ease transform 0.16s;
-}
-.placeholder-container:after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    right:0;
-    height:100%;
-    width:50%;
-    background: #FFFFFF;
-    transition: 0.4s ease transform 0.16s;
-}
-.placeholder-container[data-visible="false"].placeholder-container{
-   visibility:hidden;
-   transition:0.01s ease visibility 0.56s;
-}
-.placeholder-container[data-visible="false"].placeholder-container:after {
-   transform:translateX(100%);
-}
-.placeholder-container[data-visible="false"].placeholder-container:before{
-   transform:translateX(-100%);
-}
-.placeholder-container[data-visible="false"] .img-placeholder {
-  opacity:0;
-  visibility:hidden;
-  transition:0.16s ease opacity;
-}
-.img-overlay {
-    position: absolute;
-    background: rgba(0,0,0,0.3);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #FFF;
-    opacity:0;
-    transition:0.2s ease opacity,0.3s transform;
-    z-index:2;
-}
-.img-overlay a {
-    position:relative;   
-}
-.img-overlay a:after {
-    content:"";
-    position:absolute;
-    bottom:-4px;
-    left:0;
-    width:0%;
-    height:2px;
-    background:#FFF;
-    transition:0.2s ease ;
-}
-.img-overlay span {
-    display:inline-block;
-    font-size:1.5rem;
-    opacity:0;
-    transform:translateY(6px);
-    transition:0.2s ease;
-    transform-origin:50% 50%;
-}
-.img-container:hover .img-overlay {
-    opacity:1;
-}
-.img-container:hover .img-overlay span {
-    opacity:1;
-    transform:translateY(0px);   
-}
-.img-container:hover .img-overlay span:nth-child(2){
-    transition-delay:0.08s;
-}
-.img-container:hover .img-overlay span:nth-child(3){
-    transition-delay:0.12s;
-}
-.img-container:hover a:after {
-    width:100%;
+  
+
+
+/* CSS */
+.button-89 {
+   
+  --b: 3px;   /* border thickness */
+  --s: .45em; /* size of the corner */
+  --color:white;
+  
+  padding: calc(.5em + var(--s)) calc(.9em + var(--s));
+  color: var(--color);
+  --_p: var(--s);
+  background:
+    conic-gradient(from 90deg at var(--b) var(--b),#0000 90deg,var(--color) 0)
+    var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+  transition: .3s linear, color 0s, background-color 0s;
+  outline: var(--b) solid #0000;
+  outline-offset: .6em;
+  font-size: 16px;
+
+  border: 0;
+
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-89:hover,
+.button-89:focus-visible{
+  --_p: 0px;
+  outline-color: var(--color);
+  outline-offset: .05em;
+}
+
+.button-89:active {
+  background: var(--color);
+  color: #fff;
 }
     </style>
 </head>
+
 <body>
-    <body data-loading="true">
-        <div class="preloader">
-            <svg version="1.1" class="preloader-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                <g id="g2">
-                    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" x1="1"
-                        y1="27.316" x2="24.684" y2="51" />
-                    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10"
-                        x1="51" y1="24.684" x2="27.316" y2="1" />
-                </g>
-                <g id="g1">
-                    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10"
-                        x1="24.684" y1="1" x2="1" y2="24.684" />
-                    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10"
-                        x1="27.316" y1="51" x2="51" y2="27.316" />
-                </g>
-            </svg>
-        </div>
-        <nav data-state="closed" style="display: none;">
-            <button class="navbar-burger-btn" aria-expanded="false" aria-label='menu toggle button'>
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="navbar-left">
-                <li><a class="nav-link active" href="#">Shop</a></li>
-                <li><a class="nav-link" href="#">Blog</a></li>
-                <li><a class="nav-link" href="#">About</a></li>
-            </ul>
-    
-            <ul class="navbar-right">
-                <li><a href="#" class="nav-link brand">DressIT</a></li>
-                <li><a href="#" class="nav-link">
-                        <svg viewBox="0 0 24 24">
-                            <use xlink:href="#shop-icon" x="0" y="0">
-                        </svg>
-                    </a></li>
-                <li><a href="#" class="nav-link">
-                        <svg viewBox="0 0 24 24">
-                            <use xlink:href="#user-icon" x="0" y="0">
-                        </svg>
-                    </a></li>
-            </ul>
-        </nav>
-        <header>
-            <div class="hero"
-                data-images='["{% static 'cover.jpg' %}","{% static 'cover.jpg' %}"]'>
-                <div class="container-prev">
-                  
-                    <button class="btn-prev">Collection</button>
-                </div>
-                <div class="container-next">
-                   
-                    <button class="btn-next">Collection</button>
-                </div>
-            </div>
-        <a href="{% url  'shop' %}">   <div style="width: 100%; position: absolute; top: 50%; text-align: center;"><div style=" background-color: white; color:black; margin:0 auto; padding: 30px; width: fit-content;">SHOP
-            NOW</div></div></a>
-        </header>
-        <main>
-            <section class="info fade-in">
-                <div class="grid-container">
-                    <div class="grid-item border-right">
-                        <h3>THEYDONTKNOWUS</h3>
-                        <p class="info-text-dots">...</p>
-                        <a href="#" class="info-text-small">OUR PURPOSE</a>
-                    </div>
-                 
-                    <div class="grid-item">
-                        <h3>SOCIAL-MEDIA</h3>
-                        <p class="info-text-dots">...</p>
-                        <ul class="info-ul">
-                            <li>
-                                <a href="#">
-                                    <svg viewBox="0 0 24 24">
-                                        <use xlink:href="#fb-icon" x="0" y="0">
-                                    </svg>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <svg viewBox="0 0 24 24">
-                                        <use xlink:href="#ig-icon" x="0" y="0">
-                                    </svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-            <!-- <section class="arrivals fade-in">
-                <div class="grid-container arrivals-grid">
-                    <div class="grid-item centered">
-                        <h3>New Arrivals</h1>
-                            <p>We have put together the best urban street fashion pictures for you.
-                                I hope you will find a photo that suits your style. We will give you the best of
-                                street fashion on our website.
-                            </p>
-                            <button class="arrow-btn">Watch all<span></span></button>
-                    </div>
-                    <div class="grid-item">
-                        <div class="img-container">
-                            <div class="placeholder-container" data-visible="true">
-                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/590856/placeholder.svg"
-                                    class="img-placeholder" alt="">
-                            </div>
-    
-                            <img class="img-lazy"
-                                data-src="https://images.unsplash.com/photo-1524008759167-92256cad01a0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=390&h=700&q=80"
-                                src="" alt="" />
-                            <div class="img-overlay">
-                                <a href="#"><span>B</span><span>u</span><span>y</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid-item">
-                        <div class="img-container">
-                            <div class="placeholder-container" data-visible="true">
-                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/590856/placeholder.svg"
-                                    class="img-placeholder" alt="">
-                            </div>
-                            <img class="img-lazy"
-                                data-src="https://images.unsplash.com/photo-1524008769066-46961651f330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=390&h=400&q=80"
-                                src="" alt="" />
-                            <div class="img-overlay">
-                                <a href="#"><span>B</span><span>u</span><span>y</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid-item">
-                        <div class="img-container">
-                            <div class="placeholder-container" data-visible="true">
-                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/590856/placeholder.svg"
-                                    class="img-placeholder" alt="">
-                            </div>
-                            <img class="img-lazy"
-                                data-src="https://images.unsplash.com/photo-1524008461479-5a25481ed023?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=390&h=400&q=80"
-                                src="" alt="" />
-                            <div class="img-overlay">
-                                <a href="#"><span>B</span><span>u</span><span>y</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="fashion fade-in">
-                <div class="grid-container">
-                    <div class="grid-item">
-                        <div class="img-container">
-                            <div class="placeholder-container" data-visible="true">
-                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/590856/placeholder-square.svg"
-                                    class="img-placeholder" alt="">
-                            </div>
-                            <img class="img-lazy"
-                                data-src="https://images.unsplash.com/photo-1532072433133-6c4bc8ccbef7?ixlib=rb-1.2.1&auto=format&fit=crop&w=420&h=420&q=80"
-                                src="" alt="" />
-                            <div class="img-overlay">
-                                <a href="#"><span>B</span><span>u</span><span>y</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid-item">
-                        <div class="img-container">
-                            <div class="placeholder-container" data-visible="true">
-                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/590856/placeholder-square.svg"
-                                    class="img-placeholder" alt="">
-                            </div>
-                            <img class="img-lazy"
-                                data-src="https://images.unsplash.com/photo-1532072485171-c53a112f8cd0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=420&h=420&q=80"
-                                src="" alt="" />
-                            <div class="img-overlay">
-                                <a href="#"><span>B</span><span>u</span><span>y</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid-item centered">
-                        <h3>Urban Street Fashion</h3>
-                        <p>We have put together the best urban street fashion pictures for you.
-                            I hope you will find a photo that suits your style. We will give you the best of
-                            street fashion on our website.</p>
-                        <button class="arrow-btn">Know more<span></span></button>
-                    </div>
-                </div>
-                <div class="grid-container">
-                    <div class="grid-item">
-                        <div class="img-container">
-                            <div class="placeholder-container" data-visible="true">
-                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/590856/placeholder-square.svg"
-                                    class="img-placeholder" alt="">
-                            </div>
-                            <img class="img-lazy"
-                                data-src="https://images.unsplash.com/photo-1524053889895-de729a4227ad?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=420&h=420&q=80"
-                                src="" alt="" />
-                            <div class="img-overlay">
-                                <a href="#"><span>B</span><span>u</span><span>y</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid-item">
-                        <div class="img-container">
-                            <div class="placeholder-container" data-visible="true">
-                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/590856/placeholder-square.svg"
-                                    class="img-placeholder" alt="">
-                            </div>
-                            <img class="img-lazy"
-                                data-src="https://images.unsplash.com/photo-1524054088236-8fca5514bbfc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=420&h=420&q=80"
-                                src="" alt="" />
-                            <div class="img-overlay">
-                                <a href="#"><span>B</span><span>u</span><span>y</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid-item">
-                        <div class="img-container">
-                            <div class="placeholder-container" data-visible="true">
-                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/590856/placeholder-square.svg"
-                                    class="img-placeholder" alt="">
-                            </div>
-                            <img class="img-lazy"
-                                data-src="https://images.unsplash.com/photo-1524053474935-1da4a6d36ffe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=420&h=420&q=80"
-                                src="" alt="" />
-                            <div class="img-overlay">
-                                <a href="#"><span>B</span><span>u</span><span>y</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    
-            </section>
-            <section class="quote fade-in">
-                <div class="grid-container">
-                    <div class="grid-item span-3">
-                        <h3>MIUCCIA PRADA</h3>
-                        <p>"What you wear is how you present yourself to the world, especially today,<br> when human
-                            contacts are so quick. Fashion is instant language."</p>
-                    </div>
-                </div>
-            </section>
-            <section class="modern fade-in">
-                <div class="grid-container modern-grid">
-                    <div class="grid-item">
-                        <div class="img-container">
-                            <div class="placeholder-container" data-visible="true">
-                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/590856/placeholder.svg"
-                                    class="img-placeholder" alt="">
-                            </div>
-                            <img class="img-lazy"
-                                data-src="https://images.unsplash.com/photo-1525450824786-227cbef70703?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=450&h=825&q=80"
-                                src="" alt="" />
-                            <div class="img-overlay">
-                                <a href="#"><span>B</span><span>u</span><span>y</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid-item">
-                        <div class="img-container">
-                            <div class="placeholder-container" data-visible="true">
-                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/590856/placeholder-wide.svg"
-                                    class="img-placeholder" alt="">
-                            </div>
-                            <img class="img-lazy"
-                                data-src="https://images.unsplash.com/photo-1525450754258-0f4cbd02718d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&h=450&q=80"
-                                src="" alt="" />
-                            <div class="img-overlay">
-                                <a href="#"><span>B</span><span>u</span><span>y</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid-item centered">
-                        <h3>Modern Classic in 2020</h3>
-                        <p>
-                            I am sure I am not alone when I say that one of my favorite things about the holiday season are
-                            the many parties that bring the whole family together.
-                            Nothing makes me smile more than all the beloved people in my life in one room. If you're
-                            finally meeting your significant other's...
-                        </p>
-                        <button class="arrow-btn">Read more<span></span></button>
-                    </div>
-                </div>
-            </section> -->
-        </main>
-    
-        <svg style="display:none">
-            <symbol version="1.1" id="user-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24">
-                <path d="M21 21v-2c0-1.38-0.561-2.632-1.464-3.536s-2.156-1.464-3.536-1.464h-8c-1.38 0-2.632 0.561-3.536 1.464s-1.464 2.156-1.464 
-            3.536v2c0 0.552 0.448 1 1 1s1-0.448 1-1v-2c0-0.829 0.335-1.577 0.879-2.121s1.292-0.879 2.121-0.879h8c0.829 0 1.577 0.335 2.121 0.879s0.879 
-            1.292 0.879 2.121v2c0 0.552 0.448 1 1 1s1-0.448 1-1zM17 7c0-1.38-0.561-2.632-1.464-3.536s-2.156-1.464-3.536-1.464-2.632 0.561-3.536 1.464-1.464 
-            2.156-1.464 3.536 0.561 2.632 1.464 3.536 2.156 1.464 3.536 1.464 2.632-0.561 3.536-1.464 1.464-2.156 1.464-3.536zM15 7c0 0.829-0.335 1.577-0.879 
-            2.121s-1.292 0.879-2.121 0.879-1.577-0.335-2.121-0.879-0.879-1.292-0.879-2.121 0.335-1.577 0.879-2.121 1.292-0.879 2.121-0.879 1.577 0.335 2.121 0.879 
-            0.879 1.292 0.879 2.121z"></path>
-            </symbol>
-            <symbol version="1.1" id="shop-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24">
-                <path
-                    d="M19 5h-14l1.5-2h11zM21.794 5.392l-2.994-3.992c-0.196-0.261-0.494-0.399-0.8-0.4h-12c-0.326 
-            0-0.616 0.156-0.8 0.4l-2.994 3.992c-0.043 0.056-0.081 0.117-0.111 0.182-0.065 0.137-0.096 0.283-0.095 
-            0.426v14c0 0.828 0.337 1.58 0.879 2.121s1.293 0.879 2.121 0.879h14c0.828 0 1.58-0.337 2.121-0.879s0.879-1.293 
-            0.879-2.121v-14c0-0.219-0.071-0.422-0.189-0.585-0.004-0.005-0.007-0.010-0.011-0.015zM4 7h16v13c0 0.276-0.111 
-            0.525-0.293 0.707s-0.431 0.293-0.707 0.293h-14c-0.276 0-0.525-0.111-0.707-0.293s-0.293-0.431-0.293-0.707zM15 
-            10c0 0.829-0.335 1.577-0.879 2.121s-1.292 0.879-2.121 0.879-1.577-0.335-2.121-0.879-0.879-1.292-0.879-2.121c0-0.552-0.448-1-1-1s-1 
-            0.448-1 1c0 1.38 0.561 2.632 1.464 3.536s2.156 1.464 3.536 1.464 2.632-0.561 3.536-1.464 1.464-2.156 1.464-3.536c0-0.552-0.448-1-1-1s-1 0.448-1 1z">
-                </path>
-            </symbol>
-            <symbol version="1.1" id="fb-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24">
-                <path
-                    d="M17 3v2h-2c-0.552 0-1.053 0.225-1.414 0.586s-0.586 0.862-0.586 1.414v3c0 0.552 0.448 1 1 1h2.719l-0.5 
-            2h-2.219c-0.552 0-1 0.448-1 1v7h-2v-7c0-0.552-0.448-1-1-1h-2v-2h2c0.552 0 1-0.448 1-1v-3c0-1.105 0.447-2.103 
-            1.172-2.828s1.723-1.172 2.828-1.172zM18 1h-3c-1.657 0-3.158 0.673-4.243 1.757s-1.757 2.586-1.757 4.243v2h-2c-0.552 0-1 
-            0.448-1 1v4c0 0.552 0.448 1 1 1h2v7c0 0.552 0.448 1 1 1h4c0.552 0 1-0.448 1-1v-7h2c0.466 0 0.858-0.319 
-            0.97-0.757l1-4c0.134-0.536-0.192-1.079-0.728-1.213-0.083-0.021-0.167-0.031-0.242-0.030h-3v-2h3c0.552 0 1-0.448 1-1v-4c0-0.552-0.448-1-1-1z">
-                </path>
-            </symbol>
-            <symbol version="1.1" id="ig-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24">
-                <path d="M7 1c-1.657 0-3.158 0.673-4.243 1.757s-1.757 2.586-1.757 4.243v10c0 1.657 0.673 3.158 1.757 4.243s2.586 
-            1.757 4.243 1.757h10c1.657 0 3.158-0.673 4.243-1.757s1.757-2.586 1.757-4.243v-10c0-1.657-0.673-3.158-1.757-4.243s-2.586-1.757-4.243-1.757zM7 
-            3h10c1.105 0 2.103 0.447 2.828 1.172s1.172 1.723 1.172 2.828v10c0 1.105-0.447 2.103-1.172 2.828s-1.723 1.172-2.828 1.172h-10c-1.105 
-            0-2.103-0.447-2.828-1.172s-1.172-1.723-1.172-2.828v-10c0-1.105 0.447-2.103 1.172-2.828s1.723-1.172 2.828-1.172zM16.989 
-            11.223c-0.15-0.972-0.571-1.857-1.194-2.567-0.754-0.861-1.804-1.465-3.009-1.644-0.464-0.074-0.97-0.077-1.477-0.002-1.366 
-            0.202-2.521 0.941-3.282 1.967s-1.133 2.347-0.93 3.712 0.941 2.521 1.967 3.282 2.347 1.133 3.712 0.93 2.521-0.941 3.282-1.967 
-            1.133-2.347 0.93-3.712zM15.011 11.517c0.122 0.82-0.1 1.609-0.558 2.227s-1.15 1.059-1.969 1.18-1.609-0.1-2.227-0.558-1.059-1.15-1.18-1.969 
-            0.1-1.609 0.558-2.227 1.15-1.059 1.969-1.18c0.313-0.046 0.615-0.042 0.87-0.002 0.74 0.11 1.366 0.47 1.818 0.986 0.375 0.428 0.63 0.963 0.72 1.543zM17.5 
-            7.5c0.552 0 1-0.448 1-1s-0.448-1-1-1-1 0.448-1 1 0.448 1 1 1z"></path>
-            </symbol>
-            <symbol version="1.1" id="share-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24">
-                <path d="M16.214 18.098c0.025-0.033 0.048-0.067 0.070-0.104 0.020-0.035 0.038-0.071 0.054-0.107 0.073-0.108 
-            0.156-0.209 0.248-0.301 0.363-0.363 0.861-0.586 1.414-0.586s1.051 0.223 1.414 0.586 0.586 0.861 0.586 1.414-0.223 
-            1.051-0.586 1.414-0.861 0.586-1.414 0.586-1.051-0.223-1.414-0.586-0.586-0.861-0.586-1.414c0-0.325 0.077-0.631 0.214-0.902zM16.301 
-            6.056c-0.009-0.017-0.018-0.034-0.028-0.051s-0.020-0.034-0.031-0.050c-0.154-0.283-0.242-0.608-0.242-0.955 0-0.553 0.223-1.051 0.586-1.414s0.861-0.586 
-            1.414-0.586 1.051 0.223 1.414 0.586 0.586 0.861 0.586 1.414-0.223 1.051-0.586 1.414-0.861 0.586-1.414 0.586-1.051-0.223-1.414-0.586c-0.108-0.108-0.204-0.228-0.285-0.358zM7.699 
-            10.944c0.009 0.017 0.018 0.034 0.028 0.051s0.020 0.034 0.031 0.050c0.154 0.283 0.242 0.608 0.242 0.955s-0.088 0.672-0.243 0.956c-0.011 0.016-0.021 0.033-0.031 0.050s-0.019 
-            0.033-0.027 0.050c-0.081 0.13-0.177 0.25-0.285 0.358-0.363 0.363-0.861 0.586-1.414 0.586s-1.051-0.223-1.414-0.586-0.586-0.861-0.586-1.414 0.223-1.051 0.586-1.414 
-            0.861-0.586 1.414-0.586 1.051 0.223 1.414 0.586c0.108 0.108 0.204 0.228 0.285 0.358zM14.15 6.088l-5.308 
-            3.097c-0.004-0.005-0.009-0.009-0.014-0.014-0.722-0.722-1.724-1.171-2.828-1.171s-2.106 0.449-2.828 1.172-1.172 1.724-1.172 2.828 0.449 2.106 1.172 2.828 1.724 1.172 
-            2.828 1.172 2.106-0.449 2.828-1.172c0.005-0.005 0.009-0.009 0.014-0.014l5.309 3.094c-0.098 0.347-0.151 0.714-0.151 1.092 0 1.104 0.449 2.106 1.172 2.828s1.724 
-            1.172 2.828 1.172 2.106-0.449 2.828-1.172 1.172-1.724 1.172-2.828-0.449-2.106-1.172-2.828-1.724-1.172-2.828-1.172-2.106 0.449-2.828 1.172c-0.003 0.003-0.007 
-            0.007-0.010 0.010l-5.312-3.095c0.098-0.346 0.15-0.71 0.15-1.087s-0.052-0.742-0.15-1.088l5.308-3.098c0.004 0.005 0.009 0.009 0.014 0.014 0.722 0.723 1.724 
-            1.172 2.828 1.172s2.106-0.449 2.828-1.172 1.172-1.724 1.172-2.828-0.449-2.106-1.172-2.828-1.724-1.172-2.828-1.172-2.106 0.449-2.828 1.172-1.172 1.724-1.172 2.828c0 
-            0.377 0.052 0.742 0.15 1.088z"></path>
-            </symbol>
-        </svg>
-    </body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
-    <script>
-        // navbar toggle
-            const menuBtn = document.querySelector(".navbar-burger-btn");
+<div class="marquee" style="margin-top: 120px;">
+    <div class="marquee-content">
+        <span style="font-size: 30px;">THEYDONTKNOWUS</span>
+        <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
+        <span style="font-size: 30px;">EST. 2024</span> 
+                <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
+                <span style="font-size: 30px;">THEYDONTKNOWUS</span>
+                <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
+                <span style="font-size: 30px;">EST. 2024</span>
+                    <span style="font-size: 30px;">THEYDONTKNOWUS</span>
+                    <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
+                    <span style="font-size: 30px;">EST. 2024</span>
+                        <span style="font-size: 30px;">THEYDONTKNOWUS</span>
+                        <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
+                        <span style="font-size: 30px;">EST. 2024</span>
+                            <span style="font-size: 30px;">THEYDONTKNOWUS</span>
+                            <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
+                            <span style="font-size: 30px;">EST. 2024</span>
+                    <span style="font-size: 30px;">THEYDONTKNOWUS</span>
+                    <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
+                    <span style="font-size: 30px;">EST. 2024</span>
+    </div>
+</div>
+    <header>
+        <img src="{% static 'img/categories/wordlogo.png'  %}" alt=""  id="wordlogo">
+       <div class="button-89">
+       <a href="{% url 'shop' %}" style="text-decoration: none; color: white;">
+        SHOP
+       </a>
+       </div>
+        <span id="down">&#8595;</span>
+    </header>
 
-            menuBtn.addEventListener("click", () => {
-                nav.dataset.state === "closed"
-                    ? (nav.dataset.state = "open")
-                    : (nav.dataset.state = "closed");
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        window.onbeforeunload = function () {
+            window.scrollTo(0, 0);
+        }
+
+        $(document).ready(function () {
+            $('#down').on('click', function () {
+                $("html").scrollTop(0);
+                console.log("Clicked!");
+                $('html, body').animate({
+                    scrollTop: $(".main").offset().top
+                }, 1000);
             });
-
-            const root = document.documentElement;
-            const hero = document.querySelector(".hero");
-            const nav = document.querySelector("nav");
-
-            const heroOptions = {
-                root: document,
-                rootMargin: "-70px 0px 0px 0px",
-                threshold: [0, 0.25, 0.5, 0.75, 1.0]
-            };
-            //
-            const heroObserver = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.intersectionRatio >= 0.75) {
-                        nav.style.transform = "translateY(0%)";
-                        root.style.setProperty("--brand-color", "#FFF");
-
-                    }
-                    if (entry.intersectionRatio >= 0.5) {
-                        nav.classList.remove("fixed-top");
-                    }
-                    if (entry.intersectionRatio <= 0.5) {
-                        nav.style.transform = "translateY(-100%)";
-                    }
-                    if (entry.intersectionRatio === 0) {
-                        nav.style.transform = "translateY(0%)";
-                        nav.classList.add("fixed-top");
-                        root.style.setProperty("--brand-color", "#000");
-                    }
-                });
-            }, heroOptions);
-            heroObserver.observe(hero, heroObserver);
-
-            // Watching the sections and fading them in when needed
-            const main = document.querySelector("main");
-            let mainOptions = {
-                root: document,
-                threshold: 0.1,
-                rootMargin: "-50px 0px 0px 0px"
-            };
-            const mainObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (!entry.isIntersecting) {
-                        // exit out of the function if not intersecting
-                        return;
-                    } else {
-                        entry.target.classList.add("visible");
-                        // remove the observer after we have faded in the entry
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, mainOptions);
-            const parent = Array.from(main.children);
-            parent.forEach(child => {
-                mainObserver.observe(child, mainObserver);
-            });
-
-            // Loading the images
-            const images = document.querySelectorAll(".placeholder-container");
-
-            const setImageSrc = (img, placeholder) => {
-                const src = img.dataset.src;
-                if (!src) {
-                    return;
-                }
-                img.src = src;
-                img.onload = () => {
-                    img.classList.add('loaded')
-                    // animate the placeholder 
-                    placeholder.dataset.visible = 'false'
-                };
-            };
-
-            const imgOptions = {
-                threshold: 0,
-                rootMargin: "0px",
-            };
-
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (!entry.isIntersecting) {
-                        // exit out of the function if not intersecting
-                        return;
-                    }
-                    else {
-                        setImageSrc(entry.target.nextElementSibling, entry.target);
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, imgOptions);
-
-            images.forEach(image => {
-                imageObserver.observe(image, imageObserver);
-            });
-
-
-            // Three js stuff
-            // borrows heavily from https://tympanus.net/codrops/2019/11/05/creative-webgl-image-transitions/
-            let vertex = `varying vec2 vUv;void main() {vUv = uv;gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );}`;
-
-            let fragment = `
-		uniform float progress;
-		uniform float intensity;
-		uniform sampler2D currentImage;
-		uniform sampler2D nextImage;
-		uniform vec4 resolution;
-		varying vec2 vUv;
-		mat2 rotate(float a) {
-            float s = sin(a);
-			float c = cos(a);
-			return mat2(c, -s, s, c);
-		}
-
-		void main()	{
-			vec2 newUV = (vUv - vec2(0.5))*resolution.zw + vec2(0.5);
-
-            vec2 uvDivided = fract(newUV*vec2(intensity,1.));
-     
-
-			vec2 uvDisplaced1 = newUV - rotate(0.0)*uvDivided*progress*0.05;
-			vec2 uvDisplaced2 = newUV - rotate(0.0)*uvDivided*(1. - progress)*0.05;
-
-			vec4 t1 = texture2D(currentImage,uvDisplaced1);
-			vec4 t2 = texture2D(nextImage,uvDisplaced2);
-
-			gl_FragColor = mix(t1, t2, progress);
-
-		}
-
-	`;
-            // scene
-            let scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x333333);
-            // camera
-            const camera = new THREE.PerspectiveCamera(
-                70,
-                window.innerWidth / window.innerHeight,
-                0.001,
-                1000
-            );
-            camera.position.set(0, 0, 2);
-            // renderer
-            let renderer = new THREE.WebGLRenderer({
-                antialias: true
-            });
-            // renderer opts
-            renderer.setSize(hero.offsetWidth, hero.offsetHeight);
-            renderer.setPixelRatio(window.devicePixelRatio || 1);
-            // append canvas 
-            hero.appendChild(renderer.domElement);
-
-            // images
-            let loader = new THREE.TextureLoader();
-            loader.crossOrigin = "anonymous";
-            const sliderImgs = JSON.parse(hero.getAttribute("data-images"));
-            const imgArray = [];
-            // load images and resize
-            const loadImages = callback => {
-                const promises = [];
-                // load images as textures
-                sliderImgs.forEach((url, i) => {
-                    let promise = new Promise(resolve => {
-                        imgArray[i] = loader.load(url, resolve);
-                    });
-                    promises.push(promise);
-                });
-                Promise.all(promises).then(() => {
-                    callback();
-                    // remove preloader when loading has finished
-                    document.body.dataset.loading = "false";
-                });
-            };
-
-            const resize = () => {
-                let width = hero.offsetWidth;
-                let height = hero.offsetHeight;
-                renderer.setSize(width, height);
-                camera.aspect = width / height;
-                // image aspect ratio preserve on resize
-                let imageAspect = imgArray[0].image.height / imgArray[0].image.width;
-                let a1;
-                let a2;
-                if (height / width > imageAspect) {
-                    a1 = (width / height) * imageAspect;
-                    a2 = 1;
-                } else {
-                    a1 = 1;
-                    a2 = height / width / imageAspect;
-                }
-                mat.uniforms.resolution.value.x = width;
-                mat.uniforms.resolution.value.y = height;
-                mat.uniforms.resolution.value.z = a1;
-                mat.uniforms.resolution.value.w = a2;
-
-                const dist = camera.position.z;
-                const FOVheight = 1;
-                camera.fov = 2 * (180 / Math.PI) * Math.atan(FOVheight / (2 * dist));
-
-                object.scale.x = camera.aspect;
-                object.scale.y = 1;
-                camera.updateProjectionMatrix();
-            };
-
-            loadImages(resize);
-
-            // create 
-            let mat = new THREE.ShaderMaterial({
-                side: THREE.DoubleSide,
-                uniforms: {
-                    progress: { type: "f", value: 0 },
-                    intensity: { type: "f", value: 16 },
-                    currentImage: { type: "f", value: imgArray[0] },
-                    nextImage: { type: "f", value: imgArray[1] },
-                    resolution: { type: "v4", value: new THREE.Vector4() }
-                },
-                vertexShader: vertex,
-                fragmentShader: fragment
-            });
-            let geometry = new THREE.PlaneGeometry(1, 1, 2, 2);
-            let object = new THREE.Mesh(geometry, mat);
-            object.position.set(0, 0, 0);
-
-            scene.add(object);
-
-            // animate
-            let animate = () => {
-                requestAnimationFrame(animate);
-                renderer.render(scene, camera);
-            };
-            // call animate fn
-            animate();
-
-            // resize
-            window.addEventListener("resize", resize);
-
-            // slide animation
-            const animateSlide = index => {
-                mat.uniforms.nextImage.value = imgArray[index];
-                gsap.to(mat.uniforms.progress, 0.64, {
-                    value: 1,
-                    ease: "sine.inOut",
-                    onComplete: () => {
-                        mat.uniforms.currentImage.value = imgArray[index];
-                        mat.uniforms.progress.value = 0;
-                    }
-                });
-            };
-
-            // slider
-            let index = 0;
-            const nextBtn = document.querySelector(".btn-next");
-            const prevBtn = document.querySelector(".btn-prev");
-            const heroBg = document.querySelector(".hero");
-            const nextSlide = () => {
-                if (index < 1) {
-                    animateSlide(1);
-                    index += 1;
-                }
-            };
-
-            const prevSlider = () => {
-                if (index > 0) {
-                    animateSlide(0);
-                    index -= 1;
-                }
-            };
-
-            nextBtn.addEventListener("click", () => {
-                nextSlide();
-            });
-            prevBtn.addEventListener("click", () => {
-                prevSlider();
-            });
+        });
     </script>
 </body>
+
 </html>
