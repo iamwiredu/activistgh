@@ -1,13 +1,10 @@
+import uuid
 from django.db import models
 
-# Create your models here.
-
-from django.db import models
-from django.utils.timezone import now
-
+# Assuming the EventModel is defined as before
 class EventModel(models.Model):
     # Core Attributes
-    id = models.UUIDField(primary_key=True, editable=False, unique=True)
+    unique_id = models.UUIDField(default=uuid.uuid4,unique=True,null=True,editable=False)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
 
@@ -20,31 +17,17 @@ class EventModel(models.Model):
     address = models.TextField(blank=True, null=True)
 
     # Ticketing
-    ticket_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)  # Free if 0
     capacity = models.PositiveIntegerField(default=0)  # 0 for unlimited capacity
     tickets_sold = models.PositiveIntegerField(default=0)
 
     # Media
-    cover_image = models.URLField(blank=True, null=True)  # New attribute for the cover image
-    event_image = models.URLField(blank=True, null=True)
+    cover_image = models.ImageField(upload_to='strangers/events',null=True,blank=True)  # New attribute for the cover image
     gallery = models.JSONField(blank=True, null=True)  # List of image/video URLs
 
-    # Organizer
-    organizer_name = models.CharField(max_length=255)
     organizer_contact = models.EmailField(blank=True, null=True)
 
     # Engagement
     rsvp_count = models.PositiveIntegerField(default=0)
-    social_links = models.JSONField(blank=True, null=True)  # List of URLs
-
-    # Advanced Features
-    recurring = models.BooleanField(default=False)
-    tags = models.JSONField(blank=True, null=True)  # List of tags
-    status = models.CharField(max_length=50, choices=[
-        ('draft', 'Draft'),
-        ('published', 'Published'),
-        ('canceled', 'Canceled'),
-    ], default='draft')
 
     # Audit Fields
     created_at = models.DateTimeField(auto_now_add=True)
@@ -58,3 +41,20 @@ class EventModel(models.Model):
         ordering = ['-start_datetime']
         verbose_name = "Event"
         verbose_name_plural = "Events"
+
+
+# Second model for TicketType, inheriting from EventModel
+class TicketType(models.Model):
+    unique_id = models.UUIDField(default=uuid.uuid4,unique=True,editable=False,null=True)
+    events = models.ForeignKey(EventModel,on_delete=models.CASCADE,null=True,blank=True)
+    ticket_type_name = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    available_quantity = models.PositiveIntegerField(default=0)
+    sold_quantity = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.ticket_type_name} for {self.name}"
+
+    class Meta:
+        verbose_name = "Ticket Type"
+        verbose_name_plural = "Ticket Types"
