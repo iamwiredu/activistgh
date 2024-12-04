@@ -41,7 +41,7 @@
     {% endfor %}
     {% for event in events %}
     <div class="max-w-xs bg-white rounded-xl duration-500 hover:scale-105 flex flex-col">
-        <a href="#" class="flex flex-col h-full">
+        <a href="{% url 'event' event.id %}" class="flex flex-col h-full">
             <img src="{{ event.cover_image.url }}" alt="Product" class="h-56 sm:h-80 w-full object-cover rounded-t-xl" />
             <div class="px-4 py-3">
                 <div class="mb-4">
