@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 
 # Assuming the EventModel is defined as before
-class EventModel(models.Model):
+class Outing(models.Model):
     # Core Attributes
     unique_id = models.UUIDField(default=uuid.uuid4,unique=True,null=True,editable=False)
     name = models.CharField(max_length=255)
@@ -46,7 +46,7 @@ class EventModel(models.Model):
 # Second model for TicketType, inheriting from EventModel
 class TicketType(models.Model):
     unique_id = models.UUIDField(default=uuid.uuid4,unique=True,editable=False,null=True)
-    events = models.ForeignKey(EventModel,on_delete=models.CASCADE,null=True,blank=True)
+    events = models.ForeignKey(Outing,on_delete=models.CASCADE,null=True,blank=True)
     ticket_type_name = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     available_quantity = models.PositiveIntegerField(default=0)
