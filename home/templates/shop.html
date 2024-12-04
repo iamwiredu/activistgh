@@ -8,17 +8,19 @@
     <!-- ✅ Grid Section - Starts Here 👇 -->
 <!-- ✅ Grid Section - Starts Here 👇 -->
 <section
-    class="w-fit mx-auto grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-y-8 sm:gap-y-10 md:gap-y-14 lg:gap-y-20 gap-x-4 sm:gap-x-8 md:gap-x-10 lg:gap-x-14 mt-10 mb-5">
+    class="container mx-auto px-4 grid grid-cols-2 gap-y-8 gap-x-4 sm:gap-y-10 sm:gap-x-8 md:grid-cols-2 lg:grid-cols-3 md:gap-y-14 lg:gap-y-20 md:gap-x-10 lg:gap-x-14 mt-10 mb-5">
     {% for product in products %}
-    <!--   ✅ Product card 1 - Starts Here 👇 -->
-    <div class="w-64 sm:w-72 bg-white rounded-xl duration-500 hover:scale-105">
-        <a href="{% url 'productDetailPage' product.unique_id %}">
-            <img src="{{product.image.url}}" alt="Product" class="h-56 sm:h-80 w-full object-cover rounded-t-xl" />
-            <div class="px-4 py-3">
-                <span class="text-gray-400 uppercase text-xs sm:text-sm block">Brand</span>
-                <p class="text-base sm:text-lg font-bold text-black truncate capitalize">{{product.name}}</p>
-                <div class="flex items-center mt-2">
-                    <p class="text-sm sm:text-lg font-semibold text-black cursor-auto">GHS {{product.price}}</p>
+    <!-- ✅ Product Card - Starts Here 👇 -->
+    <div class="max-w-xs bg-white rounded-xl  duration-500 hover:scale-105 flex flex-col">
+        <a href="{% url 'productDetailPage' product.unique_id %}" class="flex flex-col">
+            <img src="{{ product.image.url }}" alt="Product" class="h-56 sm:h-80 w-full object-cover rounded-t-xl" />
+            <div class="px-4 py-3 flex-1 flex flex-col justify-between">
+                <div>
+                    <span class="text-gray-400 uppercase text-xs sm:text-sm block">Brand</span>
+                    <p class="text-sm sm:text-lg font-bold text-black truncate capitalize">{{ product.name }}</p>
+                </div>
+                <div class="flex items-center mt-4">
+                    <p class="text-sm sm:text-lg font-semibold text-black">GHS {{ product.price }}</p>
                     <div class="ml-auto">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                             class="bi bi-bag-plus" viewBox="0 0 16 16">
@@ -32,11 +34,9 @@
             </div>
         </a>
     </div>
-    <!--   🛑 Product card 1 - Ends Here  -->
+    <!-- 🛑 Product Card - Ends Here -->
     {% endfor %}
 </section>
-
-
     <!-- 🛑 Grid Section - Ends Here -->
 
 
