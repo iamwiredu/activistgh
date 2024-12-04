@@ -816,15 +816,16 @@ body[data-loading="false"] .container-prev button,body[data-loading="false"] .co
             <div class="hero"
                 data-images='["{% static 'cover.jpg' %}","{% static 'cover.jpg' %}"]'>
                 <div class="container-prev">
-                    <h3>Winter / 2020</h3>
+                  
                     <button class="btn-prev">Collection</button>
                 </div>
                 <div class="container-next">
-                    <h3>Spring / 2020</h3>
+                   
                     <button class="btn-next">Collection</button>
                 </div>
             </div>
-            <div style="position: absolute; top: 50%; left: 50%;">SHOP NOW</div>
+        <a href="{% url  'shop' %}">   <div style="width: 100%; position: absolute; top: 50%; text-align: center;"><div style=" background-color: white; color:black; margin:0 auto; padding: 30px; width: fit-content;">SHOP
+            NOW</div></div></a>
         </header>
         <main>
             <section class="info fade-in">
@@ -857,7 +858,7 @@ body[data-loading="false"] .container-prev button,body[data-loading="false"] .co
                     </div>
                 </div>
             </section>
-            <section class="arrivals fade-in">
+            <!-- <section class="arrivals fade-in">
                 <div class="grid-container arrivals-grid">
                     <div class="grid-item centered">
                         <h3>New Arrivals</h1>
@@ -1046,7 +1047,7 @@ body[data-loading="false"] .container-prev button,body[data-loading="false"] .co
                         <button class="arrow-btn">Read more<span></span></button>
                     </div>
                 </div>
-            </section>
+            </section> -->
         </main>
     
         <svg style="display:none">
