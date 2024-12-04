@@ -282,6 +282,8 @@
          }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 </head>
 
 
@@ -351,45 +353,10 @@
         <div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
         <div class="hamburger_menu_content text-right">
             <ul class="menu_top_nav">
-                <li class="menu_item has-children">
-                    <a href="#">
-                        usd
-                        <i class="fa fa-angle-down"></i>
-                    </a>
-                    <ul class="menu_selection">
-                        <li><a href="#">cad</a></li>
-                        <li><a href="#">aud</a></li>
-                        <li><a href="#">eur</a></li>
-                        <li><a href="#">gbp</a></li>
-                    </ul>
-                </li>
-                <li class="menu_item has-children">
-                    <a href="#">
-                        English
-                        <i class="fa fa-angle-down"></i>
-                    </a>
-                    <ul class="menu_selection">
-                        <li><a href="#">French</a></li>
-                        <li><a href="#">Italian</a></li>
-                        <li><a href="#">German</a></li>
-                        <li><a href="#">Spanish</a></li>
-                    </ul>
-                </li>
-                <li class="menu_item has-children">
-                    <a href="#">
-                        My Account
-                        <i class="fa fa-angle-down"></i>
-                    </a>
-                    <ul class="menu_selection">
-                        <li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
-                        <li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
-                    </ul>
-                </li>
+           
                 <li class="menu_item"><a href="#">home</a></li>
                 <li class="menu_item"><a href="#">shop</a></li>
-                <li class="menu_item"><a href="#">promotion</a></li>
-                <li class="menu_item"><a href="#">pages</a></li>
-                <li class="menu_item"><a href="#">blog</a></li>
+              
                 <li class="menu_item"><a href="#">contact</a></li>
             </ul>
         </div>
@@ -438,8 +405,8 @@
                             <div class="formbold-input-flex">
                                 <div>
                                     <label for="dob" class="formbold-form-label">Phone</label>
-                                    <input id="phone" type="tel" name="phone" style="min-width: 100%;"
-                                        class="formbold-form-input" />
+                                    <input id="phone"  class="formbold-form-input" type="tel" name="phone" style="min-width: 100%;" required />
+                                    <input type="number" id="country_code" style="display: none;">
                                 </div>
                                 <div>
                                     <label for="email" class="formbold-form-label"> Email Address </label>
@@ -729,18 +696,24 @@
     </div>
 
 
+
+
     <!-- Js Plugins -->
    
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://js.paystack.co/v2/inline.js"></script>
     <script>
-        const phoneInputField = document.querySelector("#phone");
+            const phoneInputField = document.querySelector("#phone");
 
-        const phoneInput = window.intlTelInput(phoneInputField, {
-            preferredCountries: ["gh"],
-            utilsScript:
-                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        });
+                const phoneInput = window.intlTelInput(phoneInputField, {
+                    preferredCountries: ["gh"],
+                    utilsScript:
+                        "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+                });
+    </script>
+    <script>
+
+    
         function PaywithPaystack() {
             const popup = new PaystackPop()
 
@@ -758,8 +731,8 @@
                     console.log(transaction);
 
 
-                    document.getElementById('nextStepButton').click()
-                    document.getElementById('AttendeeRequest').click()
+                    // document.getElementById('nextStepButton').click()
+                    // document.getElementById('AttendeeRequest').click()
 
 
                     // successfull transaction have to create user and attendee code with
@@ -792,37 +765,19 @@
 
     </script>
     <script>
-        createAccount = () => {
 
-            // Set CSRF token as default headers for Axios
-            axios.defaults.xsrfCookieName = "csrftoken"; // CSRF cookie name
-            axios.defaults.xsrfHeaderName = "X-CSRFToken"; // CSRF header name
+        country_li = document.querySelectorAll('li.iti__country')
+        country_code = document.getElementById('country_code')
+        country_code.value = '233'
+        country_li.forEach(li => {
+            li.onclick = () => {
 
-            // Retrieve user data from local storage
-            const user = JSON.parse(localStorage.getItem('user'));
-
-            // Ensure user data is valid
-            if (!user) {
-                console.error('No user data found in local storage');
-                return;
+                country_code.value = li.getAttribute('data-dial-code')
             }
-
-            // Make POST request to create an attendee
-            axios.post('/api/create/attendee/', {
-                "first_name": user.firstName,
-                "last_name": user.lastName, // Corrected from last_Name to last_name
-                "email": user.email,
-                "phone": user.phone,
-            })
-                .then((response) => {
-                    console.log('Response:', response);
-                })
-                .catch((error) => {
-                    console.error('Error creating attendee:', error);
-                });
-        }
+        })
 
     </script>
+ 
     <script>
         const stepMenuOne = document.querySelector('.formbold-step-menu1')
         const stepMenuTwo = document.querySelector('.formbold-step-menu2')
@@ -898,8 +853,10 @@
 
 
     </script>
+    <script>
+        document.getElementById('iti-0__item-gh-preferred').click()
+    </script>
     
-    </html>
         <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
         <script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
         <script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
