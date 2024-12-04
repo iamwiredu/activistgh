@@ -30,6 +30,7 @@ class Product(models.Model):
 class Outing(models.Model):
     # Core Attributes
    
+    unique_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
 

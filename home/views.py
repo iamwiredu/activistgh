@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Product
+from .models import Product, Outing
 # Create your views here.
 
 
@@ -19,7 +19,9 @@ def productDetailPage(request,unique_id):
 
 def shop(request):
     products = Product.objects.all()
+    events = Outing.objects.all()
     context ={
         'products':products,
+        'events': events,
     }
     return render(request,'shop.html',context)
