@@ -25,6 +25,11 @@ class Product(models.Model):
         else:
             color_tag = ''
             return f'{self.name}  {color_tag} Category:{self.category}' 
+
+class RelatedImages(models.Model):
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='strangers/relatedImages',null=True,blank=True)
+    
         
 # Assuming the EventModel is defined as before
 class Outing(models.Model):
@@ -69,7 +74,6 @@ class Outing(models.Model):
         verbose_name_plural = "Events"
 
 
-# Second model for TicketType, inheriting from EventModel
 class TicketType(models.Model):
     unique_id = models.UUIDField(default=uuid.uuid4,unique=True,editable=False)
     events = models.ForeignKey(Outing,on_delete=models.CASCADE,null=True,blank=True)

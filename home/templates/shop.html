@@ -1,5 +1,65 @@
-
 {% extends 'main.html' %}
+{% load static %}
+{% block head %}
+
+<style>
+        body{
+        background-image: url("{% static 'img/blueback.jpg' %}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: #fd9b03;
+    }
+    .slide-cart {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            max-width: 400px;
+            background-color: #fff;
+           
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+        }
+    
+
+        .slide-cart {
+            right: 0;
+            transform: translateX(100%);
+        }
+
+        .slide-menu.active {
+            transform: translateX(0);
+        }
+
+        .slide-cart.active {
+            transform: translateX(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .slide-cart.active {
+            transform: translateX(0);
+        }
+        .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        z-index: 1;
+    }
+     
+</style>
+
+{% endblock %}
 {% block  body %}
 
 <div>
@@ -11,28 +71,17 @@
     class="container mx-auto px-4 grid grid-cols-2 gap-y-8 gap-x-4 sm:gap-y-10 sm:gap-x-8 md:grid-cols-2 lg:grid-cols-3 md:gap-y-14 lg:gap-y-20 md:gap-x-10 lg:gap-x-14 mt-10 mb-5">
     {% for product in products %}
     <!-- ✅ Product Card - Starts Here 👇 -->
-    <div class="max-w-xs bg-white rounded-xl duration-500 hover:scale-105 flex flex-col">
+    <div class="max-w-xs  rounded-xl duration-500 hover:scale-105 flex flex-col">
         <a href="{% url 'productDetailPage' product.unique_id %}" class="flex flex-col h-full">
             <img src="{{ product.image.url }}" alt="Product" class="h-56 sm:h-80 w-full object-cover rounded-t-xl" />
         <div class="px-4 py-3">
             <div class="mb-4">
-                <span class="text-gray-400 uppercase text-xs sm:text-sm block">Brand</span>
-                <p class="text-sm sm:text-sm font-bold text-black capitalize min-h-[3rem] sm:min-h-[4rem]">
+                <p class="text-sm sm:text-sm font-bold text-black capitalize min-h-[3rem] sm:min-h-[4rem]" style="color: #fd9b03 ;">
                     {{ product.name }}
                 </p>
+                <p class="text-sm sm:text-lg font-bold" style="color: #fd9b03;">GHS {{ product.price }}</p>
             </div>
-            <div class="flex items-center">
-                <p class="text-sm sm:text-lg font-semibold text-black">GHS {{ product.price }}</p>
-                <div class="ml-auto">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bag-plus"
-                        viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                        <path
-                            d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                    </svg>
-                </div>
-            </div>
+       
         </div>
 
         </a>
@@ -40,7 +89,7 @@
     <!-- 🛑 Product Card - Ends Here -->
     {% endfor %}
     {% for event in events %}
-    <div class="max-w-xs bg-white rounded-xl duration-500 hover:scale-105 flex flex-col">
+    <div class="max-w-xs  rounded-xl duration-500 hover:scale-105 flex flex-col">
         <a href="{% url 'event' event.id %}" class="flex flex-col h-full">
             <img src="{{ event.cover_image.url }}" alt="Product" class="h-56 sm:h-80 w-full object-cover rounded-t-xl" />
             <div class="px-4 py-3">

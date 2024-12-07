@@ -1,95 +1,64 @@
-
-
+{% load static %}
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Row</title>
     <style>
-    * {
-        box-sizing: border-box;
-    }
-
-    body {
-        margin: 0;
-        font-family: Arial;
-    }
-
-    .center {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .row {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 0 4px;
-    }
-
-    /* Create four equal columns that sits next to each other */
-    .column {
-        flex: 25%;
-        max-width: 25%;
-        padding: 0 4px;
-    }
-
-    .column img {
-        margin-top: 8px;
-        vertical-align: middle;
-        width: 100%;
-    }
-
-    /* Responsive layout - makes a two column-layout instead of four columns */
-    @media screen and (max-width: 768px) {
-        .column {
-            flex: 50%;
-            max-width: 50%;
+        * {
+            box-sizing: border-box;
         }
-    }
 
+        body {
+            margin: 0;
+            font-family: Arial;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0;
+            /* Removes any gap between flex items */
+        }
+
+        .column {
+            flex: 25%;
+            max-width: 25%;
+            padding: 0;
+            /* Remove padding */
+            margin: 0;
+            /* Remove margin */
+        }
+
+        .column img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Responsive layout - makes a two column-layout instead of four columns */
+        @media screen and (max-width: 768px) {
+            .column {
+                flex: 50%;
+                max-width: 50%;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .column {
+                flex: 100%;
+                max-width: 100%;
+            }
+        }
     </style>
 </head>
 
 <body>
     <!-- Photo Grid -->
-    <div class="row">
-        <!--"Image1"-->
-        <div class="column">
-            <a href="https://psyche.co.uk/product/cp-company-micro-hw-lens-sweatshirt-51832">
-            <img src="{% static 'cover.jpg' %}" alt="Psyche" class="center" style="width:80%"></a>
-            <p style="text-align:center; font-family:arial; font-size:13px; font-weight:bold">C.P. Company</p>
-            <p style="text-align:center; font-family:arial; font-size:11px;">Micro Lens Sweatshirt</p>
-        </div>
-   
-        <!--"Image2"-->
-        <div class="column">
-            <a href="https://psyche.co.uk/product/cp-company-cord-overshirt-51831#?variant=49">
-            <img src="{% static 'cover.jpg' %}" alt="Psyche" class="center" style="width:80%"></a>
-            <p style="text-align:center; font-family:arial; font-size:13px; font-weight:bold">C.P. Company</p>
-            <p style="text-align:center; font-family:arial; font-size:11px">Lens Cord Overshirt</p>
-        </div>
-   
-        <!--"Image3"-->
-        <div class="column">
-            <a href="https://psyche.co.uk/product/cp-company-gabardine-hooded-jacket-51830#?variant=1497">
-            <img src="{% static 'cover.jpg' %}" alt="Psyche" class="center" style="width:80%"></a>
-            <p style="text-align:center; font-family:arial; font-size:13px; font-weight:bold">C.P. Company</p>
-            <p style="text-align:center; font-family:arial; font-size:11px">Gabardine Hooded Jacket</p>
-        </div>
-   
-        <!--"Image4"-->
-        <div class="column">
-            <a href="https://psyche.co.uk/product/cp-company-stitch-logo-crew-neck-t-shirt-51833">
-            <img src="{% static 'cover.jpg' %}" alt="Psyche" class="center" style="width:80%"></a>
-            <p style="text-align:center; font-family:arial; font-size:13px; font-weight:bold">C.P. Company</p>
-            <p style="text-align:center; font-family:arial; font-size:11px">Stitch Crew Neck T-Shirt</p>
-        </div>
+    
     </div>
-
 </body>
 
 </html>
-
