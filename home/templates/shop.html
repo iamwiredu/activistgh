@@ -74,6 +74,12 @@
             display: none;
             z-index: 1;
         }
+        
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.7); /* Adjust color and opacity as needed */
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+            }
     </style>
 
 </head>
@@ -85,7 +91,7 @@
 
         <!-- Header -->
 
-        <header class="header trans_300" style="background-color: transparent;">
+        <header class="header trans_300" id="navbar" style="background-color: transparent;">
 
             <!-- Top Navigation -->
 
@@ -305,7 +311,17 @@
     <script src="{% static 'plugins/easing/easing.js' %}"></script>
     <script src="{% static 'js/custom.js' %}"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-
+    <script>
+        // this gives the navbar a glassy look when scrolled
+        navbar = document.getElementById('navbar')
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 5) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
 
     <!--cart and wishlist scripts-->
 
