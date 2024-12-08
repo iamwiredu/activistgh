@@ -27,6 +27,9 @@ def shop(request):
     }
     return render(request,'shop.html',context)
 
+def checkout(request):
+    return render(request,'checkout.html')
+
 
 # Management Db
 def managementDb(request):

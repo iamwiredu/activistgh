@@ -1,10 +1,11 @@
 from django.urls import path
-from .views import home, productDetailPage, shop, managementDb, productManagement
+from .views import home, productDetailPage, shop, checkout, managementDb, productManagement
 
 urlpatterns = [
     path('',home,name='home'),
     path('product/<str:unique_id>/',productDetailPage,name='productDetailPage'),
     path('shop/',shop,name="shop"),
+    path('checkout/',checkout,name='checkout'),
 
 
     # site management links

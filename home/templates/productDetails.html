@@ -139,7 +139,7 @@
             <div class="slide-cart" id="cart">
                 <div style="display: flex; justify-content: space-between;align-items: center; ">
                     <div id="bag-header" style="padding: 37px;">CART</div>
-                    
+
                     <div class="hamburger_close" id="close-cart-button"><i class="fa fa-times" aria-hidden="true"></i></div>
                 </div>
             
@@ -670,7 +670,7 @@
                     <div class="total-price" id="total-price" style="color: #28a745; font-weight: bold; margin-right: 20px;">${formatPrice(totalPrice)}</div>
                 </div>
                 <div style="text-align: center; margin: 20px;">
-                        <a href="">       <button style="padding: 10px 20px; width:100%; background-color: #228B22; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        <a href="{% url 'checkout' %}">       <button style="padding: 10px 20px; width:100%; background-color: #228B22; color: white; border: none; border-radius: 5px; cursor: pointer;">
                         Checkout
                     </button></a>
                 </div>

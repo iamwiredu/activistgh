@@ -150,7 +150,7 @@
                                     <li class="checkout" id="cart-btn">
                                         <a href="#">
                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                            <span id="checkout_items" class="checkout_items" id="cart-total">2</span>
+                                            <span id="checkout_items" class="checkout_items" id="cart-total">0</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -369,6 +369,7 @@
 
 
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('checkout_items').innerText = cart.length
             // document.getElementById('cart-total').innerText = cart.length
             if (cart.length > 0) {
                 cart.forEach(item => {
@@ -399,7 +400,7 @@
                 <div class="total-price" id="total-price" style="color: #28a745; font-weight: bold; margin-right: 20px;">${formatPrice(totalPrice)}</div>
             </div>
             <div style="text-align: center; margin: 20px;">
-                    <a href="">       <button style="padding: 10px 20px; width:100%; background-color: #228B22; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    <a href="{% url 'checkout' %}">       <button style="padding: 10px 20px; width:100%; background-color: #228B22; color: white; border: none; border-radius: 5px; cursor: pointer;">
                     Checkout
                 </button></a>
             </div>
