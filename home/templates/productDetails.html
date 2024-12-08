@@ -137,8 +137,9 @@
             <!-- Main Navigation -->
             <!-- Sliding Cart -->
             <div class="slide-cart" id="cart">
-                <div style="display: flex; justify-content: space-between;align-items: center; padding: 50px;">
-                    <div id="bag-header">CART</div>
+                <div style="display: flex; justify-content: space-between;align-items: center; ">
+                    <div id="bag-header" style="padding: 37px;">CART</div>
+                    
                     <div class="hamburger_close" id="close-cart-button"><i class="fa fa-times" aria-hidden="true"></i></div>
                 </div>
             
@@ -678,7 +679,7 @@
 
             }
             else {
-                cartBox.innerHTML = '<div class="empty-cart">Nothing in Cart</div>'
+                cartBox.innerHTML = '<div class="empty-cart" style="display:flex; justify-content:center;">Nothing in Cart</div>'
 
 
             }
