@@ -31,7 +31,8 @@ class RelatedImages(models.Model):
     image = models.ImageField(upload_to='strangers/relatedImages',null=True,blank=True)
     
     def __str__(self):
-        return {self.product}
+        return f'{self.product}'
+    
 # Assuming the EventModel is defined as before
 class Outing(models.Model):
     # Core Attributes
