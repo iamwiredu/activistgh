@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Product, Outing
+from .forms import ProductForm
 # Create your views here.
 
 
@@ -25,3 +26,27 @@ def shop(request):
         'events': events,
     }
     return render(request,'shop.html',context)
+
+
+# Management Db
+def managementDb(request):
+    return render(request,'managementDb.html')
+
+
+def productManagement(request):
+    productFormCreator = ProductForm()
+
+    if request.method == 'POST':
+        if 'addProduct' in request.POST:
+            productFormCreator = ProductForm(request.POST, request.FILES)    
+            if productFormCreator.is_valid(): 
+                productFormCreator.save() 
+                return redirect(productManagement)  # Redirect to the same page or a success page
+            else:
+                print('error')
+
+    context = {
+        'productFormCreator':productFormCreator,
+    }
+
+    return render(request,'productManagement.html',context)

@@ -16,9 +16,106 @@
     <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
-    {% block head %} 
+    <style>
+        body {
+            background-image: url("{% static 'img/blueback.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #fd9b03;
+        }
 
-    {% endblock %}
+        .slide-cart {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            max-width: 400px;
+            background-color:rgba(255,255,255,0.95);
+            opacity: 1;
+
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+        }
+
+
+        .slide-cart {
+            right: 0;
+            transform: translateX(100%);
+        }
+
+        .slide-menu.active {
+            transform: translateX(0);
+        }
+
+        .slide-cart.active {
+            transform: translateX(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .slide-cart.active {
+            transform: translateX(0);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 1;
+        }
+        /* card styles */
+        .card {
+	background-color: #fff;
+	box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+	border-radius: 20px;
+	display: flex;
+	flex-direction: row;
+	padding: 30px;
+	max-width: 400px;
+	min-height: 130px;
+	margin: 20px 0;
+	transition: all 0.5s ease;
+}
+
+.card:hover {
+	box-shadow: 8px 28px 50px rgba(39, 44, 49, 0.07),
+		1px 6px 12px rgba(39, 44, 49, 0.04);
+	transform: translate3D(0, -1px, 0) scale(1.02);
+	transition: all 0.5s ease;
+}
+
+.card_cover{
+	width: 80px;
+	height: 80px;
+
+	object-fit: cover;
+	object-position: 50% 50%;
+
+	border-radius: 100%;
+}
+
+
+.left {
+	margin-right: 12.5px;
+}
+.right {
+	margin-left: 12.5px;
+}
+
+
+    </style>
+
 </head>
 
 <body>
@@ -40,7 +137,7 @@
                         </div>
                         <div class="col-md-6 text-right">
                             <div class="top_nav_right">
-                             
+
                             </div>
                         </div>
                     </div>
@@ -49,15 +146,18 @@
 
             <!-- Main Navigation -->
 
-                <!-- Sliding Cart -->
-                <div class="slide-cart" id="cart">
-                    <span class="close-btn" id="close-cart-btn" onclick="closecart()">&times;</span>
-                    <div id="bag-header" style="padding-left:6.5px; font-size: 20px; padding-top: 12.5px;">CART</div>
-                    <hr>
-                    <div id="cartBox" style="overflow-y: auto; max-height: 90vh; ">
-                
-                    </div>
+            <!-- Sliding Cart -->
+            <div class="slide-cart" id="cart">
+                <div style="display: flex; justify-content: space-between;align-items: center; padding: 50px;">
+                    <div id="bag-header">CART</div>
+                    <div class="hamburger_close" id="close-cart-button"><i class="fa fa-times" aria-hidden="true"></i></div>
                 </div>
+                
+                <hr>
+                <div id="cartBox" style="overflow-y: auto; max-height: 90vh; ">
+
+                </div>
+            </div>
 
             <div class="main_nav_container" style="background-color: transparent;">
                 <div class="container">
@@ -74,11 +174,11 @@
                                     <li><a href="contact.html">contact</a></li>
                                 </ul>
                                 <ul class="navbar_user">
-                                   
+
                                     <li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
                                     <li class="checkout" id="cart-btn">
                                         <a href="#">
-                                            <i class="fa fa-shopping-cart"   aria-hidden="true"></i>
+                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                             <span id="checkout_items" class="checkout_items" id="cart-total">2</span>
                                         </a>
                                     </li>
@@ -99,19 +199,52 @@
             <div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
             <div class="hamburger_menu_content text-right">
                 <ul class="menu_top_nav">
-                
+
                     <li class="menu_item"><a href="#">home</a></li>
                     <li class="menu_item"><a href="#">shop</a></li>
-                
-                
+
+
                     <li class="menu_item"><a href="#">contact</a></li>
                 </ul>
             </div>
         </div>
-{% block body %}
+        <div>
+            <div style="padding: 70px;"></div>
 
-{% endblock %}
-<!-- Newsletter -->
+            <!-- ✅ Grid Section - Starts Here 👇 -->
+            <!-- ✅ Grid Section - Starts Here 👇 -->
+            <section style="margin-bottom: 500px;">
+                <div> 
+                 <a href="{% url 'productManagement' %}">
+                    <div class="card">
+                        <div class="left">
+                            <svg fill="#fd9b03" width="32px" height="32px" viewBox="0 0 24 24" data-name="Layer 1" id="Layer_1"
+                                xmlns="http://www.w3.org/2000/svg" stroke="#fd9b03">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <title></title>
+                                    <path d="M14.43,3l-.29.49a2.5,2.5,0,0,1-4.29,0L9.57,3H6.76L2,5.38V11H6V21H18V11h4V5.38L17.24,3Z"></path>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="right">
+                            <h2 class="name">Product Management</h2>
+                            <p class="title">Create Product <br> Update Products<br> Delete Products</p>
+                    
+                        </div>
+                    </div>
+                 </a>
+                </div>
+
+            </section>
+
+            <!-- 🛑 Grid Section - Ends Here -->
+
+
+        </div>
+
+        <!-- Newsletter -->
 
         <div class="newsletter">
             <div class="container">
@@ -120,7 +253,7 @@
                         <div
                             class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
                             <h4>Newsletter</h4>
-                         
+
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -190,25 +323,26 @@
     <script>
         const cart = document.getElementById('cart')
         const cartBtn = document.getElementById('cart-btn');
-        const closeCartBtn = document.getElementById('close-cart-btn');
-      
-      
+       
+        var closeCart = document.getElementById('close-cart-button')
+        closeCart.onclick = () =>{
+            cart.classList.remove('active');
+            overlay.style.display = 'none';
+            document.body.style.overflow = 'scroll'
+        }
+
+       
+
         const overlay = document.getElementById('overlay');
         cartBtn.addEventListener('click', () => {
             cart.classList.add('active');
             overlay.style.display = 'block';
             document.body.style.overflow = 'hidden'
         });
-                
-        function closecart(){
-            alert('clicked')
-            cart.classList.remove('active');
-            overlay.style.display = 'none';
-            document.body.style.overflow = 'scroll'
-        }
 
+  
         overlay.addEventListener('click', () => {
-            
+
             cart.classList.remove('active');
             overlay.style.display = 'none';
             document.body.style.overflow = 'scroll'
@@ -294,8 +428,6 @@
 
     </script>
 
-    {% block scripts %}
-    {% endblock %}
 </body>
 
 </html>
