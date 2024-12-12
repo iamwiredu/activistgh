@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Product, Outing
-from .forms import ProductForm
+
 # Create your views here.
 
 
@@ -31,25 +31,6 @@ def checkout(request):
     return render(request,'checkout.html')
 
 
-# Management Db
-def managementDb(request):
-    return render(request,'managementDb.html')
+def contactPage(request):
+    return render(request,'contact.html')
 
-
-def productManagement(request):
-    productFormCreator = ProductForm()
-
-    if request.method == 'POST':
-        if 'addProduct' in request.POST:
-            productFormCreator = ProductForm(request.POST, request.FILES)    
-            if productFormCreator.is_valid(): 
-                productFormCreator.save() 
-                return redirect(productManagement)  # Redirect to the same page or a success page
-            else:
-                print('error')
-
-    context = {
-        'productFormCreator':productFormCreator,
-    }
-
-    return render(request,'productManagement.html',context)

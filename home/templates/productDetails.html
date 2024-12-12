@@ -159,14 +159,14 @@
                             </div>
                             <nav class="navbar">
                                 <ul class="navbar_menu">
-                                    <li><a href="index.html">home</a></li>
-                                    <li><a href="#">shop</a></li>
+                                    <li><a href="{% url 'home' %}">home</a></li>
+                                    <li><a href="{% url 'shop' %}">shop</a></li>
                                     
-                                    <li><a href="contact.html">contact</a></li>
+                                    <li><a href="{% url 'contact' %}">contact</a></li>
                                 </ul>
                                 <ul class="navbar_user">
                                 
-                                    <li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
+                                
                                     <li class="checkout" id="cart-btn">
                                         <a href="#">
                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -194,11 +194,11 @@
             <div class="hamburger_menu_content text-right">
                 <ul class="menu_top_nav">
               
-                    <li class="menu_item"><a href="#">home</a></li>
-                    <li class="menu_item"><a href="#">shop</a></li>
+                    <li class="menu_item"><a href="{% url 'home' %}">home</a></li>
+                    <li class="menu_item"><a href="{% url 'shop' %}">shop</a></li>
                  
                    
-                    <li class="menu_item"><a href="#">contact</a></li>
+                    <li class="menu_item"><a href="{% url 'contact' %}">contact</a></li>
                 </ul>
             </div>
         </div>
@@ -282,8 +282,7 @@
                                 <span class="plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
                             </div>
                             <div class="red_button add_to_cart_button"><a href="#" id="addToCartDiv">add to cart</a></div>
-                            <div class="product_favorite d-flex flex-column align-items-center justify-content-center">
-                            </div>
+                        
                         </div>
                     </div>
                 </div>

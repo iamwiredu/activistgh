@@ -197,21 +197,21 @@
         cartBtn.addEventListener('click', () => {
             cart.classList.add('active');
             overlay.style.display = 'block';
-            document.body.style.overflow = 'hidden'
+            document.body.style.overflowY = 'hidden'
         });
                 
         function closecart(){
             alert('clicked')
             cart.classList.remove('active');
             overlay.style.display = 'none';
-            document.body.style.overflow = 'scroll'
+            document.body.style.overflowY = 'scroll'
         }
 
         overlay.addEventListener('click', () => {
             
             cart.classList.remove('active');
             overlay.style.display = 'none';
-            document.body.style.overflow = 'scroll'
+            document.body.style.overflowY = 'scroll'
         });
 
         function formatPrice(price) {
