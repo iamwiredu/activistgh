@@ -1,5 +1,4 @@
-{% load static %}
-{% load crispy_forms_tags %}
+{% load static%}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -216,7 +215,7 @@
 
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
+                <a class="nav-link collapsed" href="{% url 'ordersList' %}">
                     <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Orders List</span>
                 </a>
@@ -265,26 +264,113 @@
                 <div class="col-lg-8">
                     <div class="row">
 
-               
+                        <!-- Sales Card -->
+                        <div class="col-xxl-4 col-md-6">
+                            <div class="card info-card sales-card">
 
+                                <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                        <li class="dropdown-header text-start">
+                                            <h6>Filter</h6>
+                                        </li>
+
+                                        <li><a class="dropdown-item" href="#">Today</a></li>
+                                        <li><a class="dropdown-item" href="#">This Month</a></li>
+                                        <li><a class="dropdown-item" href="#">This Year</a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="card-body">
+                                    <h5 class="card-title">Orders <span>| to date</span></h5>
+
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-cart"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>145</h6>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div><!-- End Sales Card -->
+
+                        <!-- Revenue Card -->
+                        <div class="col-xxl-4 col-md-6">
+                            <div class="card info-card revenue-card">
+
+                                <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                        <li class="dropdown-header text-start">
+                                            <h6>Filter</h6>
+                                        </li>
+
+                                        <li><a class="dropdown-item" href="#">Today</a></li>
+                                        <li><a class="dropdown-item" href="#">This Month</a></li>
+                                        <li><a class="dropdown-item" href="#">This Year</a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="card-body">
+                                    <h5 class="card-title">Delivered <span>| to date</span></h5>
+
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        ₵
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>GHS3,264</h6>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div><!-- End Revenue Card -->
 
                         <!-- Customers Card -->
                         <div class="col-xxl-4 col-xl-12">
 
                             <div class="card info-card customers-card">
 
+                                <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                        <li class="dropdown-header text-start">
+                                            <h6>Filter</h6>
+                                        </li>
+
+                                        <li><a class="dropdown-item" href="#">Today</a></li>
+                                        <li><a class="dropdown-item" href="#">This Month</a></li>
+                                        <li><a class="dropdown-item" href="#">This Year</a></li>
+                                    </ul>
+                                </div>
+
                                 <div class="card-body">
-                                    <h5 class="card-title">Add Product</h5>
-                                    <form method="POST" enctype="multipart/form-data">
-                                    <div>
-                                        {% csrf_token %}
-                                        {{productFormCreator|crispy}}
+                                    <h5 class="card-title">Not Delivered</h5>
+
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-truck"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>1244</h6>
+
+
+                                        </div>
                                     </div>
-                                    <input type="submit" style="background-color: green; padding:10px; color: white; border-radius: 10px;text-align: center;"
-                                      value="add Product"
-                                      name="addProduct"
-                                    >
-                                </form>
+
                                 </div>
                             </div>
 
@@ -294,7 +380,19 @@
                         <div class="col-12">
                             <div class="card">
 
-                           
+                                <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                        <li class="dropdown-header text-start">
+                                            <h6>Filter</h6>
+                                        </li>
+
+                                        <li><a class="dropdown-item" href="#">Today</a></li>
+                                        <li><a class="dropdown-item" href="#">This Month</a></li>
+                                        <li><a class="dropdown-item" href="#">This Year</a></li>
+                                    </ul>
+                                </div>
 
 
                             </div>
@@ -319,32 +417,55 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Product List</h5>
+                                    <h5 class="card-title">Recent Sales <span>| Today</span></h5>
 
                                     <table class="table table-borderless datatable">
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Product Name</th>
-                                                <th scope="col">Category</th>
-                                                <th scope="col">Stock</th>
-                                                <th scope="col">Edit</th>
+                                                <th scope="col">Customer</th>
+                                                <th scope="col">Product</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for product in products %}
-                                                <tr>
-                                                    <th scope="row"><a href="#">
-                                                        <img src="{{product.image.url}}" alt="{{product.name}}" style="width: 20px; height: 20px;">
-                                                    </a></th>
-                                                    <td>{{product.name}}</td>
-                                                    <td><a href="#" class="text-primary">{{product.category}}</a></td>
-                                                    <td>{{product.stock}}</td>
-                                                    <td><a href="{% url 'productEdit' product.unique_id %}">
-                                                        <span class="badge bg-success" style="cursor: pointer;">Edit</span>
-                                                    </a></td>
-                                                </tr>
-                                            {% endfor %}
+                                            <tr>
+                                                <th scope="row"><a href="#">#2457</a></th>
+                                                <td>Brandon Jacob</td>
+                                                <td><a href="#" class="text-primary">At praesentium minu</a></td>
+                                                <td>$64</td>
+                                                <td><span class="badge bg-success">Approved</span></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><a href="#">#2147</a></th>
+                                                <td>Bridie Kessler</td>
+                                                <td><a href="#" class="text-primary">Blanditiis dolor omnis
+                                                        similique</a></td>
+                                                <td>$47</td>
+                                                <td><span class="badge bg-warning">Pending</span></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><a href="#">#2049</a></th>
+                                                <td>Ashleigh Langosh</td>
+                                                <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
+                                                <td>$147</td>
+                                                <td><span class="badge bg-success">Approved</span></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><a href="#">#2644</a></th>
+                                                <td>Angus Grady</td>
+                                                <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
+                                                <td>$67</td>
+                                                <td><span class="badge bg-danger">Rejected</span></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><a href="#">#2644</a></th>
+                                                <td>Raheem Lehner</td>
+                                                <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
+                                                <td>$165</td>
+                                                <td><span class="badge bg-success">Approved</span></td>
+                                            </tr>
                                         </tbody>
                                     </table>
 
@@ -376,10 +497,10 @@
             Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
         </div>
     </footer><!-- End Footer -->
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
-
+        
     <script src="{% static 'assets/vendor/apexcharts/apexcharts.min.js' %}"></script>
     <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'assets/vendor/chart.js/chart.umd.js' %}"></script>

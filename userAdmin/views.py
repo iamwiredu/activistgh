@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import ProductForm
+from .forms import ProductForm, RelatedImagesForm
 from home.models import Product
 # Create your views here.
 
@@ -38,3 +38,37 @@ def productManagement(request):
     }
 
     return render(request,'productsManagement.html',context)
+
+def productEdit(request,unique_id):
+    product = Product.objects.get(unique_id=unique_id)
+    productFormCreator = ProductForm(instance=product)
+    relatedImage = product.relatedImages.all()[0]
+    
+
+    if request.method == 'POST':
+        if 'editProduct' in request.POST:
+            productFormCreator = ProductForm(request.POST, request.FILES,instance=product)    
+            if productFormCreator.is_valid(): 
+                productFormCreator.save() 
+                return redirect(productEdit,unique_id)  # Redirect to the same page or a success page
+            else:
+                print('error')
+        if 'updateBackImage' in request.POST:
+            backImage = request.FILES.get('backImage')
+            try:
+                if backImage:
+                    relatedImage.image = backImage
+                    relatedImage.save()
+            except:
+                print('error')
+
+
+
+    context ={
+        'product':product,
+        'productFormCreator':productFormCreator,
+    }
+    return render(request,'productEdit.html',context)
+
+def ordersList(request):
+    return render(request,'ordersList.html')

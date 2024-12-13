@@ -265,7 +265,7 @@
                 <div class="col-lg-8">
                     <div class="row">
 
-               
+
 
 
                         <!-- Customers Card -->
@@ -274,17 +274,16 @@
                             <div class="card info-card customers-card">
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Add Product</h5>
+                                    <h5 class="card-title">Update Product</h5>
                                     <form method="POST" enctype="multipart/form-data">
-                                    <div>
-                                        {% csrf_token %}
-                                        {{productFormCreator|crispy}}
-                                    </div>
-                                    <input type="submit" style="background-color: green; padding:10px; color: white; border-radius: 10px;text-align: center;"
-                                      value="add Product"
-                                      name="addProduct"
-                                    >
-                                </form>
+                                        <div>
+                                            {% csrf_token %}
+                                            {{productFormCreator|crispy}}
+                                        </div>
+                                        <input type="submit"
+                                            style="background-color: green; padding:10px; color: white; border-radius: 10px;text-align: center;"
+                                            value="add Product" name="editProduct">
+                                    </form>
                                 </div>
                             </div>
 
@@ -294,7 +293,7 @@
                         <div class="col-12">
                             <div class="card">
 
-                           
+
 
 
                             </div>
@@ -319,34 +318,17 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Product List</h5>
+                                    <h5 class="card-title">Product Image Back</h5>
 
-                                    <table class="table table-borderless datatable">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Product Name</th>
-                                                <th scope="col">Category</th>
-                                                <th scope="col">Stock</th>
-                                                <th scope="col">Edit</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for product in products %}
-                                                <tr>
-                                                    <th scope="row"><a href="#">
-                                                        <img src="{{product.image.url}}" alt="{{product.name}}" style="width: 20px; height: 20px;">
-                                                    </a></th>
-                                                    <td>{{product.name}}</td>
-                                                    <td><a href="#" class="text-primary">{{product.category}}</a></td>
-                                                    <td>{{product.stock}}</td>
-                                                    <td><a href="{% url 'productEdit' product.unique_id %}">
-                                                        <span class="badge bg-success" style="cursor: pointer;">Edit</span>
-                                                    </a></td>
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
+                                    <div>
+                                        <img src="{{product.relatedImages.all.0.image.url}}" alt="" style="width: 70px; height: 70px;">
+                                        <form action="" method="POST" 
+                                        enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                            <input type="file" name="backImage" class="form-control" accept="image/*" id="id_image">
+                                            <input type="submit" value="Update Back Image" name="updateBackImage">
+                                        </form>
+                                    </div>
 
                                 </div>
 
