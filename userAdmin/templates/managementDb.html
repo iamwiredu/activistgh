@@ -238,7 +238,7 @@
                                             <i class="bi bi-people"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6>0</h6>
+                                            <h6></h6>
               
 
                                         </div>
@@ -379,71 +379,40 @@
                     <!-- Website Traffic -->
                     <div class="card">
                   
-                        <div class="card-body pb-0">
-                            <h5 class="card-title">Most Sold Items<span>| To date</span></h5>
-                
-                            <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
-                
-                            <script>
-                                document.addEventListener("DOMContentLoaded", () => {
-                                    echarts.init(document.querySelector("#trafficChart")).setOption({
-                                        tooltip: {
-                                            trigger: 'item'
-                                        },
-                                        legend: {
-                                            top: '5%',
-                                            left: 'center'
-                                        },
-                                        series: [{
-                                            name: 'Data',
-                                            type: 'pie',
-                                            radius: ['40%', '70%'],
-                                            avoidLabelOverlap: false,
-                                            label: {
-                                                show: false,
-                                                position: 'center'
-                                            },
-                                            emphasis: {
-                                                label: {
-                                                    show: true,
-                                                    fontSize: '18',
-                                                    fontWeight: 'bold'
-                                                }
-                                            },
-                                            labelLine: {
-                                                show: false
-                                            },
-                                            data: [
-                                            // {
-                                            //     value: 1048,
-                                            //     name: 'Search Engine'
-                                            // },
-                                            // {
-                                            //     value: 735,
-                                            //     name: 'Direct'
-                                            // },
-                                            // {
-                                            //     value: 580,
-                                            //     name: 'Email'
-                                            // },
-                                            // {
-                                            //     value: 484,
-                                            //     name: 'Union Ads'
-                                            // },
-                                            {
-                                                value: 0,
-                                                name: 'Tees'
-                                            }
-                                            ]
-                                        }]
-                                    });
-                                });
-                            </script>
-                
-                        </div>
+                     <div class="card-body pb-0">
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+                        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+                        
+                        <script>
+                            var xValues = [ "Tees"];
+                            var yValues = [55];
+                            var barColors = [
+                             
+                                "#2b5797",
+                               
+                            ];
+
+                            new Chart("myChart", {
+                                type: "pie",
+                                data: {
+                                    labels: xValues,
+                                    datasets: [{
+                                        backgroundColor: barColors,
+                                        data: yValues
+                                    }]
+                                },
+                                options: {
+                                    title: {
+                                        display: true,
+                                        text: "Items Sold by category"
+                                    }
+                                }
+                            });
+                        </script>
+</div>
                     </div><!-- End Website Traffic -->
                 
-                  >
+                  
                 
                 </div><!-- End Right side columns -->
 
