@@ -47,17 +47,12 @@
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.html" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block"><img src="{% static 'assets/img/wordlogo.png' %}" alt=""></span>
+                <span class="d-none d-lg-block"><img src="{% static 'wordlogo.png' %}"  alt=""></span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
-        <div class="search-bar">
-            <form class="search-form d-flex align-items-center" method="POST" action="#">
-                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-            </form>
-        </div><!-- End Search Bar -->
+  
 
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
@@ -183,19 +178,7 @@
                         <div class="col-xxl-4 col-md-6">
                             <div class="card info-card sales-card">
 
-                                <div class="filter">
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                            class="bi bi-three-dots"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li class="dropdown-header text-start">
-                                            <h6>Filter</h6>
-                                        </li>
-
-                                        <li><a class="dropdown-item" href="#">Today</a></li>
-                                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                                    </ul>
-                                </div>
+                        
 
                                 <div class="card-body">
                                     <h5 class="card-title">Sales <span>| to date</span></h5>
@@ -206,7 +189,7 @@
                                             <i class="bi bi-cart"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6>145</h6>
+                                            <h6>0</h6>
                  
                                         </div>
                                     </div>
@@ -219,30 +202,17 @@
                         <div class="col-xxl-4 col-md-6">
                             <div class="card info-card revenue-card">
 
-                                <div class="filter">
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                            class="bi bi-three-dots"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li class="dropdown-header text-start">
-                                            <h6>Filter</h6>
-                                        </li>
-
-                                        <li><a class="dropdown-item" href="#">Today</a></li>
-                                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                                    </ul>
-                                </div>
-
+                        
                                 <div class="card-body">
                                     <h5 class="card-title">Revenue <span>| to date</span></h5>
 
                                     <div class="d-flex align-items-center">
                                         <div
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-currency-dollar"></i>
+                                        ¢
                                         </div>
                                         <div class="ps-3">
-                                            <h6>GHS3,264</h6>
+                                            <h6>GHS 0</h6>
                                          
 
                                         </div>
@@ -257,19 +227,7 @@
 
                             <div class="card info-card customers-card">
 
-                                <div class="filter">
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                            class="bi bi-three-dots"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li class="dropdown-header text-start">
-                                            <h6>Filter</h6>
-                                        </li>
-
-                                        <li><a class="dropdown-item" href="#">Today</a></li>
-                                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                                    </ul>
-                                </div>
+                          
 
                                 <div class="card-body">
                                     <h5 class="card-title">Newsletter subscribers</h5>
@@ -280,7 +238,7 @@
                                             <i class="bi bi-people"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6>1244</h6>
+                                            <h6>0</h6>
               
 
                                         </div>
@@ -295,41 +253,63 @@
                         <div class="col-12">
                             <div class="card">
 
-                                <div class="filter">
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                            class="bi bi-three-dots"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li class="dropdown-header text-start">
-                                            <h6>Filter</h6>
-                                        </li>
-
-                                        <li><a class="dropdown-item" href="#">Today</a></li>
-                                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                                    </ul>
-                                </div>
-
+                         
                         
                             </div>
                         </div><!-- End Reports -->
-
+                        <div class="col-12">
+                                <!-- Budget Report -->
+                                <div class="card">
+                                
+                                
+                                    <div class="card-body pb-0">
+                                        <canvas id="barChart" style="height: auto; width: 100%;"></canvas>
+                                        <script>
+                                            document.addEventListener("DOMContentLoaded", () => {
+                                                new Chart(document.querySelector('#barChart'), {
+                                                    type: 'bar',
+                                                    data: {
+                                                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                                                        datasets: [{
+                                                            label: 'Revenue GHS',
+                                                            data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                                                            backgroundColor: [
+                                                                'rgba(255, 99, 132, 0.2)',
+                                                                'rgba(255, 159, 64, 0.2)',
+                                                                'rgba(255, 205, 86, 0.2)',
+                                                                'rgba(75, 192, 192, 0.2)',
+                                                                'rgba(54, 162, 235, 0.2)',
+                                                                'rgba(153, 102, 255, 0.2)',
+                                                                'rgba(201, 203, 207, 0.2)'
+                                                            ],
+                                                            borderColor: [
+                                                                'rgb(255, 99, 132)',
+                                                                'rgb(255, 159, 64)',
+                                                                'rgb(255, 205, 86)',
+                                                                'rgb(75, 192, 192)',
+                                                                'rgb(54, 162, 235)',
+                                                                'rgb(153, 102, 255)',
+                                                                'rgb(201, 203, 207)'
+                                                            ],
+                                                            borderWidth: 1
+                                                        }]
+                                                    },
+                                                    options: {
+                                                        scales: {
+                                                            y: {
+                                                                beginAtZero: true
+                                                            }
+                                                        }
+                                                    }
+                                                });
+                                            });
+                                        </script>
+                                    </div>
+                                </div><!-- End Budget Report -->
+                        </div>
                         <!-- Recent Sales -->
                         <div class="col-12">
                             <div class="card recent-sales overflow-auto">
-
-                                <div class="filter">
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                            class="bi bi-three-dots"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li class="dropdown-header text-start">
-                                            <h6>Filter</h6>
-                                        </li>
-
-                                        <li><a class="dropdown-item" href="#">Today</a></li>
-                                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                                    </ul>
-                                </div>
 
                                 <div class="card-body">
                                     <h5 class="card-title">Recent Sales <span>| Today</span></h5>
@@ -369,18 +349,7 @@
                 
                     <!-- Recent Activity -->
                     <div class="card">
-                        <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <li class="dropdown-header text-start">
-                                    <h6>Filter</h6>
-                                </li>
-                
-                                <li><a class="dropdown-item" href="#">Today</a></li>
-                                <li><a class="dropdown-item" href="#">This Month</a></li>
-                                <li><a class="dropdown-item" href="#">This Year</a></li>
-                            </ul>
-                        </div>
+                       
                 
                         <div class="card-body">
                             <h5 class="card-title">Recent Activity <span>| Today</span></h5>
@@ -406,81 +375,10 @@
                         </div>
                     </div><!-- End Recent Activity -->
                 
-                    <!-- Budget Report -->
-                    <div class="card">
-                        <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <li class="dropdown-header text-start">
-                                    <h6>Filter</h6>
-                                </li>
-                
-                                <li><a class="dropdown-item" href="#">Today</a></li>
-                                <li><a class="dropdown-item" href="#">This Month</a></li>
-                                <li><a class="dropdown-item" href="#">This Year</a></li>
-                            </ul>
-                        </div>
-                
-                        <div class="card-body pb-0">
-                        <canvas id="barChart" style="height: auto; width: 100%;"></canvas>
-                        <script>
-                            document.addEventListener("DOMContentLoaded", () => {
-                                new Chart(document.querySelector('#barChart'), {
-                                    type: 'bar',
-                                    data: {
-                                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug','Sep','Oct','Nov','Dec'],
-                                        datasets: [{
-                                            label: 'Revenue GHS',
-                                            data: [1,1,1,1,1,1,1,1,1,1,1,1,1],
-                                            backgroundColor: [
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 159, 64, 0.2)',
-                                                'rgba(255, 205, 86, 0.2)',
-                                                'rgba(75, 192, 192, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(153, 102, 255, 0.2)',
-                                                'rgba(201, 203, 207, 0.2)'
-                                            ],
-                                            borderColor: [
-                                                'rgb(255, 99, 132)',
-                                                'rgb(255, 159, 64)',
-                                                'rgb(255, 205, 86)',
-                                                'rgb(75, 192, 192)',
-                                                'rgb(54, 162, 235)',
-                                                'rgb(153, 102, 255)',
-                                                'rgb(201, 203, 207)'
-                                            ],
-                                            borderWidth: 1
-                                        }]
-                                    },
-                                    options: {
-                                        scales: {
-                                            y: {
-                                                beginAtZero: true
-                                            }
-                                        }
-                                    }
-                                });
-                            });
-                        </script>
-                        </div>
-                    </div><!-- End Budget Report -->
-                
+             
                     <!-- Website Traffic -->
                     <div class="card">
-                        <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <li class="dropdown-header text-start">
-                                    <h6>Filter</h6>
-                                </li>
-                
-                                <li><a class="dropdown-item" href="#">Today</a></li>
-                                <li><a class="dropdown-item" href="#">This Month</a></li>
-                                <li><a class="dropdown-item" href="#">This Year</a></li>
-                            </ul>
-                        </div>
-                
+                  
                         <div class="card-body pb-0">
                             <h5 class="card-title">Most Sold Items<span>| To date</span></h5>
                 
@@ -562,7 +460,8 @@
 
     <script src="{% static 'assets/vendor/apexcharts/apexcharts.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <script src="{% static 'assets/vendor/chart.js/chart.umd.js' %}"></script>
+    <script src="{% static 'assets/vendor/echarts/echarts.min.js' %}"></script>
     <script src="{% static 'assets/vendor/echarts/echarts.min.js' %}"></script>
     <script src="{% static 'assets/vendor/quill/quill.js' %}"></script>
     <script src="{% static 'assets/vendor/simple-datatables/simple-datatables.js' %}"></script>
