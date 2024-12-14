@@ -43,8 +43,9 @@ INSTALLED_APPS = [
     'home',
     'events',
     'storages',
-    'userAdmin',
-   
+    # 'userAdmin',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -171,7 +172,7 @@ STATIC_ROOT = 'productionFiles'
 MEDIA_ROOT = ''
 
 
-
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 
 # Default primary key field type
