@@ -19,10 +19,10 @@
     <link rel="stylesheet" type="text/css" href="{% static 'styles/single_responsive.css' %}">
     <style>
          body {
-            background-image: url("{% static 'images/cover.jpg' %}");
+          
             background-repeat: no-repeat;
             background-size: cover;
-            color: #fd9b03;
+          
         }
         .overlay {
             position: fixed;
@@ -211,10 +211,10 @@
 
                     <div class="breadcrumbs d-flex flex-row align-items-center" >
                         <ul>
-                            <li><a href="{% url 'shop' %}" style="color: #fd9b03;">Shop</a></li>
-                            <li ><a href="{% url 'shop'  %}" style="color: #fd9b03;"><i class="fa fa-angle-right" aria-hidden="true"></i>{{product.category}}</a>
+                            <li><a href="{% url 'shop' %}" >Shop</a></li>
+                            <li ><a href="{% url 'shop'  %}" ><i class="fa fa-angle-right" aria-hidden="true"></i>{{product.category}}</a>
                             </li>
-                            <li class="active" ><a href="#"><i class="fa fa-angle-right" style="color: #fd9b03;"aria-hidden="true"></i>{{product.name}}</a></li>
+                            <li class="active" ><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>{{product.name}}</a></li>
                         </ul>
                     </div>
 
@@ -250,14 +250,14 @@
                 <div class="col-lg-5">
                     <div class="product_details">
                         <div class="product_details_title">
-                            <h2 style="color: #fd9b03;" >{{product.name}}</h2>
+                            <h2>{{product.name}}</h2>
                             <p>{{product.description}}</p>
                         </div>
                         <div class="free_delivery d-flex flex-row align-items-center justify-content-center">
                             <span class="ti-truck"></span><span>Delivery Fee At Checkout</span>
                         </div>
                         <div class="original_price"></div>
-                        <div class="product_price" style="color: #fd9b03;">GHS {{product.price}}</div>
+                        <div class="product_price" >GHS {{product.price}}</div>
                         <!-- <ul class="star_rating">
                             <li><i class="fa fa-star" aria-hidden="true"></i></li>
                             <li><i class="fa fa-star" aria-hidden="true"></i></li>

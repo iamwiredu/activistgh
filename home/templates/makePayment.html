@@ -8,20 +8,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Colo Shop Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
     <link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/themify-icons/themify-icons.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/jquery-ui-1.12.1.custom/jquery-ui.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/single_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/single_responsive.css' %}">
     <style>
         body {
-           
+
             background-repeat: no-repeat;
             background-size: cover;
-           
+            color: #fd9b03;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 1;
         }
 
         .slide-cart {
@@ -30,7 +42,7 @@
             bottom: 0;
             width: 50%;
             max-width: 400px;
-            background-color:rgba(255,255,255,0.95);
+            background-color: rgba(255, 255, 255, 0.95);
             opacity: 1;
 
             transform: translateX(-100%);
@@ -74,24 +86,178 @@
             display: none;
             z-index: 1;
         }
-        
+
         .header.scrolled {
-            background: rgba(255, 255, 255, 0.7); /* Adjust color and opacity as needed */
+            background: rgba(255, 255, 255, 0.7);
+            /* Adjust color and opacity as needed */
             backdrop-filter: blur(10px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
-            }
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* Optional shadow for depth */
+        }
+
+        #size-select {
+            padding: 10px;
+            background-color: transparent;
+            border: 1px solid white;
+            margin-left: 12px;
+            margin-top: 20px;
+
+        }
+
+        .single_product_thumbnails ul li::after {
+            border: none;
+            border-bottom: 1px solid #fd9b03;
+        }
+
         @media (max-width: 768px) {
-            .slide-cart{
+            .slide-cart {
                 width: 100%;
             }
         }
-    </style>
+        /* Our Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
 
+/* Global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins'
+}
+
+
+/* The Receipt */
+.receipt {
+  width: 360px;
+  height: 720px;
+  background-color: white;
+  border-radius: 30px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  margin-top: -360px; /* -half height and width to center */
+  margin-left: -180px;
+  border: 1px solid rgb(212, 208, 208);
+ 
+  padding: 20px
+}
+
+/* Heading */
+.name {
+  text-transform: uppercase;
+  text-align: center;
+ 
+  letter-spacing: 10px;
+  font-size: 1.8em;
+  margin-top: 10px
+}
+
+/* Big thank */
+.greeting {
+  font-size: 21px;
+  text-transform: capitalize;
+  text-align: center;
+ 
+  margin: 35px 0;
+  letter-spacing: 1.2px
+}
+
+/* Order info */
+.order p {
+  font-size: 13px;
+  
+  padding-left: 10px;
+  letter-spacing: .7px
+}
+
+/* Our line */
+hr {
+  border: .7px solid #ddd;
+  margin: 15px 0;
+}
+
+/* Order details */
+.details {
+  padding-left: 10px;
+  margin-bottom: 35px;
+  overflow: hidden
+}
+
+.details h3 {
+  font-weight: 400;
+  
+  font-size: 1.5em;
+  margin-bottom: 15px
+}
+
+/* Image and the info of the order */
+.product {
+  float: left;
+  width: 83%
+}
+
+.product img {
+  width: 65px;
+  float: left
+}
+
+.product .info {
+  float: left;
+  margin-left: 15px
+}
+
+.product .info h4 {
+
+  font-weight: 400;
+  text-transform: uppercase;
+  margin-top: 10px
+}
+
+.product .info p {
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* Net price */
+.details > p {
+  
+  margin-top: 25px;
+  font-size: 15px
+}
+
+/* Total price */
+.totalprice p {
+  padding-left: 10px
+}
+
+.totalprice .sub,
+.totalprice .del {
+  font-size: 13px;
+  
+}
+
+.totalprice span {
+  float: right;
+  margin-right: 17px
+}
+
+.totalprice .tot {
+ 
+  font-size: 15px
+}
+
+/* Footer */
+footer {
+  font-size: 10px;
+  text-align: center;
+  margin-top: 135px; /* You can make it with position try it */
+  color: #aaa
+}
+    </style>
 </head>
 
 <body>
     <div class="overlay" id="overlay"></div>
-
     <div class="super_container">
 
         <!-- Header -->
@@ -116,19 +282,21 @@
             </div>
 
             <!-- Main Navigation -->
-
             <!-- Sliding Cart -->
             <div class="slide-cart" id="cart">
-                <div style="display: flex; justify-content: space-between;align-items: center; padding: 50px;">
-                    <div id="bag-header">CART</div>
-                    <div class="hamburger_close" id="close-cart-button"><i class="fa fa-times" aria-hidden="true"></i></div>
+                <div style="display: flex; justify-content: space-between;align-items: center; ">
+                    <div id="bag-header" style="padding: 37px;">CART</div>
+
+                    <div class="hamburger_close" id="close-cart-button"><i class="fa fa-times" aria-hidden="true"></i>
+                    </div>
                 </div>
-                
+
                 <hr>
                 <div id="cartBox" style="overflow-y: auto; max-height: 90vh; ">
 
                 </div>
             </div>
+
 
             <div class="main_nav_container" style="background-color: transparent;">
                 <div class="container">
@@ -142,15 +310,16 @@
                                 <ul class="navbar_menu">
                                     <li><a href="{% url 'home' %}">home</a></li>
                                     <li><a href="{% url 'shop' %}">shop</a></li>
+
                                     <li><a href="{% url 'contact' %}">contact</a></li>
                                 </ul>
                                 <ul class="navbar_user">
 
-                                    
+
                                     <li class="checkout" id="cart-btn">
                                         <a href="#">
                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                            <span id="checkout_items" class="checkout_items" id="cart-total">0</span>
+                                            <span id="checkout_items" class="checkout_items">0</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -166,6 +335,9 @@
         </header>
 
         <div class="fs_menu_overlay"></div>
+
+        <!-- Hamburger Menu -->
+
         <div class="hamburger_menu">
             <div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
             <div class="hamburger_menu_content text-right">
@@ -179,71 +351,66 @@
                 </ul>
             </div>
         </div>
-        <div>
-            <div style="padding: 70px;"></div>
-
-            <!-- ✅ Grid Section - Starts Here 👇 -->
-            <!-- ✅ Grid Section - Starts Here 👇 -->
-            <section
-                class="container mx-auto px-4 grid grid-cols-2 gap-y-8 gap-x-4 sm:gap-y-10 sm:gap-x-8 md:grid-cols-2 lg:grid-cols-3 md:gap-y-14 lg:gap-y-20 md:gap-x-10 lg:gap-x-14 mt-10 mb-5">
-                {% for product in products %}
-                <!-- ✅ Product Card - Starts Here 👇 -->
-                <div class="max-w-xs  rounded-xl duration-500 hover:scale-105 flex flex-col">
-                    <a href="{% url 'productDetailPage' product.unique_id %}" class="flex flex-col h-full">
-                        <img src="{{ product.image.url }}" alt="Product"
-                            class="h-56 sm:h-80 w-full object-cover rounded-t-xl" />
-                        <div class="px-4 py-3">
-                            <div class="mb-4">
-                                <p class="text-sm sm:text-sm font-bold text-black capitalize min-h-[3rem] sm:min-h-[4rem]"
-                                    style="text-align: center;">
-                                    {{ product.name }}
-                                </p>
-                                <p class="text-sm sm:text-lg font-bold" style="text-align: center;">GHS {{ product.price }}
-                                </p>
-                            </div>
-
-                        </div>
-
-                    </a>
-                </div>
-                <!-- 🛑 Product Card - Ends Here -->
-                {% endfor %}
-                {% for event in events %}
-                <div class="max-w-xs  rounded-xl duration-500 hover:scale-105 flex flex-col">
-                    <a href="{% url 'event' event.id %}" class="flex flex-col h-full">
-                        <img src="{{ event.cover_image.url }}" alt="Product"
-                            class="h-56 sm:h-80 w-full object-cover rounded-t-xl" />
-                        <div class="px-4 py-3">
-                            <div class="mb-4">
-                                <span class="text-gray-400 uppercase text-xs sm:text-sm block">Brand</span>
-                                <p
-                                    class="text-sm sm:text-sm font-bold text-black capitalize min-h-[3rem] sm:min-h-[4rem]">
-                                    {{event.name}}
-                                </p>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="ml-auto">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                        class="bi bi-bag-plus" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                            d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                                        <path
-                                            d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-
-                    </a>
-                </div>
-                {% endfor %}
-            </section>
-
-            <!-- 🛑 Grid Section - Ends Here -->
-
-
+    <div class="receipt" style="margin-top: 160px;">
+    
+        <h2 class="name"> Make Payment </h2>
+    
+      
+    
+        <!-- Order info -->
+        <div class="order">
+    
+            <p> Order No : {{payment.order_id}} </p>
+         
+    
         </div>
-
+    
+        <hr>
+    
+        <!-- Details -->
+        <div class="details">
+    
+            <h3> Details </h3>
+    
+            {% for item in payment.cart.cart_objects.all %}
+            <div class="product">
+            
+                <img src="{{item.product.image.url}}" alt="">
+            
+                <div class="info">
+            
+                    <p> {{item.product.name}} </p>
+                    <p> Qty: 1 </p>
+            
+                </div>
+            
+            </div>
+            {% endfor %}
+    
+            <p> GHS {{item.price}}</p>
+    
+        </div>
+    
+        <!-- Sub and total price -->
+        <div class="totalprice">
+    
+            <p class="sub"> Subtotal <span> GHS {{payment.amount}} </span></p>
+    
+            <p class="del"> Delivery <span> GHS {{payment.delivery_actual}}</span> </p>
+    
+            <hr>
+    
+            <p class="tot"> Total <span> GHS {{payment.total_actual}} </span> </p>
+    
+        </div>
+        <div style="background-color: black; padding: 5px 0px 5px 0px;color: white; text-align: center;border-radius: 10px;cursor: pointer;"  id="django-paystack-button" onclick="payWithPayStack()">
+            Make Payment
+        </div>
+        <!-- Footer -->
+        <footer> Lorem ipsum dolor sit amet consectetur adipisicing. </footer>
+    
+    </div>
+      
         <div class="newsletter">
             <div class="container">
                 <div class="row">
@@ -251,7 +418,7 @@
                         <div
                             class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
                             <h4>Newsletter</h4>
-        
+
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -259,8 +426,7 @@
                             <div
                                 class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
                                 <input id="newsletter_email" type="email" placeholder="Your email" required="required"
-                                    data-error="Valid email is required."><br>
-                                <input type="text" id="phone" placeholder="phoneNumber">
+                                    data-error="Valid email is required.">
                                 <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300"
                                     value="Submit">subscribe</button>
                             </div>
@@ -275,6 +441,8 @@
                                     <div
                                         class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
                                         <ul class="footer_nav">
+
+
                                             <li><a href="contact.html">Contact us</a></li>
                                         </ul>
                                     </div>
@@ -283,10 +451,10 @@
                                     <div
                                         class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
                                         <ul>
-        
+
                                             <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                                             <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-        
+
                                         </ul>
                                     </div>
                                 </div>
@@ -300,10 +468,13 @@
                             </div>
                         </div>
                     </footer>
-        
+
                 </div>
             </div>
         </div>
+
+        <!-- Footer -->
+
 
     </div>
 
@@ -313,8 +484,8 @@
     <script src="{% static 'plugins/Isotope/isotope.pkgd.min.js' %}"></script>
     <script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
     <script src="{% static 'plugins/easing/easing.js' %}"></script>
-    <script src="{% static 'js/custom.js' %}"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{% static 'plugins/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
+    <script src="{% static 'js/single_custom.js' %}"></script>
     <script>
         // this gives the navbar a glassy look when scrolled
         navbar = document.getElementById('navbar')
@@ -326,21 +497,18 @@
             }
         });
     </script>
-
-    <!--cart and wishlist scripts-->
-
     <script>
         const cart = document.getElementById('cart')
         const cartBtn = document.getElementById('cart-btn');
-       
+
         var closeCart = document.getElementById('close-cart-button')
-        closeCart.onclick = () =>{
+        closeCart.onclick = () => {
             cart.classList.remove('active');
             overlay.style.display = 'none';
             document.body.style.overflowY = 'scroll'
         }
 
-       
+
 
         const overlay = document.getElementById('overlay');
         cartBtn.addEventListener('click', () => {
@@ -349,7 +517,7 @@
             document.body.style.overflowY = 'hidden'
         });
 
-  
+
         overlay.addEventListener('click', () => {
 
             cart.classList.remove('active');
@@ -376,41 +544,41 @@
                 cart.forEach(item => {
                     // Create HTML for each cart item
                     let cartItemDiv = `
-                        <div class="cart-item" style="padding: 10px; margin: 10px; display: flex; align-items: center;  position: relative;">
-                            <img src="${item.image_url}" alt="Product Image" width="100" style="border-radius: 8px; margin-right: 15px;">
-                            <div style="flex: 1; ">
-                            <div style="display:flex; gap:5px;">
-                                <p style="margin: 0; font-weight: bold; font-size: 14px;">${item.product_name}</p>
-                                <p style="margin: 0; font-size: 14px; "> x${item.quantity}</p>
+                            <div class="cart-item" style="padding: 10px; margin: 10px; display: flex; align-items: center;  position: relative;">
+                                <img src="${item.image_url}" alt="Product Image" width="100" style="border-radius: 8px; margin-right: 15px;">
+                                <div style="flex: 1; ">
+                                <div style="display:flex; gap:5px;">
+                                    <p style="margin: 0; font-weight: bold; font-size: 14px;">${item.product_name}</p>
+                                    <p style="margin: 0; font-size: 14px; "> x${item.quantity}</p>
+                                </div>
+                                <div style='display:flex; justify-content:space-between;'>
+                                <p style="margin: 0; font-size: 14px;">${item.selectedSize}</p>
+                                    <p style="margin: 0; font-size: 14px;"> GHS ${item.price}</p>
+                                </div>
+                                </div>
+                                <button class="close-button" onclick="removeFromCart('${item.product_id_date}')" style="position: absolute; top: 10px; right: 10px; background: transparent; border: none; cursor: pointer; font-size: 16px; color: #FF5722;">&times;</button>
                             </div>
-                            <div style='display:flex; justify-content:space-between;'>
-                            <p style="margin: 0; font-size: 14px;">${item.selectedSize}</p>
-                                <p style="margin: 0; font-size: 14px;"> GHS ${item.price}</p>
-                            </div>
-                            </div>
-                            <button class="close-button" onclick="removeFromCart('${item.product_id_date}')" style="position: absolute; top: 10px; right: 10px; background: transparent; border: none; cursor: pointer; font-size: 16px; color: #FF5722;">&times;</button>
-                        </div>
-                        `;
+                            `;
 
                     cartBox.innerHTML += cartItemDiv;  // Add the cart item to the cart box
                     totalPrice += item.price
                 });
                 cartBox.innerHTML += `
-            <div style="display: flex; justify-content: space-between; align-items: center;margin-left: 20px;" id="total-price-div" >
-                <div>Total:</div>
-                <div class="total-price" id="total-price" style="color: #28a745; font-weight: bold; margin-right: 20px;">${formatPrice(totalPrice)}</div>
-            </div>
-            <div style="text-align: center; margin: 20px;">
-                    <a href="{% url 'checkout' %}">       <button style="padding: 10px 20px; width:100%; background-color: #228B22; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                    Checkout
-                </button></a>
-            </div>
-            <div style="width:100%; height:150px"></div>
-            `;
+                <div style="display: flex; justify-content: space-between; align-items: center;margin-left: 20px;" id="total-price-div" >
+                    <div>Total:</div>
+                    <div class="total-price" id="total-price" style="color: #28a745; font-weight: bold; margin-right: 20px;">${formatPrice(totalPrice)}</div>
+                </div>
+                <div style="text-align: center; margin: 20px;">
+                        <a href="{% url 'checkout' %}">       <button style="padding: 10px 20px; width:100%; background-color: #228B22; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        Checkout
+                    </button></a>
+                </div>
+                <div style="width:100%; height:150px"></div>
+                `;
 
             }
             else {
-                cartBox.innerHTML = '<div class="empty-cart">Nothing in Cart</div>'
+                cartBox.innerHTML = '<div class="empty-cart" style="display:flex; justify-content:center;">Nothing in Cart</div>'
 
 
             }
@@ -437,6 +605,129 @@
         window.onload = displayCartItems;
 
     </script>
+    <script>
+        // Getting the addToCartDiv element
+        const addToCartDiv = document.getElementById('addToCartDiv');
+
+        // Product details using template literals
+        const product_id = '{{product.unique_id}}';
+        const image_url = '{{product.image.url}}';
+        const product_name = '{{product.name}}';
+
+        // Event listener for the addToCartDiv click event
+        addToCartDiv.onclick = () => {
+            // Create a unique product ID with timestamp and random number
+            const product_id_date = `${product_id}_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+
+            // Get quantity from the input field
+            const quantity = Number(document.getElementById('quantity_value').innerText);
+
+            // Select the currently selected size
+            const selectElement = document.getElementById('size-select');
+            const selectedSize = selectElement.value;;
+
+            // If no size is selected, alert the user and exit
+            if (!selectedSize) {
+                return alert('No size selected');
+            }
+
+            // Calculate the total price
+            const price = Number(quantity) * {{ product.price }};
+
+        // Create the new item object to add or update in the cart
+        const newItem = {
+            product_id_date,
+            product_id,  // Include original product_id to identify the product in the cart
+            product_name,
+            quantity,
+            image_url,
+            selectedSize,
+            price
+        };
+
+        // Get the cart from localStorage or initialize an empty array
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Find index of the existing product in the cart by both product_id and selectedSize
+        const existingIndex = cart.findIndex(item => item.product_id === product_id && item.selectedSize === selectedSize);
+
+        if (existingIndex !== -1) {
+            // If the same product with the same size exists, replace it with the new item
+            cart[existingIndex] = newItem;
+            alert('Updated product in cart');
+        } else {
+            // If the product or size is new, add it to the cart
+            cart.push(newItem);
+            alert('Item added to cart');
+        }
+
+        // Save the updated cart back to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Call a function to display the updated cart items
+        displayCartItems();
+};
+
+
+
+
+    </script>
+<script src="https://js.paystack.co/v2/inline.js"></script>
+<script>
+    // function payWithPayStack(){
+    //     let currency = 'GHS';
+    //     let plan = "";
+    //     let ref = "{{payment.ref}}"
+    //     let obj = {
+    //         key: "{{paystack_public_key}}",
+    //         email: "{{payment.email}}",
+    //         amount: "{{payment.amount}}",
+    //         ref: ref,
+    //         callback: function(response){
+    //             window.location.href = "{url 'verify-payment' payment.ref }"
+    //         }
+    //     }
+    //     if (Boolean(currency)){
+    //         obj.currency = currency.toUpperCase()
+    //     }
+    //     if (Boolean(plan)){
+    //         obj.plan = plan;
+
+    //     }
+    //     var handler = PaystackPop.setup(obj)
+    //     handler.openIframe();
+    // }
+
+    delivery_cost = Number('{{payment.delivery_price}}') * 16 * 100
+    total = Number('{{payment.amount_value}}') + delivery_cost
+    function payWithPayStack() {
+        const paystack = new PaystackPop();
+
+
+
+        paystack.newTransaction({
+
+            key: "pk_live_946307e93a1f4a69a9f9d0aa2d5846b12e2aba6c",
+            email: "{{payment.email}}",
+            amount: `${total}`,
+
+            onSuccess: (transaction) => {
+                localStorage.removeItem('cart')
+
+                window.location.href = '/orderSuccess/{{payment.ref}}'
+
+            },
+
+            onCancel: () => {
+
+                alert('payment Canceled')
+
+            }
+
+        });
+    }
+
+</script>
 
 </body>
 
