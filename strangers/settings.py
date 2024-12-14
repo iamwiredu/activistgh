@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'home',
     'events',
     'storages',
-    # 'userAdmin',
+    'userAdmin',
     'crispy_forms',
     'crispy_bootstrap5',
 ]
