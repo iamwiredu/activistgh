@@ -27,5 +27,3 @@ tenacity==9.0.0
 tzdata==2024.2
 urllib3==2.2.3
 whitenoise==6.8.2
-
-
