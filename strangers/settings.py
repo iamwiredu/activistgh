@@ -154,17 +154,17 @@ MEDIA_URL = f'https://storage.googleapis.com/{GS_MEDIA_BUCKET_NAME}/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-# STORAGES = {
-#     'default': {
-#         'BACKEND': 'storages.backends.gcloud.GoogleCloudStorage',
-#         'OPTIONS': {
-#             'bucket_name': 'gboys-bucket',
-#         },
-#     },
-#     'staticfiles': {
-#         'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
-#     },
-# }
+STORAGES = {
+    'default': {
+        'BACKEND': 'storages.backends.gcloud.GoogleCloudStorage',
+        'OPTIONS': {
+            'bucket_name': 'gboys-bucket',
+        },
+    },
+    'staticfiles': {
+        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+    },
+}
 
 STATIC_URL = 'static/'
 STATIC_ROOT = 'productionFiles'
