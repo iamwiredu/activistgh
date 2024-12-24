@@ -1,7 +1,8 @@
 import ast
 from django.shortcuts import render, redirect
-from .models import Product, Outing, Payment, Cart, CartObject
+from .models import Product, Outing, Payment, Cart, CartObject, Newsletter
 from .deliveryRatesGen import generate_shipping_cost
+from django.contrib import messages
 
 # Create your views here.
 
@@ -23,9 +24,26 @@ def productDetailPage(request,unique_id):
 def shop(request):
     products = Product.objects.all()
     events = Outing.objects.all()
+
+    if request.method == 'POST':
+        if 'subscribe' in request.POST:
+            try:
+                email = request.POST.get('email')
+                phone = request.POST.get('phone')
+
+                subscription = Newsletter(email=email,phone=phone)
+                subscription.save()
+
+                messages.success(request,'Subscribed.')
+                return redirect(shop)
+            except:
+                messages.error(request,'Error. Try again later.')
+
+
     context ={
         'products':products,
         'events': events,
+        
     }
     return render(request,'shop.html',context)
 

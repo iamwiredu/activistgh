@@ -174,3 +174,6 @@ class CartObject(models.Model):
     def price(self):
         return self.quantity * self.product.price
     
+class Newsletter(models.Model):
+    email = models.CharField(max_length=255,null=True,blank=True)
+    phone = models.CharField(max_length=255,null=True,blank=True)

@@ -1,464 +1,324 @@
-{% load static %}
+{% load static%}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Strangers</title>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Colo Shop Template">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
-    <link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
-    <style>
-        body {
-            background-image: url("{% static 'img/blueback.jpg' %}");
-            background-repeat: no-repeat;
-            background-size: cover;
-            color: #fd9b03;
-        }
+    <title>Strangers</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
 
-        .slide-cart {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            width: 50%;
-            max-width: 400px;
-            background-color:rgba(255,255,255,0.95);
-            opacity: 1;
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-            z-index: 1000;
-        }
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
+        rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/quill/quill.snow.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/quill/quill.bubble.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/simple-datatables/style.css' %}" rel="stylesheet">
 
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
 
-        .slide-cart {
-            right: 0;
-            transform: translateX(100%);
-        }
-
-        .slide-menu.active {
-            transform: translateX(0);
-        }
-
-        .slide-cart.active {
-            transform: translateX(0);
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        .slide-cart.active {
-            transform: translateX(0);
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            z-index: 1;
-        }
-        /* card styles */
-        .card {
-	background-color: #fff;
-	box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
-	border-radius: 20px;
-	display: flex;
-	flex-direction: row;
-	padding: 30px;
-	max-width: 400px;
-	min-height: 130px;
-	margin: 20px 0;
-	transition: all 0.5s ease;
-    width: 300px;
-    height: 150px;
-}
-
-.card:hover {
-	box-shadow: 8px 28px 50px rgba(39, 44, 49, 0.07),
-		1px 6px 12px rgba(39, 44, 49, 0.04);
-	transform: translate3D(0, -1px, 0) scale(1.02);
-	transition: all 0.5s ease;
-}
-
-.card_cover{
-	width: 80px;
-	height: 80px;
-
-	object-fit: cover;
-	object-position: 50% 50%;
-
-	border-radius: 100%;
-}
-
-
-.left {
-	margin-right: 12.5px;
-}
-.right {
-	margin-left: 12.5px;
-}
-
-@media (max-width: 600px) {
-    .card {
-        width: 100%; /* Full width */
-        height: 180px; /* Adjust height based on content */
-        flex-direction: column; /* Stack icon and text vertically */
-        text-align: center;
-        padding: 15px;
-    }
-}
-
-    </style>
-
+    <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Updated: Apr 20 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
 </head>
 
 <body>
-    <div class="overlay" id="overlay"></div>
 
-    <div class="super_container">
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
 
-        <!-- Header -->
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="index.html" class="logo d-flex align-items-center">
+                <img src="assets/img/logo.png" alt="">
+                <span class="d-none d-lg-block"><img src="{% static 'wordlogo.png' %}" alt=""></span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div><!-- End Logo -->
 
-        <header class="header trans_300" style="background-color: transparent;">
 
-            <!-- Top Navigation -->
 
-            <div class="top_nav">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="top_nav_left">They Don't Know Us.</div>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <div class="top_nav_right">
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
 
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell"></i>
+                        <span class="badge bg-primary badge-number">1</span>
+                    </a><!-- End Notification Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                        <li class="dropdown-header">
+                            You have new notifications
+                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+
+                        <li class="notification-item">
+                            <i class="bi bi-info-circle text-primary"></i>
+                            <div>
+                                <h4>New Order</h4>
+                                <p>GHS 324 Paid for order #PO-0016</p>
+                                <p>4 hrs. ago</p>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </li>
 
-            <!-- Main Navigation -->
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li class="dropdown-footer">
+                            <a href="#">Show all notifications</a>
+                        </li>
 
-            <!-- Sliding Cart -->
-            <div class="slide-cart" id="cart">
-                <div style="display: flex; justify-content: space-between;align-items: center; padding: 50px;">
-                    <div id="bag-header">CART</div>
-                    <div class="hamburger_close" id="close-cart-button"><i class="fa fa-times" aria-hidden="true"></i></div>
-                </div>
-                
-                <hr>
-                <div id="cartBox" style="overflow-y: auto; max-height: 90vh; ">
+                    </ul><!-- End Notification Dropdown Items -->
 
-                </div>
-            </div>
+                </li><!-- End Notification Nav -->
 
-            <div class="main_nav_container" style="background-color: transparent;">
-                <div class="container">
+
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+
+                        <span class="d-none d-md-block ">Admin Account</span>
+                    </a><!-- End Profile Iamge Icon -->
+
+
+                </li><!-- End Profile Nav -->
+
+            </ul>
+        </nav><!-- End Icons Navigation -->
+
+    </header><!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link " href="{% url 'managementDb' %}">
+                    <i class="bi bi-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{% url 'ordersList' %}">
+                    <i class="bi bi-layout-text-window-reverse"></i>
+                    <span>Orders List</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{% url 'productManagement' %}">
+                    <i class="bi bi-menu-button-wide"></i>
+                    <span>Products Management</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{% url 'distribuition' %}">
+                    <i class="bi bi-envelope"></i>
+                    <span>Bulk Messaging</span>
+                </a>
+            </li>
+
+
+
+
+
+
+
+
+        </ul>
+
+    </aside><!-- End Sidebar-->
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>Dashboard</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
+        <section class="section dashboard">
+            <div class="row">
+
+                <!-- Left side columns -->
+                <div class="col-lg-8">
                     <div class="row">
-                        <div class="col-lg-12 text-right">
-                            <div class="logo_container">
-                                <a href="#"><img style="width: 100px; height: auto;"
-                                        src="{% static 'img/categories/wordlogo.png' %}" alt=""></a>
-                            </div>
-                            <nav class="navbar">
-                                <ul class="navbar_menu">
-                                    <li><a href="#">home</a></li>
-                                    <li><a href="{% url 'shop' %}">shop</a></li>
-                                    <li><a href="contact.html">contact</a></li>
-                                </ul>
-                                <ul class="navbar_user">
 
-                                    <li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
-                                    <li class="checkout" id="cart-btn">
-                                        <a href="#">
-                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                            <span id="checkout_items" class="checkout_items" id="cart-total">2</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <div class="hamburger_container">
-                                    <i class="fa fa-bars" aria-hidden="true"></i>
+                 
+
+                        <!-- Customers Card -->
+                        <div class="col-xxl-4 col-xl-12">
+
+                            <div class="card info-card customers-card">
+
+
+
+                                <div class="card-body">
+                                    <h5 class="card-title">Newsletter subscribers</h5>
+
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-people"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>0</h6>
+
+
+                                        </div>
+                                    </div>
+
                                 </div>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                            </div>
 
-        </header>
+                        </div><!-- End Customers Card -->
 
-        <div class="fs_menu_overlay"></div>
-        <div class="hamburger_menu">
-            <div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
-            <div class="hamburger_menu_content text-right">
-                <ul class="menu_top_nav">
-
-                    <li class="menu_item"><a href="#">home</a></li>
-                    <li class="menu_item"><a href="#">shop</a></li>
-
-
-                    <li class="menu_item"><a href="#">contact</a></li>
-                </ul>
-            </div>
-        </div>
-        <div>
-            <div style="padding: 70px;"></div>
-
-            <!-- ✅ Grid Section - Starts Here 👇 -->
-            <!-- ✅ Grid Section - Starts Here 👇 -->
-            <section style="margin-bottom: 500px;">
-                <div style="display: flex; justify-content: center; gap: 20px;"> 
-                    <a href="{% url 'productManagement' %}">
-                    <div class="card">
-                        <div class="left">
-                            <svg fill="#fd9b03" width="32px" height="32px" viewBox="0 0 24 24" data-name="Layer 1" id="Layer_1"
-                                xmlns="http://www.w3.org/2000/svg" stroke="#fd9b03">
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                <g id="SVGRepo_iconCarrier">
-                                    <title></title>
-                                    <path d="M14.43,3l-.29.49a2.5,2.5,0,0,1-4.29,0L9.57,3H6.76L2,5.38V11H6V21H18V11h4V5.38L17.24,3Z"></path>
-                                </g>
-                            </svg>
-                        </div>
-                        <div class="right">
-                            <h2 class="name">Product Management</h2>
-                            <p class="title">Create Product <br> Update Products<br> Delete Products</p>
+                        
+                      
+                    <div class="col-12">
+                        <div class="card recent-sales overflow-auto">
+                    
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                    </li>
+                    
+                                    <li><a class="dropdown-item" href="#">Today</a></li>
+                                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                </ul>
+                            </div>
+                    
+                            <div class="card-body">
+                                <h5 class="card-title">NewsLetter <span>| Today</span></h5>
+                    
+                                <table class="table table-borderless datatable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Phone</th>
+                                            <th scope="col">Update</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       {% for contact in subscibers %}
+                                        <tr>
+                                            <th scope="row"><a href="#">#{{ start_value|add:forloop.counter0 }}</a></th>
+                                            <td></td>
+                                            <td><a href="#" class="text-primary">{{contact.email}}</a></td>
+                                            <td>{{contact.phone}}</td>
+                                            <td><span class="badge bg-success">Approved</span></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                    
+                            </div>
                     
                         </div>
                     </div>
-                    </a>
-                    <a href="{% url 'distribuition' %}">
-                        <div class="card">
-                            <div class="left">
-                                <svg fill="#fd9b03" width="32px" height="32px" viewBox="0 0 24 24" data-name="Layer 1" id="Layer_1"
-                                    xmlns="http://www.w3.org/2000/svg" stroke="#fd9b03">
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                    <g id="SVGRepo_iconCarrier">
-                                        <title></title>
-                                        <path d="M14.43,3l-.29.49a2.5,2.5,0,0,1-4.29,0L9.57,3H6.76L2,5.38V11H6V21H18V11h4V5.38L17.24,3Z">
-                                        </path>
-                                    </g>
-                                </svg>
+                  
+
+                    </div>
+                </div><!-- End Left side columns -->
+
+
+                <!-- Right side columns -->
+                <div class="col-lg-4">
+
+                    <!-- Recent Activity -->
+                    <div class="card">
+
+
+                        <div class="card-body">
+                            <h5 class="card-title">Recent Activity <span>| Today</span></h5>
+
+                            <div class="activity">
+                                <!--                 
+                                <div class="activity-item d-flex">
+                                    <div class="activite-label">32 min</div>
+                                    <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                                    <div class="activity-content">
+                                        Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
+                                    </div>
+                                </div>End activity item -->
+                                <div class="activity-item d-flex">
+                                    <div class="activite-label">---</div>
+                                    <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                                    <div class="activity-content">
+                                        No activity
+                                    </div>
+                                </div><!-- End activity item-->
                             </div>
-                            <div class="right">
-                                <h2 class="name">Messaging Center</h2>
-                                <p class="title">Send bulk & single sms <br> Send bulk & single emails</p>             
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-            </section>
-
-            <!-- 🛑 Grid Section - Ends Here -->
-
-
-        </div>
-
-        <!-- Newsletter -->
-
-        <div class="newsletter">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div
-                            class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
-                            <h4>Newsletter</h4>
 
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <form action="post">
-                            <div
-                                class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
-                                <input id="newsletter_email" type="email" placeholder="Your email" required="required"
-                                    data-error="Valid email is required.">
-                                <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300"
-                                    value="Submit">subscribe</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                    </div><!-- End Recent Activity -->
+
+
+              
+
+
+                </div><!-- End Right side columns -->
+
             </div>
-        </div>
-
-        <!-- Footer -->
-
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div
-                            class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
-                            <ul class="footer_nav">
-
-                                <li><a href="contact.html">Contact us</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div
-                            class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
-                            <ul>
-
-                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+        </section>
 
 
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div>©2024 Strangers</div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-
-    </div>
-
-    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-    <script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
-    <script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
-    <script src="{% static 'plugins/Isotope/isotope.pkgd.min.js' %}"></script>
-    <script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
-    <script src="{% static 'plugins/easing/easing.js' %}"></script>
-    <script src="{% static 'js/custom.js' %}"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-
-
-    <!--cart and wishlist scripts-->
-
-    <script>
-        const cart = document.getElementById('cart')
-        const cartBtn = document.getElementById('cart-btn');
-       
-        var closeCart = document.getElementById('close-cart-button')
-        closeCart.onclick = () =>{
-            cart.classList.remove('active');
-            overlay.style.display = 'none';
-            document.body.style.overflow = 'scroll'
-        }
-
-       
-
-        const overlay = document.getElementById('overlay');
-        cartBtn.addEventListener('click', () => {
-            cart.classList.add('active');
-            overlay.style.display = 'block';
-            document.body.style.overflow = 'hidden'
-        });
-
-  
-        overlay.addEventListener('click', () => {
-
-            cart.classList.remove('active');
-            overlay.style.display = 'none';
-            document.body.style.overflow = 'scroll'
-        });
-
-        function formatPrice(price) {
-            return 'GHS' + price.toFixed(2);
-        }
-
-        function displayCartItems() {
-            let cartBox = document.getElementById('cartBox');  // Div to display cart items
-            cartBox.innerHTML = '';  // Clear existing content
-            checkoutBox = document.getElementById('checkoutBox')
-            let totalPrice = 0;
+    </main><!-- End #main -->
 
 
 
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            // document.getElementById('cart-total').innerText = cart.length
-            if (cart.length > 0) {
-                cart.forEach(item => {
-                    // Create HTML for each cart item
-                    let cartItemDiv = `
-                        <div class="cart-item" style="padding: 10px; margin: 10px; display: flex; align-items: center;  position: relative;">
-                            <img src="${item.image_url}" alt="Product Image" width="100" style="border-radius: 8px; margin-right: 15px;">
-                            <div style="flex: 1; ">
-                            <div style="display:flex; gap:5px;">
-                                <p style="margin: 0; font-weight: bold; font-size: 14px;">${item.product_name}</p>
-                                <p style="margin: 0; font-size: 14px; "> x${item.quantity}</p>
-                            </div>
-                            <div style='display:flex; justify-content:space-between;'>
-                            <p style="margin: 0; font-size: 14px;">${item.selectedSize}</p>
-                                <p style="margin: 0; font-size: 14px;"> GHS ${item.price}</p>
-                            </div>
-                            </div>
-                            <button class="close-button" onclick="removeFromCart('${item.product_id_date}')" style="position: absolute; top: 10px; right: 10px; background: transparent; border: none; cursor: pointer; font-size: 16px; color: #FF5722;">&times;</button>
-                        </div>
-                        `;
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
-                    cartBox.innerHTML += cartItemDiv;  // Add the cart item to the cart box
-                    totalPrice += item.price
-                });
-                cartBox.innerHTML += `
-            <div style="display: flex; justify-content: space-between; align-items: center;margin-left: 20px;" id="total-price-div" >
-                <div>Total:</div>
-                <div class="total-price" id="total-price" style="color: #28a745; font-weight: bold; margin-right: 20px;">${formatPrice(totalPrice)}</div>
-            </div>
-            <div style="text-align: center; margin: 20px;">
-                    <a href="">       <button style="padding: 10px 20px; width:100%; background-color: #228B22; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                    Checkout
-                </button></a>
-            </div>
-            <div style="width:100%; height:150px"></div>
-            `;
+    <script src="{% static 'assets/vendor/apexcharts/apexcharts.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'assets/vendor/chart.js/chart.umd.js' %}"></script>
+    <script src="{% static 'assets/vendor/echarts/echarts.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/echarts/echarts.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/quill/quill.js' %}"></script>
+    <script src="{% static 'assets/vendor/simple-datatables/simple-datatables.js' %}"></script>
+    <script src="{% static 'assets/vendor/tinymce/tinymce.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
 
-            }
-            else {
-                cartBox.innerHTML = '<div class="empty-cart">Nothing in Cart</div>'
-
-
-            }
-        }
-        // Add the checkout button below the last cart item
-
-        // Placeholder function for checkout action
-
-        function removeFromCart(productId) {
-            // Retrieve the current cart from localStorage
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-            // Filter out the item to be removed
-            cart = cart.filter(item => item.product_id_date !== productId);
-
-            // Save the updated cart back to localStorage
-            localStorage.setItem('cart', JSON.stringify(cart));
-
-            // Update the display
-            displayCartItems();
-        }
-
-        // Load and display cart items when the page loads
-        window.onload = displayCartItems;
-
-    </script>
-
+    <!-- Template Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
 </body>
 
 </html>
