@@ -177,3 +177,5 @@ class CartObject(models.Model):
 class Newsletter(models.Model):
     email = models.CharField(max_length=255,null=True,blank=True)
     phone = models.CharField(max_length=255,null=True,blank=True)
+    batch = models.TextField(null=True,blank=True)
+    batch_size = models.CharField(max_length=255,null=True,blank=True)

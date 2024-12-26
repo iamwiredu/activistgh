@@ -212,7 +212,7 @@
                                         ¢
                                         </div>
                                         <div class="ps-3">
-                                            <h6>GHS {{Revenue}}</h6>
+                                            <h6>GHS {{revenue_amount}}</h6>
                                          
 
                                         </div>
@@ -272,7 +272,18 @@
                                                         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                                                         datasets: [{
                                                             label: 'Revenue GHS',
-                                                            data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                                                            data: [Number('{{ revenue.january }}'),
+                                                                Number('{{ revenue.february }}'),
+                                                                Number('{{ revenue.march }}'),
+                                                                Number('{{ revenue.april }}'),
+                                                                Number('{{ revenue.may }}'),
+                                                                Number('{{ revenue.june }}'),
+                                                                Number('{{ revenue.july }}'),
+                                                                Number('{{ revenue.august }}'),
+                                                                Number('{{ revenue.september }}'),
+                                                                Number('{{ revenue.october }}'),
+                                                                Number('{{ revenue.november }}'),
+                                                                Number('{{ revenue.december }}')],
                                                             backgroundColor: [
                                                                 'rgba(255, 99, 132, 0.2)',
                                                                 'rgba(255, 159, 64, 0.2)',
@@ -317,22 +328,23 @@
                                     <table class="table table-borderless datatable">
                                         <thead>
                                             <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Order Id</th>
+                                                <th scope="col"># Order Id</th>
+                                                <th scope="col">Name</th>
                                                 <th scope="col">Payment Status</th>
                                                 <th scope="col">Delivery Status</th>
                                                 <th scope="col"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {% for payment in payments %}
                                             <tr>
-                                                <th scope="row"><a href="#">#PO-0016</a></th>
-                                                <td>Kwaku Duah</td>
-                                                <td><a href="#" class="text-primary">Paid</a></td>
-                                                <td>Not Delivered</td>
-                                                <td><span class="badge bg-success">edit</span></td>
+                                                <th scope="row"><a href="#">#{{payment.order_id}}</a></th>
+                                                <td>{{payment.first_name}} {{payment.last_name}}</td>
+                                                <td><a href="#" class="text-primary">Paid - GHS{{payment.amount}}</a></td>
+                                                <td>{% if payment.delivered == True %} Delivered {% else %} Not Delivered {% endif %}</td>
+                                                <td><span class="badge bg-success">Manage</span></td>
                                             </tr>
-                                     
+                                            {% endfor %}
                                         </tbody>
                                     </table>
 

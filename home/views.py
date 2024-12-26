@@ -131,14 +131,15 @@ def orderSuccess(request,ref):
 
     #code for revenue
     
-    # Extract year and month from `date_created`
+   
     year = payment.date_created.year
     month = payment.date_created.month
     amount = payment.amount
 
     # Get or create the Revenue object for the year
     revenue, created = Revenue.objects.get_or_create(year=year)
-    # cart 
+    revenue.update_monthly_revenue(month, amount)
+    print(f'the month is {month} and the amount is {amount}')
     cart = Cart.objects.get(payment=payment)
 
     context ={

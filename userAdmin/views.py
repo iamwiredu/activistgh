@@ -1,13 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import ProductForm, RelatedImagesForm
+from .models import Revenue
 from home.models import Product, Newsletter, Payment
+from datetime import datetime
 
 #import for emails
 
 from django.http import JsonResponse
 from django.core.mail import EmailMultiAlternatives, send_mass_mail
 from django.template.loader import render_to_string
+
+
 
 
 
@@ -20,17 +24,24 @@ def userAdmin(request):
 # Management Db
 def managementDb(request):
     sales = len(Payment.objects.all().filter(verified=True))
-    Revenue = 0 
+    payments = Payment.objects.all().filter(verified=True)
+    # get current revenue
+    currentYear = datetime.now().year
+    revenue = Revenue.objects.get(year=currentYear)
+
+    revenue_amount = 0 
 
     for sale in Payment.objects.all():
-        Revenue += sale.amount
+        revenue_amount += sale.amount
     
     subscribers = len(Newsletter.objects.all())
 
     context = {
         'sales':sales,
-        'Revenue':Revenue,
+        'revenue':revenue,
         'subscribers':subscribers,
+        'revenue_amount':revenue_amount,
+        'payments':payments,
     }
     return render(request,'managementDb.html',context)
 
@@ -39,7 +50,7 @@ def distribuition(request):
     subscribers = Newsletter.objects.all()
 
     context ={
-        'subscibers': subscribers,
+        'subscribers': subscribers,
         'start_value': 1,
     }
     return render(request,'distribuition.html',context)
@@ -96,7 +107,19 @@ def productEdit(request,unique_id):
     return render(request,'productEdit.html',context)
 
 def ordersList(request):
-    return render(request,'ordersList.html')
+    payments = Payment.objects.all().filter(verified=True)
+    orders = len(payments)
+    delivered = len(payments.filter(delivered=True))
+    not_delivered = len(payments.filter(delivered=False))
+
+    context ={
+        'payments':payments,
+        'orders':orders,
+        'delivered':delivered,
+        'not_delivered':not_delivered,
+        
+    }
+    return render(request,'ordersList.html',context)
 
 BATCH_SIZE = 1  # Adjust batch size based on your SMTP provider limits
 
