@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from .models import Product, Outing, Payment, Cart, CartObject, Newsletter
 from .deliveryRatesGen import generate_shipping_cost
 from django.contrib import messages
+from userAdmin.models import Revenue
 
 # Create your views here.
 
@@ -128,6 +129,15 @@ def orderSuccess(request,ref):
     payment.verified = True
     payment.save()
 
+    #code for revenue
+    
+    # Extract year and month from `date_created`
+    year = payment.date_created.year
+    month = payment.date_created.month
+    amount = payment.amount
+
+    # Get or create the Revenue object for the year
+    revenue, created = Revenue.objects.get_or_create(year=year)
     # cart 
     cart = Cart.objects.get(payment=payment)
 
@@ -135,7 +145,7 @@ def orderSuccess(request,ref):
         'payment':payment,
         'cart':cart,
     }
-    return render(request,'html/orderSuccess.html',context)
+    return render(request,'orderSuccess.html',context)
 
 def contactPage(request):
     return render(request,'contact.html')

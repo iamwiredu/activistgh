@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import ProductForm, RelatedImagesForm
-from home.models import Product, Newsletter
+from home.models import Product, Newsletter, Payment
 
 #import for emails
 
@@ -19,11 +19,25 @@ def userAdmin(request):
 
 # Management Db
 def managementDb(request):
-    return render(request,'managementDb.html')
+    sales = len(Payment.objects.all().filter(verified=True))
+    Revenue = 0 
+
+    for sale in Payment.objects.all():
+        Revenue += sale.amount
+    
+    subscribers = len(Newsletter.objects.all())
+
+    context = {
+        'sales':sales,
+        'Revenue':Revenue,
+        'subscribers':subscribers,
+    }
+    return render(request,'managementDb.html',context)
 
 
 def distribuition(request):
     subscribers = Newsletter.objects.all()
+
     context ={
         'subscibers': subscribers,
         'start_value': 1,
@@ -96,28 +110,21 @@ def send_newsletter_batch(request, batch_index):
     if not batch:
         return JsonResponse({'status': 'completed', 'batch': batch_index})
 
-    # Prepare emails
-    messages = []
+    # Prepare and send emails
     for email in batch:
         subject = "Our Latest Newsletter"
         text_body = "Hello! Check out our latest updates."
         html_content = render_to_string('newsletter_email.html', {'subject': subject, 'body': text_body})
-        
+
         # Use EmailMultiAlternatives for HTML emails
-        msg = EmailMultiAlternatives(subject, text_body, None, [email])
-        msg.attach_alternative(html_content, "text/html")
-        messages.append(msg)
-    print(subscribers)
+        try:
+            msg = EmailMultiAlternatives(subject, text_body, "kwakuwiredu0@gmail.com", [email])
+            msg.attach_alternative(html_content, "text/html")  # Attach the HTML version
+            msg.send()  # Send the email
+        except Exception as e:
+            print(f"Error sending email to {email}: {e}")
+            return JsonResponse({'status': 'error', 'batch': batch_index, 'error': str(e)})
 
-    # Send emails in bulk
-    try:
-        EmailMultiAlternatives.send_messages(messages)# Send all messages in the batch
-        print(messages)
-    except Exception as e:
-        return JsonResponse({'status': 'error', 'batch': batch_index, 'error': str(e)})
-        print(messages)
     return JsonResponse({'status': 'success', 'batch': batch_index, 'emails_sent': len(batch)})
-
-
 def send_emails(request):
     return render(request,'send_email.html')

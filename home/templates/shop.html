@@ -133,6 +133,10 @@
 
     </style>
 
+<!-- links fro phone -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
 </head>
 
@@ -330,32 +334,32 @@
                             </svg>
                         </span>
                     </div>
-
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div
-                            class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
-                            <h4>Newsletter</h4>
-        
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <form method="POST">
+                    <div style="display: flex; flex-direction:column; align-items: center; justify-content: center;">
+                            <div>newsletter</div>
+                           <form method="POST" action="{% url 'shop' %}" id="newsletterForm" onsubmit="process(event)">
                             {% csrf_token %}
-                            <div
-                                class="newsletter_form d-flex  flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center" style="gap: 10px;">
-                                <input type="text" name="Name" id="name" placeholder="Your Name">
-                                <input  type="email" id="email" placeholder="Your email" required="required"
-                                    data-error="Valid email is required." name="email"><br>
-                                <input type="text" id="phone" placeholder="Phone" name="phone">
-                                <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300"
-                                    value="Submit" name="subscribe" >subscribe</button>
+                    <div
+                        style="max-width: 400px; margin: 20px auto; padding: 20px; background: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <input type="text" name="Name" id="name" placeholder="Your Name"
+                            style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+                        <input type="email" id="email" placeholder="Your Email" required="required" data-error="Valid email is required."
+                            name="email"
+                            style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+                                      
+                            <input type="text" class="form-control" aria-label="Small" id="phone" name="phone" aria-describedby="inputGroup-sizing-sm"
+                            style="border: 1px solid #ddd; padding: 10px; font-size: 16px; border-radius: 0 4px 4px 0;">
 
-                            </div>
+                            <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit" name="subscribe"
+                            style="width: 100%; padding: 10px; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
+                            Subscribe
+                        </button>
+                    </div>
+
                         </form>
                     </div>
+
                 </div>
+              
                 <div class="row">
                     <footer class="footer">
                         <div class="container">
@@ -384,6 +388,42 @@
     <script src="{% static 'plugins/easing/easing.js' %}"></script>
     <script src="{% static 'js/custom.js' %}"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        //code for phone
+           const phoneInputField = document.querySelector("#phone");
+   const phoneInput = window.intlTelInput(phoneInputField, {
+     utilsScript:
+       "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+   });
+
+   function process(event) {
+        event.preventDefault();
+
+        // Get the phone number using the phone input library
+        const phoneNumber = phoneInput.getNumber();
+        document.getElementById('phone').value = phoneNumber;
+
+        // Select the form element
+        const form = document.getElementById('newsletterForm');
+
+        // Submit the form using fetch
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData, // Automatically includes CSRF token if present in the form
+        })
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload(); // Reload to reflect success messages
+                } else {
+                    console.error('Error submitting the form');
+                }
+            })
+            .catch(error => console.error('Fetch error:', error));
+    }
+
+   </script>
     <script>
            // Function to show the notification
             function showNotification(type, message) {
@@ -429,7 +469,7 @@
                 navbar.classList.remove('scrolled');
             }
         });
-    </script>
+    </scrip>
 
     <!--cart and wishlist scripts-->
 
