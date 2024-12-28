@@ -90,7 +90,31 @@
         height: 46px;
         padding-left: 10px;
        }
-      
+      #phone::placeholder{
+        margin-left: 20px;
+        padding-left: 20px;
+
+      }
+    #phone::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      margin-left: 20px;
+        padding-left: 20px;
+    }
+    #phone::-moz-placeholder { /* Firefox 19+ */
+      margin-left: 20px;
+        padding-left: 20px;
+    }
+    #phone:-ms-input-placeholder { /* IE 10+ */
+      margin-left: 20px;
+        padding-left: 20px;
+    }
+    #phone:-moz-placeholder { /* Firefox 18- */
+      margin-left: 20px;
+        padding-left: 20px;
+    }
+    #phone::-webkit-input-placeholder {
+    color: orange;
+    }
+   
     </style>
     <style>
      .notification {
@@ -339,7 +363,7 @@
                            <form method="POST" action="{% url 'shop' %}" id="newsletterForm" onsubmit="process(event)">
                             {% csrf_token %}
                     <div
-                        style="max-width: 400px; margin: 20px auto; padding: 20px; background: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        style="max-width: 400px; margin: 20px auto; padding: 20px; ">
                         <input type="text" name="Name" id="name" placeholder="Your Name"
                             style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
                         <input type="email" id="email" placeholder="Your Email" required="required" data-error="Valid email is required."
@@ -347,10 +371,15 @@
                             style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
                                       
                             <input type="text" class="form-control" aria-label="Small" id="phone" name="phone" aria-describedby="inputGroup-sizing-sm"
-                            style="border: 1px solid #ddd; padding: 10px; font-size: 16px; border-radius: 0 4px 4px 0;">
+                            style="width: 360px; margin-bottom: 10px; padding: 10px; padding-left: 45px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+                            
+                            <button id="demo_btn"  class="newsletter_submit_btn trans_300" 
+                                style="background-color:#fe4c00; margin-top: 10px; width: 100%; padding: 10px; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
+                                Subscribe
+                            </button>
 
                             <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit" name="subscribe"
-                            style="width: 100%; padding: 10px; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
+                            style="background-color:#fe4c00; display: none; width: 100%; padding: 10px; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
                             Subscribe
                         </button>
                     </div>
@@ -390,40 +419,21 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         //code for phone
-           const phoneInputField = document.querySelector("#phone");
-   const phoneInput = window.intlTelInput(phoneInputField, {
-     utilsScript:
-       "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-   });
+        const phoneInputField = document.querySelector("#phone");
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
 
-   function process(event) {
-        event.preventDefault();
+        demo_btn.addEventListener('click', () => {
+            const phoneNumber = phoneInput.getNumber();
+            document.getElementById('phone').value = phoneNumber;
+            document.getElementById('newsletter_submit').click();
 
-        // Get the phone number using the phone input library
-        const phoneNumber = phoneInput.getNumber();
-        document.getElementById('phone').value = phoneNumber;
+        });
+        
+    </script>
 
-        // Select the form element
-        const form = document.getElementById('newsletterForm');
-
-        // Submit the form using fetch
-        const formData = new FormData(form);
-
-        fetch(form.action, {
-            method: 'POST',
-            body: formData, // Automatically includes CSRF token if present in the form
-        })
-            .then(response => {
-                if (response.ok) {
-                    window.location.reload(); // Reload to reflect success messages
-                } else {
-                    console.error('Error submitting the form');
-                }
-            })
-            .catch(error => console.error('Fetch error:', error));
-    }
-
-   </script>
     <script>
            // Function to show the notification
             function showNotification(type, message) {
@@ -469,7 +479,7 @@
                 navbar.classList.remove('scrolled');
             }
         });
-    </scrip>
+    </script>
 
     <!--cart and wishlist scripts-->
 

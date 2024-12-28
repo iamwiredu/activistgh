@@ -4,10 +4,15 @@ from django.db import models
 
 # Create your models here.
 class Product(models.Model):
+    class Categoreis(models.TextChoices):
+        Tees = 'Tees','Tees'
+        Slides = 'Slides','Slides'
+        Joggers = 'Joggers','Joggers'
+    
     name = models.CharField(max_length=255)
     unique_id = models.UUIDField(editable=False,unique=True,default=uuid.uuid4)
     image = models.ImageField(upload_to='productImages/',null=True,blank=True)
-    category = models.CharField(max_length=255,null=True,blank=True)
+    category = models.CharField(max_length=7,null=True,blank=True,choices=Categoreis.choices)
     color_tag = models.CharField(max_length=255,null=True,blank=True)
     description = models.TextField(null=True,blank=True)
     product_ordering = models.PositiveIntegerField(null=True,blank=True)
@@ -177,5 +182,7 @@ class CartObject(models.Model):
 class Newsletter(models.Model):
     email = models.CharField(max_length=255,null=True,blank=True)
     phone = models.CharField(max_length=255,null=True,blank=True)
+   
+class NewsletterBatch(models.Model):
     batch = models.TextField(null=True,blank=True)
     batch_size = models.CharField(max_length=255,null=True,blank=True)

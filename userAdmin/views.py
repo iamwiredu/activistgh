@@ -1,8 +1,9 @@
+import ast
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import ProductForm, RelatedImagesForm
 from .models import Revenue
-from home.models import Product, Newsletter, Payment
+from home.models import Product, Newsletter, Payment, NewsletterBatch
 from datetime import datetime
 
 #import for emails
@@ -124,11 +125,13 @@ def ordersList(request):
 BATCH_SIZE = 1  # Adjust batch size based on your SMTP provider limits
 
 def send_newsletter_batch(request, batch_index):
-    # Fetch email addresses
-    subscribers = list(Newsletter.objects.values_list('email', flat=True))
-    start = batch_index * BATCH_SIZE
-    end = start + BATCH_SIZE
-    batch = subscribers[start:end]
+    newsLetterBatch = NewsletterBatch.objects.all()[0].batch
+   
+    
+   
+    batch = ast.literal_eval(newsLetterBatch)
+    batch = batch[batch_index]
+
 
     if not batch:
         return JsonResponse({'status': 'completed', 'batch': batch_index})
@@ -150,4 +153,8 @@ def send_newsletter_batch(request, batch_index):
 
     return JsonResponse({'status': 'success', 'batch': batch_index, 'emails_sent': len(batch)})
 def send_emails(request):
+    batch_size = NewsletterBatch.objects.all()[0].batch_size
+    context ={
+        'batch_size':batch_size,
+    }
     return render(request,'send_email.html')

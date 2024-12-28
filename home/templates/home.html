@@ -1,201 +1,172 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Strangers</title>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="index.css">
+    <title>Store Login</title>
     <style>
-   *{
-padding: 0px;
-margin: 0px;
-font-family: monospace;
-}
-
-header{
-	height: 100vh;
-    background-image: url('{% static 'cover1.jpg' %}');
-
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	background-size: cover;
-	justify-content: center;
-	}
-.main
-{
-	width: 90%;
-	max-width: 100%;
-	margin: 10px 5% 0 5%;
-	font-size: 1.4em;
-	line-height: 1.4em;
-	/*padding: 15px;*/
-	background-color: #eee;
-	height: 100vh;
-}
-
-.main p
-{
-	padding: 10px;
-}
-#down
-{
-	position: absolute;
-	top:85vh;
-	size: 40px;
-	padding: 20px;
-	font-size: 2.5em;
-}
-
-#down:hover
-{
-	cursor: pointer;
-	background-color: #eee;
-	opacity: 0.8;
-}
-#wordlogo{
-    width: 500px;
-}
-@media screen and (max-width:600px) {
-    #wordlogo{
-        width: 350px;
-    }
-}
-.marquee {
-    transform: translateY(-120px);
-    position: fixed;
-        width: 100%;
-        overflow: hidden;
-        white-space: nowrap;
-        box-sizing: border-box;
-       
-        margin: 0;
-        z-index: 10;
-        color:#ff4325;
-        font-weight: bold;
-        background-color: transparent;
-
-        
-    }
-
-    .marquee-content {
-        display: inline-block;
-        white-space: nowrap;
-        animation: scroll-text 20s linear infinite;
-    }
-
-    .marquee-content span {
-        display: inline-block;
-        margin: 0;
-        padding-right: 10px;
-    }
-
-    @keyframes scroll-text {
-        0% {
-            transform: translateX(0);
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background: url('{% static "background-image.jpg" %}') no-repeat center center/cover;
+            color: #fff;
         }
-        100% {
-            transform: translateX(-50%);
+
+        .logo-container {
+            margin-top: 20px;
+            perspective: 1000px;
         }
-    }
-  
 
+        .logo {
+            width: 340px;
+            height: 150px;
+            background: url('{% static "wordlogo3.png" %}') no-repeat center center/cover;
+            animation: rotateLogo 5s infinite linear;
+            transform-style: preserve-3d;
+        }
 
-/* CSS */
-.button-89 {
-   
-  --b: 3px;   /* border thickness */
-  --s: .45em; /* size of the corner */
-  --color:white;
-  
-  padding: calc(.5em + var(--s)) calc(.9em + var(--s));
-  color: var(--color);
-  --_p: var(--s);
-  background:
-    conic-gradient(from 90deg at var(--b) var(--b),#0000 90deg,var(--color) 0)
-    var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
-  transition: .3s linear, color 0s, background-color 0s;
-  outline: var(--b) solid #0000;
-  outline-offset: .6em;
-  font-size: 16px;
+        @keyframes rotateLogo {
+            0% {
+                transform: rotateY(0deg);
+            }
 
-  border: 0;
+            100% {
+                transform: rotateY(360deg);
+            }
+        }
 
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+            margin-top: 20px;
+        }
 
-.button-89:hover,
-.button-89:focus-visible{
-  --_p: 0px;
-  outline-color: var(--color);
-  outline-offset: .05em;
-}
+        .form-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-.button-89:active {
-  background: var(--color);
-  color: #fff;
-}
+        .form-row input {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .form-row button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        .form-row button:hover {
+            background-color: #0056b3;
+        }
+
+        .waitlist-button {
+            background: none;
+            border: none;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .waitlist-button:hover {
+            text-decoration: underline;
+        }
+
+        .waitlist-form {
+            display: block;
+            text-align: left;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+
+        .waitlist-form.visible {
+            max-height: 500px;
+            /* Adjust based on form content height */
+            opacity: 1;
+        }
+
+        .waitlist-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .waitlist-form button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+
+        .waitlist-form button:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 
 <body>
-<div class="marquee" style="margin-top: 120px;">
-    <div class="marquee-content">
-        <span style="font-size: 30px;">THEYDONTKNOWUS</span>
-        <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
-        <span style="font-size: 30px;">EST. 2024</span> 
-        <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
-                <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
-                <span style="font-size: 30px;">THEYDONTKNOWUS</span>
-                <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
-                <span style="font-size: 30px;">EST. 2024</span>
-                <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
-                    <span style="font-size: 30px;">THEYDONTKNOWUS</span>
-                    <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
-                    <span style="font-size: 30px;">EST. 2024</span>
-                    <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
-                        <span style="font-size: 30px;">THEYDONTKNOWUS</span>
-                        <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
-                        <span style="font-size: 30px;">EST. 2024</span>
-                        <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
-                            <span style="font-size: 30px;">THEYDONTKNOWUS</span>
-                            <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
-                            <span style="font-size: 30px;">EST. 2024</span>
-                            <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
-                    <span style="font-size: 30px;">THEYDONTKNOWUS</span>
-                    <span><img src="{% static 'img/categories/logo.png' %}" style="width: 30px;" alt=""></span>
-                    <span style="font-size: 30px;">EST. 2024</span>
+    <div class="logo-container">
+        <div class="logo"></div>
     </div>
-</div>
-    <header>
-        <img src="{% static 'img/categories/wordlogo.png'  %}" alt=""  id="wordlogo">
-       <div class="button-89">
-       <a href="{% url 'shop' %}" style="text-decoration: none; color: white;">
-        SHOP
-       </a>
-       </div>
-        <span id="down">&#8595;</span>
-    </header>
+    <div class="container">
+        <form class="form-row">
+        <label for="inp" class="inp">
+            <input type="password" id="inp" placeholder="Password" pattern=".{6,}" required>
+            <svg width="280px" height="18px" viewBox="0 0 280 18" class="border">
+                <path
+                    d="M0,12 L223.166144,12 C217.241379,12 217.899687,12 225.141066,12 C236.003135,12 241.9279,12 249.827586,12 C257.727273,12 264.639498,12 274.514107,12 C281.097179,12 281.755486,12 276.489028,12">
+                </path>
+            </svg>
+            <svg width="14px" height="12px" viewBox="0 0 14 12" class="check">
+                <path d="M1 7 5.5 11 L13 1"></path>
+            </svg>
+        </label>
+        </form>
+        </form>
+        <button class="waitlist-button" onclick="toggleWaitlistForm()">Join the Waitlist</button>
+        <form class="waitlist-form" id="waitlistForm">
+            <input type="email" placeholder="Email" required>
+            <input type="text" placeholder="First Name" required>
+            <input type="text" placeholder="Last Name" required>
+            <button type="submit">Join Waitlist</button>
+        </form>
+    </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        window.onbeforeunload = function () {
-            window.scrollTo(0, 0);
+    <script>
+        function toggleWaitlistForm() {
+            const form = document.getElementById('waitlistForm');
+            if (!form.classList.contains('visible')) {
+                form.classList.add('visible');
+            } else {
+                form.classList.remove('visible');
+            }
         }
-
-        $(document).ready(function () {
-            $('#down').on('click', function () {
-                $("html").scrollTop(0);
-                console.log("Clicked!");
-                $('html, body').animate({
-                    scrollTop: $(".main").offset().top
-                }, 1000);
-            });
-        });
     </script>
 </body>
 

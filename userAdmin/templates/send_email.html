@@ -48,8 +48,6 @@
     <h1>Send Newsletter in Batches</h1>
     <p>Click the button below to start sending newsletter emails in batches.</p>
 
-    <label for="total-batches">Enter Total Number of Batches:</label>
-    <input type="number" id="total-batches" min="1" value="10">
     <button id="start-button">Start Sending</button>
 
     <div class="log" id="log">
@@ -58,22 +56,18 @@
 
     <script>
         document.getElementById('start-button').addEventListener('click', async function () {
-            const totalBatches = parseInt(document.getElementById('total-batches').value, 10);
+            const totalBatches = Number('{{batch_size}}')
             const logContainer = document.getElementById('log');
             const startButton = document.getElementById('start-button');
-
-            if (isNaN(totalBatches) || totalBatches <= 0) {
-                alert('Please enter a valid number of batches.');
-                return;
-            }
-
+            alert(totalBatches)
+          
             // Disable the button to prevent duplicate clicks
             startButton.disabled = true;
             startButton.innerText = 'Sending...';
 
             logContainer.innerHTML = `<p>Starting to send ${totalBatches} batches...</p>`;
 
-            for (let i = 0; i < totalBatches; i++) {
+            for (let i = 0; i < totalBatches+1; i++) {
                 try {
                     const response = await fetch(`/send-newsletter-batch/${i}/`);
                     const data = await response.json();
