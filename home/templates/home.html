@@ -11,7 +11,7 @@
             margin: 0;
             font-family: Arial, sans-serif;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
             min-height: 100vh;
             background: url('{% static "cover.jpg" %}') no-repeat center center/cover;
@@ -19,7 +19,8 @@
         }
 
         .logo-container {
-            margin-top: 20px;
+            position: absolute;
+            top: 20px;
             perspective: 1000px;
         }
 
@@ -43,12 +44,18 @@
 
         .container {
             text-align: center;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 400px;
-            width: 90%;
-            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.75);
+            /* Adjusted transparency */
+            padding: 40px;
+          
+            width: 100%;
+          
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
         .form-row {
@@ -61,29 +68,29 @@
         .form-row input {
             padding: 10px;
             border: none;
-            border-bottom: 1px solid white;
-            background-color: transparent;
+            border-bottom: 1px solid #ccc;
+            background-color: rgba(255, 255, 255, 0.1);
+            /* Darker background for contrast */
+            width: 300px;
             color: white;
-       
         }
 
         .form-row button {
             padding: 10px 20px;
             border: none;
-         
-            background-color:#fe6c08;
+            background-color: #d95900;
+            /* Darker orange for better contrast */
             color: white;
             cursor: pointer;
         }
 
-     
         .waitlist-button {
-            background-color: #fe6c08;
-            width: 100%;
+            background-color: #d95900;
+            /* Darker orange for better contrast */
+            width: 300px;
             padding: 5px;
             border: none;
             color: white;
-
             cursor: pointer;
             font-size: 16px;
             margin-bottom: 20px;
@@ -113,27 +120,39 @@
         .waitlist-form input {
             padding: 10px;
             border: none;
-            border-bottom: 1px solid white;
-            background-color: transparent;
+            border-bottom: 1px solid #ccc;
+            background-color: rgba(255, 255, 255, 0.1);
+            /* Darker background for contrast */
+            width: 300px;
             color: white;
             margin-right: 10px;
         }
-            .waitlist-form input:focus {
-            outline: none; /* Removes the default blue outline */
-        
+
+        .waitlist-form input:focus {
+            outline: none;
+            /* Removes the default blue outline */
         }
 
         .waitlist-form button {
             width: 100%;
             padding: 10px;
             border: none;
-         
-            background-color: #fe6c08;
+            background-color: #d95900;
+            /* Darker orange for better contrast */
             color: white;
             cursor: pointer;
         }
-
-   
+        @media screen and (max-width:700px){
+            .waitlist-button{
+                width: 200px;
+            }
+            .waitlist-form input{
+                width: 200px;
+            }
+            .container input{
+                width: 200px;
+            }
+        }
     </style>
 </head>
 
@@ -147,18 +166,22 @@
             <button type="submit">Submit</button>
         </form>
         <button class="waitlist-button" onclick="toggleWaitlistForm()">Join the Waitlist</button>
-        <form class="waitlist-form" id="waitlistForm">
-            <input type="email" placeholder="Email" required>
-            <input type="text" placeholder="First Name" required>
-            <input type="text" placeholder="Last Name" required>
-            <button type="submit"><svg width="25px" height="25px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                fill="#000000">
-                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                <g id="SVGRepo_iconCarrier">
-                    <path d="M256 120.768L306.432 64 768 512l-461.568 448L256 903.232 659.072 512z" fill="#ffffff"></path>
-                </g>
-            </svg></button>
+        <form class="waitlist-form" id="waitlistForm" method="POST" >
+            {% csrf_token %}
+            <input type="email" placeholder="Email" name="email" required>
+            <input type="text" placeholder="First Name" name="fname" required>
+            <input type="text" placeholder="Last Name" name="lname" required>
+            <button type="submit" name="giveUserPassword">
+                <svg width="25px" height="25px" viewBox="0 0 1024 1024" class="icon" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" fill="#000000">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path d="M256 120.768L306.432 64 768 512l-461.568 448L256 903.232 659.072 512z" fill="#ffffff">
+                        </path>
+                    </g>
+                </svg>
+            </button>
         </form>
     </div>
 

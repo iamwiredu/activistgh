@@ -186,3 +186,10 @@ class Newsletter(models.Model):
 class NewsletterBatch(models.Model):
     batch = models.TextField(null=True,blank=True)
     batch_size = models.CharField(max_length=255,null=True,blank=True)
+
+class UserLogin(models.Model):
+    email = models.EmailField()
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)

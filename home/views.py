@@ -1,7 +1,8 @@
 import ast
 from django.shortcuts import render, redirect
-from .models import Product, Outing, Payment, Cart, CartObject, Newsletter
+from .models import Product, Outing, Payment, Cart, CartObject, Newsletter, UserLogin
 from .deliveryRatesGen import generate_shipping_cost
+from .password import generate_password
 from django.contrib import messages
 from userAdmin.models import Revenue
 
@@ -9,9 +10,18 @@ from userAdmin.models import Revenue
 
 
 def home(request):
-    products = Product.objects.all()
+    if request.method == 'POST':
+        if 'giveUserPassword' in request.POST:
+            email = request.POST.get('email')
+            fname = request.POST.get('fname')
+            lname = request.POST.get('lname')
+            
+            password = generate_password()
+            userLogin = UserLogin(email=email,first_name=fname,last_name=lname,password=password)
+            messages.success(request,'Password set to default password')
+            return redirect(home)
     context ={
-        'products':products,
+       
     }
     return render(request,'home.html',context)
 
