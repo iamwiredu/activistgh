@@ -176,7 +176,7 @@
 
         <!-- Header -->
 
-        <header class="header trans_300" id="navbar" style="background-color: transparent;">
+        <header class="header trans_300 scrolled" id="navbar" style="background-color: transparent;">
 
             <!-- Top Navigation -->
 
@@ -469,19 +469,8 @@
             {% endfor %}
             {% endif %}
     </script>
-    <script>
-        // this gives the navbar a glassy look when scrolled
-        navbar = document.getElementById('navbar')
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 5) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-    </script>
 
-    <!--cart and wishlist scripts-->
+
 
     <script>
         const cart = document.getElementById('cart')

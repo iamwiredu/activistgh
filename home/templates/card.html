@@ -3,62 +3,351 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Row</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Checkout Page" />
+    <meta name="author" content="" />
+    <title>GBOYSCLAN</title>
+    <link rel="stylesheet" href="{% static 'navbox.css' %}">
+
     <style>
-        * {
-            box-sizing: border-box;
+        h1 {
+            color: #88B04B;
+            font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+            font-weight: 900;
+            font-size: 40px;
+            margin-bottom: 10px;
         }
 
-        body {
+        p {
+            color: #404F5E;
+            font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+            font-size: 20px;
             margin: 0;
-            font-family: Arial;
         }
 
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0;
-            /* Removes any gap between flex items */
+        i {
+            color: #9ABC66;
+            font-size: 100px;
+            line-height: 200px;
+            margin-left: -15px;
         }
 
-        .column {
-            flex: 25%;
-            max-width: 25%;
-            padding: 0;
-            /* Remove padding */
-            margin: 0;
-            /* Remove margin */
+        .card {
+            background: white;
+            padding: 60px;
+            border-radius: 4px;
+
+            display: inline-block;
+            margin: 0 auto;
         }
 
-        .column img {
+        .marquee {
+            transform: translateY(-120px);
+            position: fixed;
             width: 100%;
-            height: auto;
-            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+
+            margin: 0;
+            z-index: 10;
+            color: red;
+            font-weight: bold;
+            background-color: white;
+
+
         }
 
-        /* Responsive layout - makes a two column-layout instead of four columns */
-        @media screen and (max-width: 768px) {
-            .column {
-                flex: 50%;
-                max-width: 50%;
+        .marquee-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll-text 20s linear infinite;
+        }
+
+        .marquee-content span {
+            display: inline-block;
+            margin: 0;
+            padding-right: 10px;
+        }
+
+        @keyframes scroll-text {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
             }
         }
 
-        @media screen and (max-width: 480px) {
-            .column {
-                flex: 100%;
-                max-width: 100%;
+        @media (max-width: 600px) {
+
+            #cart-menu {
+                width: 100%;
             }
+        }
+
+        .main-head {
+            font-size: 20px;
+            color: white;
+            font-weight: bolder;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+</head>
 </head>
 
 <body>
-    <!-- Photo Grid -->
-    
+    <div class="nav-box" style="align-items: center; margin-top: 10px;">
+        <div style="cursor: pointer;">
+            <span onclick="openMenu()">
+                <svg width="35px" height="35px" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 8.1H19V6.9H6V8.1ZM6 18.1H19V16.9H6V18.1ZM6 13.1H19V11.9H6V13.1Z" fill="#121923"></path>
+                </svg>
+            </span>
+        </div>
+        <div class="img-box">
+            <img src="{% static 'img/logo_outline2.svg' %}" style="padding: 0px 10px;" alt="">
+        </div>
+        <div>
+
+        </div>
+    </div>
+    <div class="marquee" style="margin-top: 120px;">
+        <div class="marquee-content">
+
+            <span>GULLY BOYS CLAN FINEST</span>
+            <span><span>GULLY BOYS CLAN</span></span>
+            <span>SINCE 2021 </span>
+            <span><span>GULLY BOYS CLAN</span></span>
+            <span>FRESH OUTTA THE CUT </span>
+            <span><span>GULLY BOYS CLAN</span></span>
+
+            <!-- Duplicate Content for Seamless Loop -->
+
+            <span>GULLY BOYS CLAN FINEST</span>
+            <span><span>GULLY BOYS CLAN</span></span>
+            <span>SINCE 2021</span>
+            <span><span>GULLY BOYS CLAN</span></span>
+            <span>FRESH OUTTA THE CUT</span>
+            <span><span>GULLY BOYS CLAN</span></span>
+
+            <span>GULLY BOYS CLAN FINEST</span>
+            <span><span>GULLY BOYS CLAN</span></span>
+            <span>SINCE 2021</span>
+            <span><span>GULLY BOYS CLAN</span></span>
+            <span>FRESH OUTTA THE CUT</span>
+            <span><span>GULLY BOYS CLAN</span></span>
+
+            <span>GULLY BOYS CLAN FINEST</span>
+            <span><span>GULLY BOYS CLAN</span></span>
+            <span>SINCE 2021</span>
+            <span><span>GULLY BOYS CLAN</span></span>
+            <span>FRESH OUTTA THE CUT</span>
+            <span><span>GULLY BOYS CLAN</span></span>
+        </div>
+    </div>
+    <!-- menu overlay -->
+    <div id="menu-overlay">
+        <div id="menu-slider" style="background-color: black; color: white;">
+            <div class="menu-header" style="border-bottom: 1px solid #f0f0f0;">
+                <h2>Menu</h2>
+
+                <svg style="cursor: pointer;" id="close-menu" width="30px" height="30px" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L16.9 7.1" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M7 7L16.9 16.9" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </div>
+
+            <div id="menu-footer">
+                <a href="https://www.instagram.com/gullyboysclan/" target="_blank" class="social-icon">
+                    <svg width="35px" height="35px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" fill="#fff">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <title>instagram [#167]</title>
+                            <desc>Created with Sketch.</desc>
+                            <defs> </defs>
+                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <g id="Dribbble-Light-Preview" transform="translate(-340.000000, -7439.000000)"
+                                    fill="#fff">
+                                    <g id="icons" transform="translate(56.000000, 160.000000)">
+                                        <path
+                                            d="M289.869652,7279.12273 C288.241769,7279.19618 286.830805,7279.5942 285.691486,7280.72871 C284.548187,7281.86918 284.155147,7283.28558 284.081514,7284.89653 C284.035742,7285.90201 283.768077,7293.49818 284.544207,7295.49028 C285.067597,7296.83422 286.098457,7297.86749 287.454694,7298.39256 C288.087538,7298.63872 288.809936,7298.80547 289.869652,7298.85411 C298.730467,7299.25511 302.015089,7299.03674 303.400182,7295.49028 C303.645956,7294.859 303.815113,7294.1374 303.86188,7293.08031 C304.26686,7284.19677 303.796207,7282.27117 302.251908,7280.72871 C301.027016,7279.50685 299.5862,7278.67508 289.869652,7279.12273 M289.951245,7297.06748 C288.981083,7297.0238 288.454707,7296.86201 288.103459,7296.72603 C287.219865,7296.3826 286.556174,7295.72155 286.214876,7294.84312 C285.623823,7293.32944 285.819846,7286.14023 285.872583,7284.97693 C285.924325,7283.83745 286.155174,7282.79624 286.959165,7281.99226 C287.954203,7280.99968 289.239792,7280.51332 297.993144,7280.90837 C299.135448,7280.95998 300.179243,7281.19026 300.985224,7281.99226 C301.980262,7282.98483 302.473801,7284.28014 302.071806,7292.99991 C302.028024,7293.96767 301.865833,7294.49274 301.729513,7294.84312 C300.829003,7297.15085 298.757333,7297.47145 289.951245,7297.06748 M298.089663,7283.68956 C298.089663,7284.34665 298.623998,7284.88065 299.283709,7284.88065 C299.943419,7284.88065 300.47875,7284.34665 300.47875,7283.68956 C300.47875,7283.03248 299.943419,7282.49847 299.283709,7282.49847 C298.623998,7282.49847 298.089663,7283.03248 298.089663,7283.68956 M288.862673,7288.98792 C288.862673,7291.80286 291.150266,7294.08479 293.972194,7294.08479 C296.794123,7294.08479 299.081716,7291.80286 299.081716,7288.98792 C299.081716,7286.17298 296.794123,7283.89205 293.972194,7283.89205 C291.150266,7283.89205 288.862673,7286.17298 288.862673,7288.98792 M290.655732,7288.98792 C290.655732,7287.16159 292.140329,7285.67967 293.972194,7285.67967 C295.80406,7285.67967 297.288657,7287.16159 297.288657,7288.98792 C297.288657,7290.81525 295.80406,7292.29716 293.972194,7292.29716 C292.140329,7292.29716 290.655732,7290.81525 290.655732,7288.98792"
+                                            id="instagram-[#167]"> </path>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; margin-bottom: 30px;">
+        <div class="card" style="text-align: center; width: fit-content; margin-top: 30px; padding-left: 83px;">
+            <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
+                <i class="checkmark">✓</i>
+            </div>
+            <h1>Success</h1>
+            <p>We received your purchase request;<br /> we'll be in touch shortly!</p>
+            <p style="font-size: 18px; color: #555; margin-bottom: 20px;">Contact us on: <br>
+                +233535283404 or +233594439353<br>
+                gullyboysclan21@gmail.com
+            </p>
+            <p style="font-size: 18px; color: #555; margin-bottom: 20px;">Follow up on your order here: <a
+                    href="#">Follow up</a> </p>
+            <p style="font-size: 18px; color: #555; margin-bottom: 20px;">Order details and followup link sent to:
+                {{payment.email}}</a>
+            </p>
+        </div>
+    </div>
+    <div class="alert alert-info" style="display: none;"></div>
+
+    <div class="footer-box">
+        <div style="display: flex; justify-content: center; gap: 20px; border-top: 1px solid #f0f0f0; padding: 30px;">
+
+        </div>
+        <div
+            style="color:#9d9d9d; border-top: 1px solid #f0f0f0; padding: 40px 0px; margin: 0px 10px; display: flex; justify-content: space-between; align-items: center;">
+            <div>&copy; GullyBoysClan 2024</div>
+            <div style="display: flex; align-items: center; gap: 5px;">
+                <a href="https://www.instagram.com/gullyboysclan/">
+                    <span><svg width="35px" height="35px" viewBox="0 -0.5 25 25" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M15.5 5H9.5C7.29086 5 5.5 6.79086 5.5 9V15C5.5 17.2091 7.29086 19 9.5 19H15.5C17.7091 19 19.5 17.2091 19.5 15V9C19.5 6.79086 17.7091 5 15.5 5Z"
+                                    stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                </path>
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M12.5 15C10.8431 15 9.5 13.6569 9.5 12C9.5 10.3431 10.8431 9 12.5 9C14.1569 9 15.5 10.3431 15.5 12C15.5 12.7956 15.1839 13.5587 14.6213 14.1213C14.0587 14.6839 13.2956 15 12.5 15Z"
+                                    stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                </path>
+                                <rect x="15.5" y="9" width="2" height="2" rx="1" transform="rotate(-90 15.5 9)"
+                                    fill="#000000">
+                                </rect>
+                                <rect x="16" y="8.5" width="1" height="1" rx="0.5" transform="rotate(-90 16 8.5)"
+                                    stroke="#000000" stroke-linecap="round"></rect>
+                            </g>
+                        </svg></span>
+                </a>
+
+            </div>
+        </div>
     </div>
 </body>
+
+<script>
+    // JavaScript for opening and closing the menu slider
+    const menuOverlay = document.getElementById('menu-overlay');
+    const menuSlider = document.getElementById('menu-slider');
+    const closeMenuButton = document.getElementById('close-menu');
+
+    // Function to open the menu
+    function openMenu() {
+        menuOverlay.style.display = 'block';
+        menuSlider.classList.add('active');
+    }
+
+    // Function to close the menu
+    function closeMenu() {
+        menuSlider.classList.remove('active');
+        setTimeout(() => {
+            menuOverlay.style.display = 'none';
+        }, 300); // Match the transition duration
+    }
+
+    // Event listener for closing the menu
+    closeMenuButton.addEventListener('click', closeMenu);
+
+    // Event listener for clicking outside the menu slider
+    menuOverlay.addEventListener('click', (event) => {
+        if (event.target === menuOverlay) {
+            closeMenu();
+        }
+    });
+
+</script>
+<script>
+    down_arrow = document.getElementById('down-arrow')
+    cart_div = document.getElementById('cart-items-container')
+    total_price_div = document.getElementById('total-price-div')
+    down_arrow.onclick = () => {
+        if (down_arrow.src.includes('down')) {
+            down_arrow.src = '{% static "up.svg" %}'
+            cart_div.style.display = 'none'
+            total_price_div.style.display = 'none'
+
+        }
+        else if (down_arrow.src.includes('up')) {
+            down_arrow.src = '{% static "down.svg" %}'
+            cart_div.style.display = 'block'
+            total_price_div.style.display = 'flex'
+        }
+    }
+</script>
+
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const cartBtn = document.getElementById('cart-btn');
+    const closeMenuBtn = document.getElementById('close-menu');
+    const closeCartBtn = document.getElementById('close-cart');
+    const menu = document.getElementById('menu');
+    const cart = document.getElementById('cart');
+    const overlay = document.getElementById('overlay');
+
+    // Footer buttons
+
+
+    // Show overlay
+    function showOverlay() {
+        overlay.style.display = 'block';
+    }
+
+    // Hide overlay
+    function hideOverlay() {
+        overlay.style.display = 'none';
+    }
+
+    // Open and close menu
+    menuBtn.addEventListener('click', () => {
+        menu.classList.add('active');
+        showOverlay();
+    });
+
+    closeMenuBtn.addEventListener('click', () => {
+        menu.classList.remove('active');
+        hideOverlay();
+    });
+
+    // Open and close cart
+    cartBtn.addEventListener('click', () => {
+        cart.classList.add('active');
+        showOverlay();
+    });
+
+    closeCartBtn.addEventListener('click', () => {
+        cart.classList.remove('active');
+        hideOverlay();
+    });
+
+
+
+    // Close the sliding menus when the overlay is clicked
+    overlay.addEventListener('click', () => {
+        menu.classList.remove('active');
+        cart.classList.remove('active');
+        hideOverlay();
+    });
+</script>
 
 </html>

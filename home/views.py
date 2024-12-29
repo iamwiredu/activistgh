@@ -1,4 +1,7 @@
 import ast
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.conf import settings
 from django.shortcuts import render, redirect
 from .models import Product, Outing, Payment, Cart, CartObject, Newsletter, UserLogin
 from .deliveryRatesGen import generate_shipping_cost
@@ -7,7 +10,10 @@ from django.contrib import messages
 from userAdmin.models import Revenue
 
 # Create your views here.
-
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.contrib import messages
+from django.shortcuts import render, redirect
 
 def home(request):
     if request.method == 'POST':
@@ -16,14 +22,38 @@ def home(request):
             fname = request.POST.get('fname')
             lname = request.POST.get('lname')
             
-            password = generate_password()
-            userLogin = UserLogin(email=email,first_name=fname,last_name=lname,password=password)
-            messages.success(request,'Password set to default password')
+            # Generate password logic (ensure this function is defined)
+            password = generate_password() 
+            
+            # Save user information (ensure you have a model to save to)
+            userLogin = UserLogin(email=email, first_name=fname, last_name=lname, password=password)
+            userLogin.save()
+
+            # Email content
+            subject = 'Strangers Password'
+            text_body = f'Your password is {password}.'
+            html_content = render_to_string('password.html', {'first_name': fname, 'subject': subject, 'body': f'Your password is {password}.'})
+            print(html_content)
+
+            try:
+                # Create email object with alternatives
+                msg = EmailMultiAlternatives(subject, text_body, "kwakuwiredu0@gmail.com", [email])
+                msg.attach_alternative(html_content, "text/html")  # Attach the HTML version
+                msg.send()
+                messages.success(request, 'Password sent to email.')
+            except Exception as e:
+                messages.error(request, 'Try again later.')
+                print(f'Error sending email: {e}')  # Log the error for debugging
+
             return redirect(home)
-    context ={
-       
+        else:
+            print('no password')
+
+    context = {
+        # You can add context data if necessary for rendering home page
     }
-    return render(request,'home.html',context)
+    return render(request, 'home.html', context)
+
 
 def productDetailPage(request,unique_id):
     product = Product.objects.get(unique_id=unique_id)
