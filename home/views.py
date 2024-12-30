@@ -46,8 +46,24 @@ def home(request):
                 print(f'Error sending email: {e}')  # Log the error for debugging
 
             return redirect(home)
-        else:
-            print('no password')
+        
+        if 'passwordLoginSubmit' in request.POST:
+            password = request.POST.get('passwordLogin')
+
+            try:
+                user = UserLogin.objects.get(password=password)
+                if user:
+                    request.session["authenticated"] = True
+                    return redirect("shop/")  
+                else:
+                    messages.error(request, 'Invalid password.')
+                    print('invalid')
+                    return redirect('/')
+                    
+            except:
+                messages.error(request, 'Invalid password.')
+                print('invalid')
+                return redirect('/')
 
     context = {
         # You can add context data if necessary for rendering home page
@@ -63,30 +79,33 @@ def productDetailPage(request,unique_id):
     return render(request,'productDetails.html',context)
 
 def shop(request):
-    products = Product.objects.all()
-    events = Outing.objects.all()
+    if not request.session.get("authenticated"):
+        return redirect('/')
+    else:
+        products = Product.objects.all()
+        events = Outing.objects.all()
 
-    if request.method == 'POST':
-        if 'subscribe' in request.POST:
-            try:
-                email = request.POST.get('email')
-                phone = request.POST.get('phone')
+        if request.method == 'POST':
+            if 'subscribe' in request.POST:
+                try:
+                    email = request.POST.get('email')
+                    phone = request.POST.get('phone')
 
-                subscription = Newsletter(email=email,phone=phone)
-                subscription.save()
+                    subscription = Newsletter(email=email,phone=phone)
+                    subscription.save()
 
-                messages.success(request,'Subscribed.')
-                return redirect(shop)
-            except:
-                messages.error(request,'Error. Try again later.')
+                    messages.success(request,'Subscribed.')
+                    return redirect(shop)
+                except:
+                    messages.error(request,'Error. Try again later.')
 
 
-    context ={
-        'products':products,
-        'events': events,
-        
-    }
-    return render(request,'shop.html',context)
+        context ={
+            'products':products,
+            'events': events,
+            
+        }
+        return render(request,'shop.html',context)
 
 def makePayment(request,ref):
     payment = Payment.objects.get(ref=ref)

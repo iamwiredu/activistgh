@@ -161,9 +161,10 @@
         <div class="logo"></div>
     </div>
     <div class="container">
-        <form class="form-row">
-            <input type="password" placeholder="Enter password" required>
-            <button type="submit">Submit</button>
+        <form class="form-row" method="POST">
+            {% csrf_token %}
+            <input type="password" placeholder="Enter password" name="passwordLogin" required>
+            <button type="submit" name="passwordLoginSubmit">Submit</button>
         </form>
         <button class="waitlist-button" onclick="toggleWaitlistForm()">Join the Waitlist</button>
         <form class="waitlist-form" id="waitlistForm" method="POST" >

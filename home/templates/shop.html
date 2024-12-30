@@ -198,7 +198,7 @@
             <!-- Main Navigation -->
 
             <!-- Sliding Cart -->
-            <div class="slide-cart" id="cart">
+            <div class="slide-cart" id="cart" style="height: 100vh;">
                 <div style="display: flex; justify-content: space-between;align-items: center; padding: 50px;">
                     <div id="bag-header">CART</div>
                     <div class="hamburger_close" id="close-cart-button"><i class="fa fa-times" aria-hidden="true"></i></div>
@@ -433,45 +433,6 @@
         });
         
     </script>
-
-    <script>
-           // Function to show the notification
-            function showNotification(type, message) {
-                const notification = document.getElementById('notification');
-                const messageElement = document.getElementById('notification-message');
-
-                // Set message text and class based on type
-                messageElement.textContent = message;
-                notification.classList.add(type);  // Add the success/error class
-                notification.style.display = 'block';  // Show the notification
-
-                // Auto-hide notification after 5 seconds
-                setTimeout(function () {
-                    closeNotification();
-                }, 5000);
-            }
-
-            // Function to close the notification
-            function closeNotification() {
-                const notification = document.getElementById('notification');
-                notification.style.display = 'none';  // Hide the notification
-                notification.classList.remove('success', 'error');  // Remove the classes
-            }
-
-            // Django will automatically render the messages
-            {% if messages %}
-            {% for message in messages %}
-            {% if message.tags == "success" %}
-            showNotification("success", "{{ message }}");
-            {% elif message.tags == "error" %}
-            showNotification("error", "{{ message }}");
-            {% endif %}
-            {% endfor %}
-            {% endif %}
-    </script>
-
-
-
     <script>
         const cart = document.getElementById('cart')
         const cartBtn = document.getElementById('cart-btn');
@@ -579,6 +540,41 @@
         // Load and display cart items when the page loads
         window.onload = displayCartItems;
 
+    </script>
+    <script>
+        // Function to show the notification
+        function showNotification(type, message) {
+            const notification = document.getElementById('notification');
+            const messageElement = document.getElementById('notification-message');
+
+            // Set message text and class based on type
+            messageElement.textContent = message;
+            notification.classList.add(type);  // Add the success/error class
+            notification.style.display = 'block';  // Show the notification
+
+            // Auto-hide notification after 5 seconds
+            setTimeout(function () {
+                closeNotification();
+            }, 5000);
+        }
+
+        // Function to close the notification
+        function closeNotification() {
+            const notification = document.getElementById('notification');
+            notification.style.display = 'none';  // Hide the notification
+            notification.classList.remove('success', 'error');  // Remove the classes
+        }
+
+        // Django will automatically render the messages
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == "success" %}
+        showNotification("success", "{{ message }}");
+        {% elif message.tags == "error" %}
+        showNotification("error", "{{ message }}");
+        {% endif %}
+        {% endfor %}
+        {% endif %}
     </script>
 
 </body>
