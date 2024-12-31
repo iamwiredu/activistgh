@@ -156,27 +156,33 @@
         }
 
     </style>
-    <style>.toggle-container {
+    <style>
+        .toggle-container {
     display: flex;
-    justify-content: flex-end;
-    gap: 10px;
+    justify-content: right;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    gap: 10px; /* Add spacing between boxes */
+    padding: 10px; /* Add padding to make it look better */
+    scrollbar-width: none; /* For Firefox, hides scrollbar */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.toggle-container::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
 }
 
 .toggle-box {
     padding: 8px 16px;
-    border: 2px solid grey;
-    border-radius: 50px;
-    background-color: #f9f9f9;
-    color: #333;
+    border: 1px solid grey;
+    border-radius: 20px;
     cursor: pointer;
-    text-align: center;
-    font-family: Arial, sans-serif;
     transition: background-color 0.3s, color 0.3s;
+    white-space: nowrap; /* Prevent text from wrapping */
 }
-
-.toggle-box:hover {
+.toggle-box:hover{
     background-color: grey;
     color: white;
+    font-weight: bold;
 }
 
 .toggle-box.active {
@@ -184,6 +190,7 @@
     color: white;
     font-weight: bold;
 }
+
 </style>
 
 <!-- links fro phone -->
@@ -293,7 +300,7 @@
 
             <!-- ✅ Grid Section - Starts Here 👇 -->
             <!-- ✅ Grid Section - Starts Here 👇 -->
-            <div class="toggle-container" style="margin-top: 20px;">
+            <div class="toggle-container" style="margin-top: 20px;" >
                 <div class="toggle-box" data-filter="All">All</div>
                 <div class="toggle-box" data-filter="Tees">Tees</div>
                 <div class="toggle-box" data-filter="Women">Women</div>
