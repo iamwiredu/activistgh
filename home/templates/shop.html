@@ -85,7 +85,7 @@
                 width: 100%;
             }
         }
-       #phone, #email, #name{
+       #phone, #email, #fname, #lname{
         width: 300px; 
         height: 46px;
         padding-left: 10px;
@@ -156,6 +156,35 @@
         }
 
     </style>
+    <style>.toggle-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.toggle-box {
+    padding: 8px 16px;
+    border: 2px solid grey;
+    border-radius: 50px;
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.toggle-box:hover {
+    background-color: grey;
+    color: white;
+}
+
+.toggle-box.active {
+    background-color: grey;
+    color: white;
+    font-weight: bold;
+}
+</style>
 
 <!-- links fro phone -->
 
@@ -176,7 +205,7 @@
 
         <!-- Header -->
 
-        <header class="header trans_300 scrolled" id="navbar" style="background-color: transparent;">
+        <header class="header trans_300 scrolled" id="navbar" >
 
             <!-- Top Navigation -->
 
@@ -210,7 +239,7 @@
                 </div>
             </div>
 
-            <div class="main_nav_container" style="background-color: transparent;">
+            <div class="main_nav_container" >
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12 text-right">
@@ -264,11 +293,19 @@
 
             <!-- ✅ Grid Section - Starts Here 👇 -->
             <!-- ✅ Grid Section - Starts Here 👇 -->
+            <div class="toggle-container" style="margin-top: 20px;">
+                <div class="toggle-box" data-filter="All">All</div>
+                <div class="toggle-box" data-filter="Tees">Tees</div>
+                <div class="toggle-box" data-filter="Women">Women</div>
+                <div class="toggle-box" data-filter="Slides">Slides</div>
+                <div class="toggle-box" data-filter="Events">Events</div>
+            </div>
+
             <section
                 class="container mx-auto px-4 grid grid-cols-2 gap-y-8 gap-x-4 sm:gap-y-10 sm:gap-x-8 md:grid-cols-2 lg:grid-cols-3 md:gap-y-14 lg:gap-y-20 md:gap-x-10 lg:gap-x-14 mt-10 mb-5">
                 {% for product in products %}
                 <!-- ✅ Product Card - Starts Here 👇 -->
-                <div class="max-w-xs  rounded-xl duration-500 hover:scale-105 flex flex-col">
+                <div class="max-w-xs  rounded-xl duration-500 hover:scale-105 flex flex-col {{ product.category }} product-card {% if product.category == 'Tees' %} Women {% endif %}">
                     <a href="{% url 'productDetailPage' product.unique_id %}" class="flex flex-col h-full">
                         <img src="{{ product.image.url }}" alt="Product"
                             class="h-56 sm:h-80 w-full object-cover rounded-t-xl" />
@@ -289,7 +326,7 @@
                 <!-- 🛑 Product Card - Ends Here -->
                 {% endfor %}
                 {% for event in events %}
-                <div class="max-w-xs  rounded-xl duration-500 hover:scale-105 flex flex-col">
+                <div class="max-w-xs  rounded-xl duration-500 hover:scale-105 flex flex-col product-card Events">
                     <a href="{% url 'event' event.id %}" class="flex flex-col h-full">
                         <img src="{{ event.cover_image.url }}" alt="Product"
                             class="h-56 sm:h-80 w-full object-cover rounded-t-xl" />
@@ -364,11 +401,13 @@
                             {% csrf_token %}
                     <div
                         style="max-width: 400px; margin: 20px auto; padding: 20px; ">
-                        <input type="text" name="Name" id="name" placeholder="Your Name"
+                        <input type="text" name="fname" id="fname" placeholder="First Name"
                             style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
-                        <input type="email" id="email" placeholder="Your Email" required="required" data-error="Valid email is required."
-                            name="email"
+                         <input type="text" name="lname" id="lname" placeholder="Last Name"
                             style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+                        
+                            <input type="email" id="email" placeholder="Email" required="required" data-error="Valid email is required."
+                            name="email" style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
                                       
                             <input type="text" class="form-control" aria-label="Small" id="phone" name="phone" aria-describedby="inputGroup-sizing-sm"
                             style="width: 360px; margin-bottom: 10px; padding: 10px; padding-left: 45px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
@@ -539,6 +578,38 @@
 
         // Load and display cart items when the page loads
         window.onload = displayCartItems;
+
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+                const toggleBoxes = document.querySelectorAll(".toggle-box");
+                const productCards = document.querySelectorAll(".product-card");
+
+                toggleBoxes.forEach((box) => {
+                    box.addEventListener("click", () => {
+                        // Remove 'active' class from all toggle boxes
+                        toggleBoxes.forEach((box) => box.classList.remove("active"));
+
+                        // Add 'active' class to the clicked box
+                        box.classList.add("active");
+
+                        // Get the filter value
+                        const filter = box.getAttribute("data-filter");
+
+                        // Show/Hide product cards based on filter
+                        productCards.forEach((card) => {
+                            if (filter === "All" || card.classList.contains(filter)) {
+                                card.style.display = "flex"; // Show the card
+                            } else {
+                                card.style.display = "none"; // Hide the card
+                            }
+                        });
+                    });
+                });
+
+                // Trigger "All" by default
+                document.querySelector(".toggle-box[data-filter='All']").click();
+            });
 
     </script>
     <script>

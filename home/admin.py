@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Outing, TicketType, RelatedImages, Newsletter, UserLogin
+from .models import Product, Outing, TicketType, RelatedImages, Newsletter, UserLogin, Contact
 
 # Register your models here.
 
@@ -9,3 +9,4 @@ admin.site.register(TicketType)
 admin.site.register(RelatedImages)
 admin.site.register(Newsletter)
 admin.site.register(UserLogin)
+admin.site.register(Contact)

@@ -1,6 +1,6 @@
 import uuid
 from django.db import models
-
+from django.db.models import Case, When 
 
 # Create your models here.
 class Product(models.Model):
@@ -8,6 +8,20 @@ class Product(models.Model):
         Tees = 'Tees','Tees'
         Slides = 'Slides','Slides'
         Joggers = 'Joggers','Joggers'
+
+
+    class Meta:
+        ordering = [
+            Case(
+                When(category='Tees', then=0),
+                When(category='Slides', then=1),
+                When(category='Joggers', then=2),
+                default=3,
+                output_field=models.IntegerField(),
+            ),
+            'name'  # Secondary ordering by name if categories are the same
+        ]
+    
     
     name = models.CharField(max_length=255)
     unique_id = models.UUIDField(editable=False,unique=True,default=uuid.uuid4)
@@ -98,6 +112,8 @@ class TicketType(models.Model):
     
 
 class Newsletter(models.Model):
+    first_name = models.CharField(max_length=255,null=True,blank=True)
+    last_name = models.CharField(max_length=255,null=True,blank=True)
     email = models.CharField(max_length=255,null=True,blank=True)
     phone = models.CharField(max_length=255,null=True,blank=True)
 
@@ -179,9 +195,6 @@ class CartObject(models.Model):
     def price(self):
         return self.quantity * self.product.price
     
-class Newsletter(models.Model):
-    email = models.CharField(max_length=255,null=True,blank=True)
-    phone = models.CharField(max_length=255,null=True,blank=True)
    
 class NewsletterBatch(models.Model):
     batch = models.TextField(null=True,blank=True)
@@ -193,3 +206,12 @@ class UserLogin(models.Model):
     last_name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
+
+class Contact(models.Model):
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    message = models.TextField()
+
+    def __str__(self):
+        return f"Message from {self.first_name}"

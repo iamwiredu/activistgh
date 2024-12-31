@@ -34,3 +34,17 @@ class Revenue(models.Model):
             current_revenue = getattr(self, field_name)
             setattr(self, field_name, current_revenue + amount)
             self.save()
+
+class Notification(models.Model):
+    class NotificationType(models.TextChoices):
+        productSold = 'Product Sold'
+        newsLetterAddition = 'NewsLetter Addition'
+        contactForm = 'Contact Form'
+
+    title = models.CharField(max_length=100)
+    message = models.TextField()
+    date_created = models.DateTimeField(auto_now_add=True)
+    notification_type= models.CharField(max_length=100, choices=NotificationType.choices, null=True,blank=True)
+    viewed = models.BooleanField(default=False)
+    def __str__(self):
+        return self.title

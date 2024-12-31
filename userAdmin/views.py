@@ -2,7 +2,7 @@ import ast
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import ProductForm, RelatedImagesForm
-from .models import Revenue
+from .models import Revenue, Notification 
 from home.models import Product, Newsletter, Payment, NewsletterBatch
 from datetime import datetime
 
@@ -26,6 +26,7 @@ def userAdmin(request):
 def managementDb(request):
     sales = len(Payment.objects.all().filter(verified=True))
     payments = Payment.objects.all().filter(verified=True)
+    notifications = Notification.objects.all().filter(viewed=False)
     # get current revenue
     currentYear = datetime.now().year
     revenue = Revenue.objects.get(year=currentYear)
@@ -43,6 +44,7 @@ def managementDb(request):
         'subscribers':subscribers,
         'revenue_amount':revenue_amount,
         'payments':payments,
+        'notifications': notifications,
     }
     return render(request,'managementDb.html',context)
 

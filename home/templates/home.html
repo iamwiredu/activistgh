@@ -154,9 +154,56 @@
             }
         }
     </style>
+    <style>
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 300px;
+            z-index: 9999;
+            display: none;
+            /* Hidden by default */
+        }
+    
+        .notification.success {
+            background-color: #28a745;
+            /* Green for success */
+            color: white;
+        }
+    
+        .notification.error {
+            background-color: #dc3545;
+            /* Red for error */
+            color: white;
+        }
+    
+        .notification .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    
+        .notification .close-btn:hover {
+            color: #000;
+        }
+    </style>
+
 </head>
 
 <body>
+    <div id="notification" class="notification">
+        <button class="close-btn" onclick="closeNotification()">×</button>
+        <span id="notification-message"></span>
+    </div>
     <div class="logo-container">
         <div class="logo"></div>
     </div>
@@ -195,6 +242,41 @@
                 form.classList.remove('visible');
             }
         }
+    </script>
+    <script>
+        // Function to show the notification
+        function showNotification(type, message) {
+            const notification = document.getElementById('notification');
+            const messageElement = document.getElementById('notification-message');
+
+            // Set message text and class based on type
+            messageElement.textContent = message;
+            notification.classList.add(type);  // Add the success/error class
+            notification.style.display = 'block';  // Show the notification
+
+            // Auto-hide notification after 5 seconds
+            setTimeout(function () {
+                closeNotification();
+            }, 5000);
+        }
+
+        // Function to close the notification
+        function closeNotification() {
+            const notification = document.getElementById('notification');
+            notification.style.display = 'none';  // Hide the notification
+            notification.classList.remove('success', 'error');  // Remove the classes
+        }
+
+        // Django will automatically render the messages
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == "success" %}
+        showNotification("success", "{{ message }}");
+        {% elif message.tags == "error" %}
+        showNotification("error", "{{ message }}");
+        {% endif %}
+        {% endfor %}
+        {% endif %}
     </script>
 </body>
 

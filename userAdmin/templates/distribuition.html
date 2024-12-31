@@ -225,7 +225,8 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Name</th>
+                                            <th scope="col">First Name</th>
+                                            <th scope="col">Last Name</th>
                                             <th scope="col">Email</th>
                                             <th scope="col">Phone</th>
                                            
@@ -235,7 +236,8 @@
                                        {% for contact in subscribers %}
                                         <tr>
                                             <th scope="row"><a href="#">#{{ start_value|add:forloop.counter0 }}</a></th>
-                                            <td>{{contact.name}}</td>
+                                            <td>{{contact.first_name}}</td>
+                                            <td>{{contact.last_name}}</td>
                                             <td><a href="#" class="text-primary">{{contact.email}}</a></td>
                                             <td>{{contact.phone}}</td>
                                          

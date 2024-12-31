@@ -189,3 +189,5 @@ EMAIL_HOST_USER = 'kwakuwiredu0@gmail.com'  # Replace with your email
 EMAIL_HOST_PASSWORD = 'tfhs vrwu wbhm yzwq '  # Replace with your email password
 DEFAULT_FROM_EMAIL = 'Strangers <StrangersOfficial517@gmail.com>'
 ACCOUNT_RATE_LIMITS = False
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
