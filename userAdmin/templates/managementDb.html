@@ -65,7 +65,7 @@
                         <span class="badge bg-primary badge-number">{{notifications|length}}</span>
                     </a><!-- End Notification Icon -->
 
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications" style="overflow-y: scroll; height: 90vh;">
                         {% if notifications %}
                         <li class="dropdown-header">
                             You have new notifications
@@ -146,9 +146,22 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{% url 'distribuition' %}">
                     <i class="bi bi-envelope"></i>
+                    <span>Messages</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{% url 'notifications' %}">
+                    <i class="bi bi-bell"></i>
+                    <span>Notifications</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{% url 'distribuition' %}">
+                    <i class="bi bi-envelope"></i>
                     <span>Bulk Messaging</span>
                 </a>
             </li>
+
             
            
             

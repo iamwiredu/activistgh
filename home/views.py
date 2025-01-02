@@ -79,6 +79,31 @@ def productDetailPage(request,unique_id):
         return redirect('/')
     else:
         product = Product.objects.get(unique_id=unique_id)
+
+        if request.method == 'POST':
+            if 'subscribe' in request.POST:
+                try:
+                    first_name = request.POST.get('fname')
+                    last_name = request.POST.get('lname')
+                    email = request.POST.get('email')
+                    phone = request.POST.get('phone')
+
+                    subscription = Newsletter(first_name=first_name,last_name=last_name,email=email,phone=phone)
+                    subscription.save()
+
+                    messages.success(request,'Subscribed.')
+
+                    # add notification
+                    new_Notification = Notification(title='New Subscriber',message=f'{email} has subscribed to the newsletter',notification_type='NewsLetter Addition')
+
+                    new_Notification.save()
+                    
+                    return redirect(f'/product/{unique_id}/')
+                except Exception as e:
+                    print(e)
+                    messages.error(request,'Error. Try again later.')
+                    return redirect(f'/product/{unique_id}/')
+
         context ={
             'product': product,
         }
@@ -113,6 +138,7 @@ def shop(request):
                 except Exception as e:
                     print(e)
                     messages.error(request,'Error. Try again later.')
+                    return redirect(shop)
 
 
         context ={
@@ -126,37 +152,63 @@ def makePayment(request,ref):
     if not request.session.get("authenticated"):
         return redirect('/')
     else:
-        payment = Payment.objects.get(ref=ref)
-        ship_to = True
+        if request.method == 'POST':
+             if 'subscribe' in request.POST:
+                try:
+                    first_name = request.POST.get('fname')
+                    last_name = request.POST.get('lname')
+                    email = request.POST.get('email')
+                    phone = request.POST.get('phone')
 
-        if payment.destination_country != 'Ghana':
-            # international delivery calculate for price:
-            # need to quantify the item's into right data form
+                    subscription = Newsletter(first_name=first_name,last_name=last_name,email=email,phone=phone)
+                    subscription.save()
 
-            items = {
-                'tee':0,
-                'hoodie':0,
-                'shorts':0,
-                'joggers':0,
+                    messages.success(request,'Subscribed.')
+
+                    # add notification
+                    new_Notification = Notification(title='New Subscriber',message=f'{email} has subscribed to the newsletter',notification_type='NewsLetter Addition')
+
+                    new_Notification.save()
+                    
+                    return redirect(f'/makePayment/{ref}/')
+                except Exception as e:
+                    print(e)
+                    messages.error(request,'Error. Try again later.')
+                    return redirect(f'/makePayment/{ref}/')
+
+        else:
+            payment = Payment.objects.get(ref=ref)
+            ship_to = True
+
+            if payment.destination_country != 'Ghana':
+                # international delivery calculate for price:
+                # need to quantify the item's into right data form
+
+                items = {
+                    'tee':0,
+                    'hoodie':0,
+                    'shorts':0,
+                    'joggers':0,
+                }
+                for item in payment.cart.cart_objects.all():
+                    items[item.product.category.lower()] += item.quantity
+                delivery_cost = generate_shipping_cost(items,payment.destination_country)
+                print(delivery_cost)
+                if 'N/A' in str(delivery_cost):
+                    delivery_cost = 0
+                    ship_to = False #
+                else:
+                    payment.delivery_price = round(delivery_cost,2)
+                    payment.save()
+
+                print(items,delivery_cost)
+
+            
+            context ={
+                'payment':payment,
+                'ship_to':ship_to,
             }
-            for item in payment.cart.cart_objects.all():
-                items[item.product.category.lower()] += item.quantity
-            delivery_cost = generate_shipping_cost(items,payment.destination_country)
-            print(delivery_cost)
-            if 'N/A' in str(delivery_cost):
-                delivery_cost = 0
-                ship_to = False #
-            else:
-                payment.delivery_price = round(delivery_cost,2)
-                payment.save()
-
-            print(items,delivery_cost)
-
-        context ={
-            'payment':payment,
-            'ship_to':ship_to,
-        }
-        return render(request,'makePayment.html',context)
+            return render(request,'makePayment.html',context)
 
 
 
@@ -202,12 +254,61 @@ def checkout(request):
 
 
                 return redirect(makePayment,payment.ref)
+            if 'subscribe' in request.POST:
+                try:
+                    first_name = request.POST.get('fname')
+                    last_name = request.POST.get('lname')
+                    email = request.POST.get('email')
+                    phone = request.POST.get('phone')
+
+                    subscription = Newsletter(first_name=first_name,last_name=last_name,email=email,phone=phone)
+                    subscription.save()
+
+                    messages.success(request,'Subscribed.')
+
+                    # add notification
+                    new_Notification = Notification(title='New Subscriber',message=f'{email} has subscribed to the newsletter',notification_type='NewsLetter Addition')
+
+                    new_Notification.save()
+                    
+                    return redirect(checkout)
+                except Exception as e:
+                    print(e)
+                    messages.error(request,'Error. Try again later.')
+                    return redirect(checkout)
+
         return render(request,'checkout.html')
 
 def orderSuccess(request,ref):
     if not request.session.get("authenticated"):
         return redirect('/')
     else:
+        if request.method == 'POST':
+            if 'subscribe' in request.POST:
+                try:
+                    first_name = request.POST.get('fname')
+                    last_name = request.POST.get('lname')
+                    email = request.POST.get('email')
+                    phone = request.POST.get('phone')
+
+                    subscription = Newsletter(first_name=first_name,last_name=last_name,email=email,phone=phone)
+                    subscription.save()
+
+                    messages.success(request,'Subscribed.')
+
+                    # add notification
+                    new_Notification = Notification(title='New Subscriber',message=f'{email} has subscribed to the newsletter',notification_type='NewsLetter Addition')
+
+                    new_Notification.save()
+                    
+                    return redirect(f'/orderSuccess/{ref}/')
+                except Exception as e:
+                    print(e)
+                    messages.error(request,'Error. Try again later.')
+                    return redirect(f'/orderSuccess/{ref}/')
+
+
+
         payment = Payment.objects.get(ref=ref)
         payment.verified = True
         payment.save()
@@ -247,19 +348,49 @@ def contactPage(request):
                     email = request.POST.get('email')
                     message = request.POST.get('message')
 
-                    new_contact = Contact(first_name=first_name,last_name=last_name,email=email,message=message)
+                    new_Notification = Notification(title='Contact Form',message=f'{email} has sent a message',notification_type='Contact Form')
+                    new_Notification.save()
 
+
+                    new_contact = Contact(first_name=first_name,last_name=last_name,email=email,message=message,notification=new_Notification)
                     new_contact.save()
+
                     messages.success(request,'Message Sent.')
 
                     # add notification
-                    new_Notification = Notification(title='Contact Form',message=f'{email} has sent a message',notification_type='Contact Form')
+   
+                    
+
+                    
+                    return redirect(contactPage)
+                except Exception as e:
+                    print(e)
+                    messages.error(request,'Error. Try again later.')
+                    return redirect(contactPage)
+                
+            if 'subscribe' in request.POST:
+                try:
+                    first_name = request.POST.get('fname')
+                    last_name = request.POST.get('lname')
+                    email = request.POST.get('email')
+                    phone = request.POST.get('phone')
+
+                    subscription = Newsletter(first_name=first_name,last_name=last_name,email=email,phone=phone)
+                    subscription.save()
+
+                    messages.success(request,'Subscribed.')
+
+                    # add notification
+                    new_Notification = Notification(title='New Subscriber',message=f'{email} has subscribed to the newsletter',notification_type='NewsLetter Addition')
 
                     new_Notification.save()
-
+                    
                     return redirect(contactPage)
-                except:
-                    messages.error('Error. Try again later.')
+                except Exception as e:
+                    print(e)
+                    messages.error(request,'Error. Try again later.')
+                    return redirect(contactPage)
+
 
         context = {
 

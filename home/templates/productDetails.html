@@ -18,22 +18,14 @@
     <link rel="stylesheet" type="text/css" href="{% static 'styles/single_styles.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'styles/single_responsive.css' %}">
     <style>
-         body {
-          
+    
+        body {
+           
             background-repeat: no-repeat;
             background-size: cover;
-          
+           
         }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            z-index: 1;
-        }
+
         .slide-cart {
             position: fixed;
             top: 0;
@@ -82,43 +74,74 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
             display: none;
-            z-index: 1;
+            z-index: 12;
         }
-        .header.scrolled {
-            background: rgba(255, 255, 255, 0.7); /* Adjust color and opacity as needed */
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
-            }
-        #size-select{
-            padding: 10px;
-            background-color: transparent;
-            border: 1px solid white;
-            margin-left: 12px;
-            margin-top: 20px;
-            
-        }
-    .single_product_thumbnails ul li::after{
-        border: none;
-        border-bottom: 1px solid #fd9b03;
-    }
-         @media (max-width: 768px) {
+        
+    
+        @media (max-width: 768px) {
             .slide-cart{
                 width: 100%;
             }
         }
     </style>
+        <style>
+            .notification {
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 15px;
+                border-radius: 5px;
+                font-size: 16px;
+                width: 300px;
+                z-index: 9999;
+                display: none;
+                /* Hidden by default */
+            }
+        
+            .notification.success {
+                background-color: #28a745;
+                /* Green for success */
+                color: white;
+            }
+        
+            .notification.error {
+                background-color: #dc3545;
+                /* Red for error */
+                color: white;
+            }
+        
+            .notification .close-btn {
+                position: absolute;
+                top: 5px;
+                right: 10px;
+                background: transparent;
+                border: none;
+                color: white;
+                font-size: 18px;
+                cursor: pointer;
+            }
+        
+            .notification .close-btn:hover {
+                color: #000;
+            }
+        </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
 </head>
 
 <body>
+    <div id="notification" class="notification">
+        <button class="close-btn" onclick="closeNotification()">×</button>
+        <span id="notification-message"></span>
+    </div>
 <div class="overlay" id="overlay"></div>
     <div class="super_container">
 
         <!-- Header -->
 
-        <header class="header trans_30 scrolled" id="navbar" style="background-color: transparent;">
+        <header class="header trans_30 scrolled" id="navbar" >
 
             <!-- Top Navigation -->
 
@@ -138,18 +161,6 @@
             </div>
 
             <!-- Main Navigation -->
-        <!-- Sliding Cart -->
-        <div class="slide-cart" id="cart">
-            <div style="display: flex; justify-content: space-between;align-items: center; padding: 50px;">
-                <div id="bag-header">CART</div>
-                <div class="hamburger_close" id="close-cart-button"><i class="fa fa-times" aria-hidden="true"></i></div>
-            </div>
-        
-            <hr>
-            <div id="cartBox" style="overflow-y: auto; max-height: 90vh; ">
-        
-            </div>
-        </div>
 
             <div class="main_nav_container" style="background-color: transparent;">
                 <div class="container">
@@ -185,6 +196,19 @@
             </div>
 
         </header>
+                <!-- Sliding Cart -->
+                <div class="slide-cart" id="cart">
+                    <div style="display: flex; justify-content: space-between;align-items: center; padding: 50px;">
+                        <div id="bag-header">CART</div>
+                        <div class="hamburger_close" id="close-cart-button"><i class="fa fa-times" aria-hidden="true"></i></div>
+                    </div>
+                
+                    <hr>
+                    <div id="cartBox" style="overflow-y: auto; max-height: 90vh; ">
+                
+                    </div>
+                </div>
+
 
         <div class="fs_menu_overlay"></div>
 
@@ -232,7 +256,7 @@
                                         <li class="active"><img src="{{product.image.url}}" alt=""
                                                 data-image="{{product.image.url}}"></li>
                                        
-                                        {% for image in product.relatedimages_set.all %}
+                                        {% for image in product.relatedImages.all %}
                                         <li><img src="{{image.image.url}}" alt=""
                                                 data-image="{{image.image.url}}"></li>
                                         {% endfor %}
@@ -266,7 +290,7 @@
                             <li><i class="fa fa-star" aria-hidden="true"></i></li>
                             <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
                         </ul> -->
-                <div>
+                <div style="margin-top: 30px;">
                     <label for="size-select">Select Size:</label>
                     <select id="size-select" name="size">
                         <option value="small">Small</option>
@@ -282,8 +306,24 @@
                                 <span id="quantity_value" >1</span>
                                 <span class="plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
                             </div>
+
+                            {% if product.stock == '0' %}
+                            <?xml version="1.0" encoding="UTF-8"?>
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="150px" height="150px"
+                                viewBox="0 0 150 150" version="1.1">
+                                <g id="surface1">
+                                    <path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;"
+                                        d="M 36.125 81.542969 C 34.601562 81.542969 33.347656 81.183594 32.363281 80.476562 C 31.367188 79.753906 30.828125 78.710938 30.742188 77.335938 L 35 77.335938 C 35.058594 78.066406 35.382812 78.429688 35.96875 78.429688 C 36.183594 78.429688 36.367188 78.378906 36.511719 78.273438 C 36.660156 78.171875 36.738281 78.015625 36.738281 77.792969 C 36.738281 77.5 36.582031 77.257812 36.25 77.070312 C 35.9375 76.882812 35.421875 76.671875 34.746094 76.433594 C 33.925781 76.144531 33.25 75.859375 32.722656 75.585938 C 32.1875 75.3125 31.726562 74.910156 31.339844 74.382812 C 30.957031 73.855469 30.769531 73.175781 30.789062 72.34375 C 30.789062 71.515625 30.996094 70.8125 31.425781 70.226562 C 31.847656 69.648438 32.429688 69.207031 33.164062 68.90625 C 33.90625 68.605469 34.738281 68.457031 35.65625 68.457031 C 37.226562 68.457031 38.464844 68.816406 39.375 69.53125 C 40.292969 70.253906 40.78125 71.277344 40.820312 72.578125 L 36.53125 72.578125 C 36.511719 72.21875 36.417969 71.960938 36.25 71.804688 C 36.085938 71.652344 35.886719 71.570312 35.644531 71.570312 C 35.476562 71.570312 35.339844 71.628906 35.234375 71.746094 C 35.125 71.855469 35.066406 72.011719 35.066406 72.21875 C 35.066406 72.507812 35.222656 72.742188 35.539062 72.929688 C 35.859375 73.117188 36.367188 73.339844 37.0625 73.601562 C 37.871094 73.90625 38.527344 74.199219 39.054688 74.472656 C 39.578125 74.746094 40.027344 75.125 40.410156 75.617188 C 40.800781 76.113281 40.988281 76.730469 40.988281 77.480469 C 40.988281 78.253906 40.800781 78.953125 40.410156 79.570312 C 40.027344 80.1875 39.464844 80.675781 38.738281 81.015625 C 38.007812 81.367188 37.140625 81.542969 36.125 81.542969 Z M 48.601562 81.542969 C 47.402344 81.542969 46.308594 81.261719 45.300781 80.703125 C 44.296875 80.128906 43.503906 79.355469 42.917969 78.359375 C 42.332031 77.363281 42.039062 76.238281 42.039062 74.992188 C 42.039062 73.742188 42.332031 72.625 42.917969 71.628906 C 43.503906 70.632812 44.296875 69.851562 45.300781 69.289062 C 46.308594 68.738281 47.402344 68.457031 48.601562 68.457031 C 49.804688 68.457031 50.898438 68.738281 51.894531 69.289062 C 52.890625 69.851562 53.679688 70.632812 54.265625 71.628906 C 54.84375 72.625 55.136719 73.742188 55.136719 74.992188 C 55.136719 76.238281 54.84375 77.363281 54.265625 78.359375 C 53.679688 79.355469 52.890625 80.128906 51.886719 80.703125 C 50.886719 81.261719 49.785156 81.542969 48.601562 81.542969 Z M 48.601562 77.820312 C 49.394531 77.820312 50.007812 77.558594 50.441406 77.050781 C 50.867188 76.542969 51.085938 75.851562 51.085938 74.992188 C 51.085938 74.113281 50.867188 73.417969 50.441406 72.917969 C 50.007812 72.402344 49.394531 72.148438 48.601562 72.148438 C 47.792969 72.148438 47.1875 72.402344 46.75 72.917969 C 46.316406 73.417969 46.105469 74.113281 46.105469 74.992188 C 46.105469 75.851562 46.316406 76.542969 46.75 77.050781 C 47.1875 77.558594 47.792969 77.820312 48.601562 77.820312 Z M 60.566406 78.390625 L 64.425781 78.390625 L 64.425781 81.417969 L 56.574219 81.417969 L 56.574219 68.671875 L 60.566406 68.671875 Z M 70.996094 68.671875 C 72.332031 68.671875 73.496094 68.9375 74.5 69.484375 C 75.5 70.019531 76.269531 70.773438 76.808594 71.738281 C 77.351562 72.6875 77.617188 73.789062 77.617188 75.007812 C 77.617188 76.222656 77.351562 77.3125 76.808594 78.28125 C 76.269531 79.257812 75.5 80.019531 74.5 80.585938 C 73.496094 81.132812 72.332031 81.417969 70.996094 81.417969 L 65.683594 81.417969 L 65.683594 68.671875 Z M 70.636719 77.851562 C 71.535156 77.851562 72.246094 77.605469 72.773438 77.117188 C 73.300781 76.621094 73.566406 75.917969 73.566406 75.007812 C 73.566406 74.09375 73.300781 73.390625 72.773438 72.898438 C 72.246094 72.414062 71.535156 72.160156 70.636719 72.160156 L 69.6875 72.160156 L 69.6875 77.851562 Z M 88.328125 81.542969 C 87.128906 81.542969 86.023438 81.261719 85.027344 80.703125 C 84.023438 80.128906 83.230469 79.355469 82.644531 78.359375 C 82.058594 77.363281 81.757812 76.238281 81.757812 74.992188 C 81.757812 73.742188 82.058594 72.625 82.644531 71.628906 C 83.230469 70.632812 84.023438 69.851562 85.027344 69.289062 C 86.023438 68.738281 87.128906 68.457031 88.328125 68.457031 C 89.53125 68.457031 90.625 68.738281 91.621094 69.289062 C 92.617188 69.851562 93.40625 70.632812 93.992188 71.628906 C 94.570312 72.625 94.863281 73.742188 94.863281 74.992188 C 94.863281 76.238281 94.570312 77.363281 93.992188 78.359375 C 93.40625 79.355469 92.617188 80.128906 91.613281 80.703125 C 90.613281 81.261719 89.511719 81.542969 88.328125 81.542969 Z M 88.328125 77.820312 C 89.121094 77.820312 89.734375 77.558594 90.167969 77.050781 C 90.59375 76.542969 90.8125 75.851562 90.8125 74.992188 C 90.8125 74.113281 90.59375 73.417969 90.167969 72.917969 C 89.734375 72.402344 89.121094 72.148438 88.328125 72.148438 C 87.519531 72.148438 86.902344 72.402344 86.476562 72.917969 C 86.042969 73.417969 85.820312 74.113281 85.820312 74.992188 C 85.820312 75.851562 86.042969 76.542969 86.476562 77.050781 C 86.902344 77.558594 87.519531 77.820312 88.328125 77.820312 Z M 100.214844 68.671875 L 100.214844 75.851562 C 100.214844 76.4375 100.339844 76.90625 100.597656 77.253906 C 100.859375 77.597656 101.277344 77.761719 101.84375 77.761719 C 102.421875 77.761719 102.851562 77.597656 103.125 77.253906 C 103.398438 76.90625 103.535156 76.4375 103.535156 75.851562 L 103.535156 68.671875 L 107.519531 68.671875 L 107.519531 75.851562 C 107.519531 77.070312 107.265625 78.105469 106.757812 78.957031 C 106.257812 79.824219 105.566406 80.46875 104.6875 80.890625 C 103.808594 81.328125 102.839844 81.542969 101.757812 81.542969 C 100.683594 81.542969 99.71875 81.328125 98.886719 80.890625 C 98.054688 80.46875 97.402344 79.824219 96.933594 78.964844 C 96.464844 78.113281 96.230469 77.078125 96.230469 75.851562 L 96.230469 68.671875 Z M 119.257812 68.671875 L 119.257812 71.84375 L 115.867188 71.84375 L 115.867188 81.417969 L 111.875 81.417969 L 111.875 71.84375 L 108.523438 71.84375 L 108.523438 68.671875 L 119.257812 68.671875 " />
+                                    <path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;"
+                                        d="M 125.859375 87.019531 L 24.140625 87.019531 L 24.140625 62.980469 L 125.859375 62.980469 Z M 124.1875 64.648438 L 25.8125 64.648438 L 25.8125 85.351562 L 124.1875 85.351562 L 124.1875 64.648438 " />
+                                    <path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;"
+                                        d="M 129.753906 90.910156 L 20.253906 90.910156 L 20.253906 59.089844 L 129.753906 59.089844 Z M 126.835938 61.992188 L 23.164062 61.992188 L 23.164062 88.007812 L 126.835938 88.007812 L 126.835938 61.992188 " />
+                                </g>
+                            </svg>
+
+                            {% else %}
                             <div class="red_button add_to_cart_button"><a href="#" id="addToCartDiv">add to cart</a></div>
-                        
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -511,98 +551,100 @@
         </div> -->
 
         <!-- Newsletter -->
-
-            <div class="newsletter">
-                <div class="container">
-                    <div style="display: flex; flex-direction: column;">
-                        <img src="{% static 'img/categories/logo.png' %}" style="width: 300px; height: auto; margin: 0 auto;"
-                            alt="">
-                        <div style="display: flex; justify-content: center; gap: 8px;">
-                            <span>
-                                <svg fill="#000000" width="25px" height="25px" viewBox="0 0 32 32" version="1.1"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                    <g id="SVGRepo_iconCarrier">
-                                        <title>tiktok</title>
-                                        <path
-                                            d="M16.656 1.029c1.637-0.025 3.262-0.012 4.886-0.025 0.054 2.031 0.878 3.859 2.189 5.213l-0.002-0.002c1.411 1.271 3.247 2.095 5.271 2.235l0.028 0.002v5.036c-1.912-0.048-3.71-0.489-5.331-1.247l0.082 0.034c-0.784-0.377-1.447-0.764-2.077-1.196l0.052 0.034c-0.012 3.649 0.012 7.298-0.025 10.934-0.103 1.853-0.719 3.543-1.707 4.954l0.020-0.031c-1.652 2.366-4.328 3.919-7.371 4.011l-0.014 0c-0.123 0.006-0.268 0.009-0.414 0.009-1.73 0-3.347-0.482-4.725-1.319l0.040 0.023c-2.508-1.509-4.238-4.091-4.558-7.094l-0.004-0.041c-0.025-0.625-0.037-1.25-0.012-1.862 0.49-4.779 4.494-8.476 9.361-8.476 0.547 0 1.083 0.047 1.604 0.136l-0.056-0.008c0.025 1.849-0.050 3.699-0.050 5.548-0.423-0.153-0.911-0.242-1.42-0.242-1.868 0-3.457 1.194-4.045 2.861l-0.009 0.030c-0.133 0.427-0.21 0.918-0.21 1.426 0 0.206 0.013 0.41 0.037 0.61l-0.002-0.024c0.332 2.046 2.086 3.59 4.201 3.59 0.061 0 0.121-0.001 0.181-0.004l-0.009 0c1.463-0.044 2.733-0.831 3.451-1.994l0.010-0.018c0.267-0.372 0.45-0.822 0.511-1.311l0.001-0.014c0.125-2.237 0.075-4.461 0.087-6.698 0.012-5.036-0.012-10.060 0.025-15.083z">
-                                        </path>
-                                    </g>
-                                </svg></span>
-                            <span>
-                                <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                    <g id="SVGRepo_iconCarrier">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"
-                                            fill="#0F0F0F"></path>
-                                        <path
-                                            d="M18 5C17.4477 5 17 5.44772 17 6C17 6.55228 17.4477 7 18 7C18.5523 7 19 6.55228 19 6C19 5.44772 18.5523 5 18 5Z"
-                                            fill="#0F0F0F"></path>
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M1.65396 4.27606C1 5.55953 1 7.23969 1 10.6V13.4C1 16.7603 1 18.4405 1.65396 19.7239C2.2292 20.8529 3.14708 21.7708 4.27606 22.346C5.55953 23 7.23969 23 10.6 23H13.4C16.7603 23 18.4405 23 19.7239 22.346C20.8529 21.7708 21.7708 20.8529 22.346 19.7239C23 18.4405 23 16.7603 23 13.4V10.6C23 7.23969 23 5.55953 22.346 4.27606C21.7708 3.14708 20.8529 2.2292 19.7239 1.65396C18.4405 1 16.7603 1 13.4 1H10.6C7.23969 1 5.55953 1 4.27606 1.65396C3.14708 2.2292 2.2292 3.14708 1.65396 4.27606ZM13.4 3H10.6C8.88684 3 7.72225 3.00156 6.82208 3.0751C5.94524 3.14674 5.49684 3.27659 5.18404 3.43597C4.43139 3.81947 3.81947 4.43139 3.43597 5.18404C3.27659 5.49684 3.14674 5.94524 3.0751 6.82208C3.00156 7.72225 3 8.88684 3 10.6V13.4C3 15.1132 3.00156 16.2777 3.0751 17.1779C3.14674 18.0548 3.27659 18.5032 3.43597 18.816C3.81947 19.5686 4.43139 20.1805 5.18404 20.564C5.49684 20.7234 5.94524 20.8533 6.82208 20.9249C7.72225 20.9984 8.88684 21 10.6 21H13.4C15.1132 21 16.2777 20.9984 17.1779 20.9249C18.0548 20.8533 18.5032 20.7234 18.816 20.564C19.5686 20.1805 20.1805 19.5686 20.564 18.816C20.7234 18.5032 20.8533 18.0548 20.9249 17.1779C20.9984 16.2777 21 15.1132 21 13.4V10.6C21 8.88684 20.9984 7.72225 20.9249 6.82208C20.8533 5.94524 20.7234 5.49684 20.564 5.18404C20.1805 4.43139 19.5686 3.81947 18.816 3.43597C18.5032 3.27659 18.0548 3.14674 17.1779 3.0751C16.2777 3.00156 15.1132 3 13.4 3Z"
-                                            fill="#0F0F0F"></path>
-                                    </g>
-                                </svg>
-                            </span>
+    <div class="newsletter">
+        <div class="container">
+            <div style="display: flex; flex-direction: column;">
+                <img src="{% static 'img/categories/logo.png' %}" style="width: 300px; height: auto; margin: 0 auto;"
+                    alt="">
+                <div style="display: flex; justify-content: center; gap: 8px;">
+                    <span>
+                        <svg fill="#000000" width="25px" height="25px" viewBox="0 0 32 32" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <title>tiktok</title>
+                                <path
+                                    d="M16.656 1.029c1.637-0.025 3.262-0.012 4.886-0.025 0.054 2.031 0.878 3.859 2.189 5.213l-0.002-0.002c1.411 1.271 3.247 2.095 5.271 2.235l0.028 0.002v5.036c-1.912-0.048-3.71-0.489-5.331-1.247l0.082 0.034c-0.784-0.377-1.447-0.764-2.077-1.196l0.052 0.034c-0.012 3.649 0.012 7.298-0.025 10.934-0.103 1.853-0.719 3.543-1.707 4.954l0.020-0.031c-1.652 2.366-4.328 3.919-7.371 4.011l-0.014 0c-0.123 0.006-0.268 0.009-0.414 0.009-1.73 0-3.347-0.482-4.725-1.319l0.040 0.023c-2.508-1.509-4.238-4.091-4.558-7.094l-0.004-0.041c-0.025-0.625-0.037-1.25-0.012-1.862 0.49-4.779 4.494-8.476 9.361-8.476 0.547 0 1.083 0.047 1.604 0.136l-0.056-0.008c0.025 1.849-0.050 3.699-0.050 5.548-0.423-0.153-0.911-0.242-1.42-0.242-1.868 0-3.457 1.194-4.045 2.861l-0.009 0.030c-0.133 0.427-0.21 0.918-0.21 1.426 0 0.206 0.013 0.41 0.037 0.61l-0.002-0.024c0.332 2.046 2.086 3.59 4.201 3.59 0.061 0 0.121-0.001 0.181-0.004l-0.009 0c1.463-0.044 2.733-0.831 3.451-1.994l0.010-0.018c0.267-0.372 0.45-0.822 0.511-1.311l0.001-0.014c0.125-2.237 0.075-4.461 0.087-6.698 0.012-5.036-0.012-10.060 0.025-15.083z">
+                                </path>
+                            </g>
+                        </svg></span>
+                    <span>
+                        <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"
+                                    fill="#0F0F0F"></path>
+                                <path
+                                    d="M18 5C17.4477 5 17 5.44772 17 6C17 6.55228 17.4477 7 18 7C18.5523 7 19 6.55228 19 6C19 5.44772 18.5523 5 18 5Z"
+                                    fill="#0F0F0F"></path>
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M1.65396 4.27606C1 5.55953 1 7.23969 1 10.6V13.4C1 16.7603 1 18.4405 1.65396 19.7239C2.2292 20.8529 3.14708 21.7708 4.27606 22.346C5.55953 23 7.23969 23 10.6 23H13.4C16.7603 23 18.4405 23 19.7239 22.346C20.8529 21.7708 21.7708 20.8529 22.346 19.7239C23 18.4405 23 16.7603 23 13.4V10.6C23 7.23969 23 5.55953 22.346 4.27606C21.7708 3.14708 20.8529 2.2292 19.7239 1.65396C18.4405 1 16.7603 1 13.4 1H10.6C7.23969 1 5.55953 1 4.27606 1.65396C3.14708 2.2292 2.2292 3.14708 1.65396 4.27606ZM13.4 3H10.6C8.88684 3 7.72225 3.00156 6.82208 3.0751C5.94524 3.14674 5.49684 3.27659 5.18404 3.43597C4.43139 3.81947 3.81947 4.43139 3.43597 5.18404C3.27659 5.49684 3.14674 5.94524 3.0751 6.82208C3.00156 7.72225 3 8.88684 3 10.6V13.4C3 15.1132 3.00156 16.2777 3.0751 17.1779C3.14674 18.0548 3.27659 18.5032 3.43597 18.816C3.81947 19.5686 4.43139 20.1805 5.18404 20.564C5.49684 20.7234 5.94524 20.8533 6.82208 20.9249C7.72225 20.9984 8.88684 21 10.6 21H13.4C15.1132 21 16.2777 20.9984 17.1779 20.9249C18.0548 20.8533 18.5032 20.7234 18.816 20.564C19.5686 20.1805 20.1805 19.5686 20.564 18.816C20.7234 18.5032 20.8533 18.0548 20.9249 17.1779C20.9984 16.2777 21 15.1132 21 13.4V10.6C21 8.88684 20.9984 7.72225 20.9249 6.82208C20.8533 5.94524 20.7234 5.49684 20.564 5.18404C20.1805 4.43139 19.5686 3.81947 18.816 3.43597C18.5032 3.27659 18.0548 3.14674 17.1779 3.0751C16.2777 3.00156 15.1132 3 13.4 3Z"
+                                    fill="#0F0F0F"></path>
+                            </g>
+                        </svg>
+                    </span>
+                </div>
+                <div style="display: flex; flex-direction:column; align-items: center; justify-content: center;">
+                    <div>newsletter</div>
+                    <form method="POST"  id="newsletterForm" onsubmit="process(event)">
+                        {% csrf_token %}
+                        <div style="max-width: 400px; margin: 20px auto; padding: 20px; ">
+                            <input type="text" name="fname" id="fname" placeholder="First Name"
+                                style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+                            <input type="text" name="lname" id="lname" placeholder="Last Name"
+                                style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+    
+                            <input type="email" id="email" placeholder="Email" required="required"
+                                data-error="Valid email is required." name="email"
+                                style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+    
+                            <input type="text" class="form-control" aria-label="Small" id="phone" name="phone"
+                                aria-describedby="inputGroup-sizing-sm"
+                                style="width: 360px; margin-bottom: 10px; padding: 10px; padding-left: 45px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+    
+                            <button id="demo_btn" class="newsletter_submit_btn trans_300"
+                                style="background-color:#fe4c00; margin-top: 10px; width: 100%; padding: 10px; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
+                                Subscribe
+                            </button>
+    
+                            <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300"
+                                value="Submit" name="subscribe"
+                                style="background-color:#fe4c00; display: none; width: 100%; padding: 10px; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
+                                Subscribe
+                            </button>
                         </div>
-                        <div style="display: flex; flex-direction:column; align-items: center; justify-content: center;">
-                            <div>newsletter</div>
-                            <form method="POST" action="{% url 'shop' %}" id="newsletterForm" onsubmit="process(event)">
-                                {% csrf_token %}
-                                <div style="max-width: 400px; margin: 20px auto; padding: 20px; ">
-                                    <input type="text" name="Name" id="name" placeholder="Your Name"
-                                        style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
-                                    <input type="email" id="email" placeholder="Your Email" required="required"
-                                        data-error="Valid email is required." name="email"
-                                        style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
-            
-                                    <input type="text" class="form-control" aria-label="Small" id="phone" name="phone"
-                                        aria-describedby="inputGroup-sizing-sm"
-                                        style="width: 360px; margin-bottom: 10px; padding: 10px; padding-left: 45px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
-            
-                                    <button id="demo_btn" class="newsletter_submit_btn trans_300"
-                                        style="background-color:#fe4c00; margin-top: 10px; width: 100%; padding: 10px; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
-                                        Subscribe
-                                    </button>
-            
-                                    <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300"
-                                        value="Submit" name="subscribe"
-                                        style="background-color:#fe4c00; display: none; width: 100%; padding: 10px; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
-                                        Subscribe
-                                    </button>
-                                </div>
-            
-                            </form>
-                        </div>
-            
-                    </div>
-            
-                    <div class="row">
-                        <footer class="footer">
-                            <div class="container">
-            
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="footer_nav_container">
-                                            <div class="cr">©2024 Strangers</div>
-                                        </div>
-                                    </div>
+    
+                    </form>
+                </div>
+    
+            </div>
+    
+            <div class="row">
+                <footer class="footer">
+                    <div class="container">
+    
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="footer_nav_container">
+                                    <div class="cr">©2024 Strangers</div>
                                 </div>
                             </div>
-                        </footer>
-            
+                        </div>
                     </div>
-                </div>
+                </footer>
+    
             </div>
+        </div>
+    </div>
 
         <!-- Footer -->
 
    
     </div>
-
+   
     <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     <script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
     <script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
@@ -803,6 +845,42 @@
 
        
     </script>
+    <script>
+        // Function to show the notification
+        function showNotification(type, message) {
+            const notification = document.getElementById('notification');
+            const messageElement = document.getElementById('notification-message');
+
+            // Set message text and class based on type
+            messageElement.textContent = message;
+            notification.classList.add(type);  // Add the success/error class
+            notification.style.display = 'block';  // Show the notification
+
+            // Auto-hide notification after 5 seconds
+            setTimeout(function () {
+                closeNotification();
+            }, 5000);
+        }
+
+        // Function to close the notification
+        function closeNotification() {
+            const notification = document.getElementById('notification');
+            notification.style.display = 'none';  // Hide the notification
+            notification.classList.remove('success', 'error');  // Remove the classes
+        }
+
+        // Django will automatically render the messages
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == "success" %}
+        showNotification("success", "{{ message }}");
+        {% elif message.tags == "error" %}
+        showNotification("error", "{{ message }}");
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </script>
+
 
 </body>
 

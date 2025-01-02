@@ -635,7 +635,7 @@ hr {
                     </div>
                     <div style="display: flex; flex-direction:column; align-items: center; justify-content: center;">
                         <div>newsletter</div>
-                        <form method="POST" action="{% url 'shop' %}" id="newsletterForm" onsubmit="process(event)">
+                        <form method="POST" id="newsletterForm" onsubmit="process(event)">
                             {% csrf_token %}
                             <div style="max-width: 400px; margin: 20px auto; padding: 20px; ">
                                 <input type="text" name="fname" id="fname" placeholder="First Name"

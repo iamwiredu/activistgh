@@ -12,8 +12,9 @@ from django.http import JsonResponse
 from django.core.mail import EmailMultiAlternatives, send_mass_mail
 from django.template.loader import render_to_string
 
+# import view
 
-
+from django.views import View
 
 
 
@@ -29,7 +30,7 @@ def managementDb(request):
     notifications = Notification.objects.all().filter(viewed=False)
     # get current revenue
     currentYear = datetime.now().year
-    revenue = Revenue.objects.get(year=currentYear)
+    revenue = Revenue.objects.get_or_create(year=currentYear)
 
     revenue_amount = 0 
 
@@ -81,7 +82,11 @@ def productManagement(request):
 def productEdit(request,unique_id):
     product = Product.objects.get(unique_id=unique_id)
     productFormCreator = ProductForm(instance=product)
-    relatedImage = product.relatedImages.all()[0]
+
+    try:
+        relatedImage = product.relatedImages.all()[0]
+    except:
+        relatedImage = None
     
 
     if request.method == 'POST':
@@ -160,3 +165,15 @@ def send_emails(request):
         'batch_size':batch_size,
     }
     return render(request,'send_email.html')
+
+
+# CBV
+
+class Notifications_view(View):
+
+    def get(self, request):
+        notifications = Notification.objects.all()
+        context = {
+            'notifications':notifications,
+        }
+        return render(request,'notifications.html',context)

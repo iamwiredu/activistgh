@@ -72,14 +72,10 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
             display: none;
-            z-index: 1;
+            z-index: 12;
         }
         
-        .header.scrolled {
-            background: rgba(255, 255, 255, 0.7); /* Adjust color and opacity as needed */
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            }
+    
         @media (max-width: 768px) {
             .slide-cart{
                 width: 100%;
@@ -115,6 +111,22 @@
     color: orange;
     }
    
+    </style>
+    <style>
+        /* Ensure proper positioning for back image */
+.back-image {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.product-card:hover .back-image {
+    opacity: 1;
+}
+
+.product-card:hover .front-image {
+    opacity: 0;
+}
+
     </style>
     <style>
      .notification {
@@ -212,7 +224,7 @@
 
         <!-- Header -->
 
-        <header class="header trans_300 scrolled" id="navbar" >
+        <header class="header trans_300" id="navbar" >
 
             <!-- Top Navigation -->
 
@@ -233,18 +245,7 @@
 
             <!-- Main Navigation -->
 
-            <!-- Sliding Cart -->
-            <div class="slide-cart" id="cart" style="height: 100vh;">
-                <div style="display: flex; justify-content: space-between;align-items: center; padding: 50px;">
-                    <div id="bag-header">CART</div>
-                    <div class="hamburger_close" id="close-cart-button"><i class="fa fa-times" aria-hidden="true"></i></div>
-                </div>
-                
-                <hr>
-                <div id="cartBox" style="overflow-y: auto; max-height: 90vh; ">
-
-                </div>
-            </div>
+     
 
             <div class="main_nav_container" >
                 <div class="container">
@@ -280,6 +281,18 @@
             </div>
 
         </header>
+               <!-- Sliding Cart -->
+            <div class="slide-cart" id="cart" style="height: 100vh;">
+                <div style="display: flex; justify-content: space-between;align-items: center; padding: 50px;">
+                    <div id="bag-header">CART</div>
+                    <div class="hamburger_close" id="close-cart-button"><i class="fa fa-times" aria-hidden="true"></i></div>
+                </div>
+                
+                <hr>
+                <div id="cartBox" style="overflow-y: auto; max-height: 90vh; ">
+
+                </div>
+            </div>
 
         <div class="fs_menu_overlay"></div>
         <div class="hamburger_menu">
@@ -310,28 +323,43 @@
 
             <section
                 class="container mx-auto px-4 grid grid-cols-2 gap-y-8 gap-x-4 sm:gap-y-10 sm:gap-x-8 md:grid-cols-2 lg:grid-cols-3 md:gap-y-14 lg:gap-y-20 md:gap-x-10 lg:gap-x-14 mt-10 mb-5">
-                {% for product in products %}
-                <!-- ✅ Product Card - Starts Here 👇 -->
-                <div class="max-w-xs  rounded-xl duration-500 hover:scale-105 flex flex-col {{ product.category }} product-card {% if product.category == 'Tees' %} Women {% endif %}">
-                    <a href="{% url 'productDetailPage' product.unique_id %}" class="flex flex-col h-full">
-                        <img src="{{ product.image.url }}" alt="Product"
-                            class="h-56 sm:h-80 w-full object-cover rounded-t-xl" />
-                        <div class="px-4 py-3">
-                            <div class="mb-4">
-                                <p class="text-sm sm:text-sm font-bold text-black capitalize min-h-[3rem] sm:min-h-[4rem]"
-                                    style="text-align: center;">
-                                    {{ product.name }}
-                                </p>
-                                <p class="text-sm sm:text-lg font-bold" style="text-align: center;">GHS {{ product.price }}
-                                </p>
-                            </div>
+{% for product in products %}
+<!-- ✅ Product Card - Starts Here 👇 -->
+<div
+    class="max-w-xs rounded-xl duration-500 hover:scale-105 flex flex-col {{ product.category }} product-card {% if product.category == 'Tees' %} Women {% endif %} "  >
+    <a href="{% url 'productDetailPage' product.unique_id %}" class="flex flex-col h-full relative">
+        <!-- Product Image -->
+        <div class="relative h-56 sm:h-80 w-full rounded-t-xl overflow-hidden">
+            <img src="{{ product.image.url }}" alt="Product Front"
+                class="h-full w-full object-cover rounded-t-xl product-image">
+            {% if product.relatedImages.all.0 %}
+            <img src="{{ product.relatedImages.all.0.image.url}}" alt=""    class="h-full w-full object-cover rounded-t-xl product-image">
+            {% endif %}
+        
+        </div>
 
-                        </div>
+        <!-- "Sold Out" Icon -->
+        {% if product.stock == '0' %}
+        <div class="absolute top-2 right-2 bg-red-500 text-white text-xs sm:text-sm px-2 py-1 rounded-lg font-bold z-1">
+            Sold Out
+        </div>
+        {% endif %}
 
-                    </a>
-                </div>
-                <!-- 🛑 Product Card - Ends Here -->
-                {% endfor %}
+        <!-- Product Details -->
+        <div class="px-4 py-3">
+            <div class="mb-4">
+                <p class="text-sm sm:text-sm font-bold text-black capitalize min-h-[3rem] sm:min-h-[4rem]"
+                    style="text-align: center;">
+                    {{ product.name }}
+                </p>
+                <p class="text-sm sm:text-lg font-bold" style="text-align: center;">GHS {{ product.price }}</p>
+            </div>
+        </div>
+    </a>
+</div>
+<!-- 🛑 Product Card - Ends Here -->
+{% endfor %}
+
                 {% for event in events %}
                 <div class="max-w-xs  rounded-xl duration-500 hover:scale-105 flex flex-col product-card Events">
                     <a href="{% url 'event' event.id %}" class="flex flex-col h-full">
@@ -464,6 +492,36 @@
     <script src="{% static 'js/custom.js' %}"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    // Select all product cards
+    const productCards = document.querySelectorAll(".product-card");
+
+    productCards.forEach((card) => {
+        // Find all images within the card
+        const images = card.querySelectorAll(".product-image");
+        if (images.length === 2) { // Ensure there are both front and back images
+            const frontImage = images[0];
+            const backImage = images[1];
+
+            // Hide the back image initially
+            backImage.style.display = "none";
+
+            // Add hover event listeners
+            card.addEventListener("mouseenter", () => {
+                frontImage.style.display = "none";
+                backImage.style.display = "block";
+            });
+
+            card.addEventListener("mouseleave", () => {
+                backImage.style.display = "none";
+                frontImage.style.display = "block";
+            });
+        }
+    });
+});
+
+    </script>
+    <script>
         //code for phone
         const phoneInputField = document.querySelector("#phone");
         const phoneInput = window.intlTelInput(phoneInputField, {
@@ -538,7 +596,7 @@
                                 <p style="margin: 0; font-size: 14px;"> GHS ${item.price}</p>
                             </div>
                             </div>
-                            <button class="close-button" onclick="removeFromCart('${item.product_id_date}')" style="position: absolute; top: 10px; right: 10px; background: transparent; border: none; cursor: pointer; font-size: 16px; color: #FF5722;">&times;</button>
+                            <button class="close-button" onclick="removeFromCart('${item.product_id_date}')" style="position: absolute; top: 10px; right: 10px; background: #fff; border: none; cursor: pointer; font-size: 16px; color: #FF5722;">&times;</button>
                         </div>
                         `;
 
@@ -560,7 +618,7 @@
 
             }
             else {
-                cartBox.innerHTML = '<div class="empty-cart">Nothing in Cart</div>'
+                cartBox.innerHTML = '<div class="empty-cart" style="text-align:center; margin-top:40px;">Nothing in Cart</div>'
 
 
             }
