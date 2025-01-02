@@ -3,7 +3,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.shortcuts import render, redirect
-from .models import Product, Outing, Payment, Cart, CartObject, Newsletter, UserLogin, Contact
+from .models import Product, Outing, Payment, Cart, CartObject, Newsletter, UserLogin
 from .deliveryRatesGen import generate_shipping_cost
 from .password import generate_password
 from django.contrib import messages
@@ -347,14 +347,19 @@ def contactPage(request):
                     last_name = request.POST.get('last_name')
                     email = request.POST.get('email')
                     message = request.POST.get('message')
+                    print(message)
+
+
+                   
+                  
+
 
                     new_Notification = Notification(title='Contact Form',message=f'{email} has sent a message',notification_type='Contact Form')
                     new_Notification.save()
 
-
                     new_contact = Contact(first_name=first_name,last_name=last_name,email=email,message=message,notification=new_Notification)
+                   
                     new_contact.save()
-
                     messages.success(request,'Message Sent.')
 
                     # add notification
