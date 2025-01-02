@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import ProductForm, RelatedImagesForm
 from .models import Revenue, Notification 
-from home.models import Product, Newsletter, Payment, NewsletterBatch
+from home.models import Product, Newsletter, Payment, NewsletterBatch, RelatedImages
 from datetime import datetime
 
 #import for emails
@@ -86,7 +86,7 @@ def productEdit(request,unique_id):
     try:
         relatedImage = product.relatedImages.all()[0]
     except:
-        relatedImage = None
+        relatedImage = RelatedImages.objects.get_or_create(product=product)
     
 
     if request.method == 'POST':
@@ -103,6 +103,7 @@ def productEdit(request,unique_id):
                 if backImage:
                     relatedImage.image = backImage
                     relatedImage.save()
+                    return redirect(f'/productEdit/{unique_id}')
             except:
                 print('error')
 

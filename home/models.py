@@ -9,6 +9,7 @@ class Product(models.Model):
         Tees = 'Tees','Tees'
         Slides = 'Slides','Slides'
         Joggers = 'Joggers','Joggers'
+        Caps = 'Caps','Caps'
 
 
     class Meta:
@@ -17,7 +18,8 @@ class Product(models.Model):
                 When(category='Tees', then=0),
                 When(category='Slides', then=1),
                 When(category='Joggers', then=2),
-                default=3,
+                When(category='Caps',then=3),
+                default=4,
                 output_field=models.IntegerField(),
             ),
             'name'  # Secondary ordering by name if categories are the same

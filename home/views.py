@@ -3,7 +3,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.shortcuts import render, redirect
-from .models import Product, Outing, Payment, Cart, CartObject, Newsletter, UserLogin
+from .models import Product, Outing, Payment, Cart, CartObject, Newsletter, UserLogin, Contact
 from .deliveryRatesGen import generate_shipping_cost
 from .password import generate_password
 from django.contrib import messages

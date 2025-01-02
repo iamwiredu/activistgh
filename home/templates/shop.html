@@ -319,6 +319,7 @@
                 <div class="toggle-box" data-filter="Women">Women</div>
                 <div class="toggle-box" data-filter="Slides">Slides</div>
                 <div class="toggle-box" data-filter="Events">Events</div>
+                <div class="toggle-box" data-filter="Caps">Caps</div>
             </div>
 
             <section
@@ -332,7 +333,7 @@
         <div class="relative h-56 sm:h-80 w-full rounded-t-xl overflow-hidden">
             <img src="{{ product.image.url }}" alt="Product Front"
                 class="h-full w-full object-cover rounded-t-xl product-image">
-            {% if product.relatedImages.all.0 %}
+            {% if product.relatedImages.all.0.image %}
             <img src="{{ product.relatedImages.all.0.image.url}}" alt=""    class="h-full w-full object-cover rounded-t-xl product-image">
             {% endif %}
         
@@ -493,32 +494,32 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-    // Select all product cards
-    const productCards = document.querySelectorAll(".product-card");
+                // Select all product cards
+                const productCards = document.querySelectorAll(".product-card");
 
-    productCards.forEach((card) => {
-        // Find all images within the card
-        const images = card.querySelectorAll(".product-image");
-        if (images.length === 2) { // Ensure there are both front and back images
-            const frontImage = images[0];
-            const backImage = images[1];
+                productCards.forEach((card) => {
+                    // Find all images within the card
+                    const images = card.querySelectorAll(".product-image");
+                    if (images.length === 2) { // Ensure there are both front and back images
+                        const frontImage = images[0];
+                        const backImage = images[1];
 
-            // Hide the back image initially
-            backImage.style.display = "none";
+                        // Hide the back image initially
+                        backImage.style.display = "none";
 
-            // Add hover event listeners
-            card.addEventListener("mouseenter", () => {
-                frontImage.style.display = "none";
-                backImage.style.display = "block";
+                        // Add hover event listeners
+                        card.addEventListener("mouseenter", () => {
+                            frontImage.style.display = "none";
+                            backImage.style.display = "block";
+                        });
+
+                        card.addEventListener("mouseleave", () => {
+                            backImage.style.display = "none";
+                            frontImage.style.display = "block";
+                        });
+                    }
+                });
             });
-
-            card.addEventListener("mouseleave", () => {
-                backImage.style.display = "none";
-                frontImage.style.display = "block";
-            });
-        }
-    });
-});
 
     </script>
     <script>

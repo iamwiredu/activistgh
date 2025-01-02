@@ -324,7 +324,11 @@
                                     <h5 class="card-title">Product Image Back</h5>
 
                                     <div>
+                                        {% if product.relatedImages.all.0.image %}
                                         <img src="{{product.relatedImages.all.0.image.url}}" alt="" style="width: 70px; height: 70px;">
+                                        {% else %}
+                                        No Image
+                                        {% endif %}
                                         <form action="" method="POST" 
                                         enctype="multipart/form-data">
                                         {% csrf_token %}
