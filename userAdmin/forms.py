@@ -22,7 +22,7 @@ class DeliveryPriceByRegionForm(forms.ModelForm):
     class Meta:
         model = DeliveryPriceByRegion
         fields = [
-            'delivery_method',
+            
             'ashanti',
             'greater_accra',
             'volta',

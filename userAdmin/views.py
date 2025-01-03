@@ -2,7 +2,7 @@ import ast
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import ProductForm, RelatedImagesForm, CategoryForm, DeliveryPriceByRegionForm
-from .models import Revenue, Notification 
+from .models import Revenue, Notification, DeliveryPriceByRegion 
 from home.models import Product, Contact,Newsletter, Payment, NewsletterBatch, RelatedImages,Category
 from datetime import datetime
 
@@ -28,7 +28,9 @@ def managementDb(request):
     sales = len(Payment.objects.all().filter(verified=True))
     payments = Payment.objects.all().filter(verified=True)
     notifications = Notification.objects.all().filter(viewed=False)
-    DeliveryPriceByRegionFormCreator = DeliveryPriceByRegionForm()
+  
+    delivery = DeliveryPriceByRegion.objects.get(name='standard')
+    DeliveryPriceByRegionFormCreator = DeliveryPriceByRegionForm(instance=delivery)
     # get current revenue
     currentYear = datetime.now().year
     revenue = Revenue.objects.get_or_create(year=currentYear)
@@ -36,7 +38,7 @@ def managementDb(request):
     revenue_amount = 0 
 
     if request.method == 'POST':
-        form = DeliveryPriceByRegionForm(request.POST)
+        form = DeliveryPriceByRegionForm(request.POST,instance=delivery)
         if form.is_valid():
             form.save()
             return redirect(managementDb)  # Redirect to a success page

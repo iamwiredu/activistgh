@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Outing, Payment,TicketType, RelatedImages, Newsletter, UserLogin, Contact
+from .models import Product, Outing, Payment,Size,SizeSet,TicketType, RelatedImages, Newsletter, UserLogin, Contact
 
 # Register your models here.
 
