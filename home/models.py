@@ -1,35 +1,35 @@
 import uuid
 from django.db import models
-from django.db.models import Case, When  
+from django.db.models import Case, When, IntegerField  
 from userAdmin.models import Notification
 
-# Create your models here.
+
+class Category(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+    
+
 class Product(models.Model):
-    class Categoreis(models.TextChoices):
-        Tees = 'Tees','Tees'
-        Slides = 'Slides','Slides'
-        Joggers = 'Joggers','Joggers'
-        Caps = 'Caps','Caps'
-
-
     class Meta:
         ordering = [
             Case(
-                When(category='Tees', then=0),
-                When(category='Slides', then=1),
-                When(category='Joggers', then=2),
-                When(category='Caps',then=3),
+                When(product_category__name='Tees', then=0),
+                When(product_category__name='Slides', then=1),
+                When(product_category__name='Joggers', then=2),
+                When(product_category__name='Caps', then=3),
                 default=4,
-                output_field=models.IntegerField(),
+                output_field=IntegerField(),
             ),
-            'name'  # Secondary ordering by name if categories are the same
+            'name'  # Secondary ordering by name
         ]
     
     
     name = models.CharField(max_length=255)
     unique_id = models.UUIDField(editable=False,unique=True,default=uuid.uuid4)
     image = models.ImageField(upload_to='productImages/',null=True,blank=True)
-    category = models.CharField(max_length=7,null=True,blank=True,choices=Categoreis.choices)
+    product_category = models.ForeignKey(Category,on_delete=models.SET_NULL,null=True,blank=True)
     color_tag = models.CharField(max_length=255,null=True,blank=True)
     description = models.TextField(null=True,blank=True)
     product_ordering = models.PositiveIntegerField(null=True,blank=True)
@@ -43,10 +43,10 @@ class Product(models.Model):
     def __str__(self):
         color_tag = self.color_tag
         if color_tag:
-            return f'{self.name}  {color_tag} Category:{self.category}' 
+            return f'{self.name}  {color_tag} Category:{self.product_category}' 
         else:
+            return f'{self.name}  {color_tag} Category:{self.product_category}' 
             color_tag = ''
-            return f'{self.name}  {color_tag} Category:{self.category}' 
 
 class RelatedImages(models.Model):
     product = models.ForeignKey(Product,on_delete=models.CASCADE,related_name='relatedImages')
@@ -122,6 +122,7 @@ class Newsletter(models.Model):
 
 class Payment(models.Model):
     # personal details 
+    
     first_name = models.CharField(max_length=255,blank=True)
     last_name = models.CharField(max_length=255,blank=True)
     country_code = models.CharField(max_length=255)

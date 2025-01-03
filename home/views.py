@@ -3,7 +3,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.shortcuts import render, redirect
-from .models import Product, Outing, Payment, Cart, CartObject, Newsletter, UserLogin, Contact
+from .models import Product, Outing, Payment, Cart, CartObject, Newsletter, UserLogin, Contact, Category
 from .deliveryRatesGen import generate_shipping_cost
 from .password import generate_password
 from django.contrib import messages
@@ -115,6 +115,7 @@ def shop(request):
     else:
         products = Product.objects.all()
         events = Outing.objects.all()
+        categories = Category.objects.all()
 
         if request.method == 'POST':
             if 'subscribe' in request.POST:
@@ -144,7 +145,7 @@ def shop(request):
         context ={
             'products':products,
             'events': events,
-            
+            'categories':categories,
         }
         return render(request,'shop.html',context)
 

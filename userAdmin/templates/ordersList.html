@@ -365,9 +365,9 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Customer</th>
-                <th scope="col">Product</th>
                 <th scope="col">Price</th>
-                <th scope="col">Status</th>
+                <th scope="col">Delivery</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -377,7 +377,7 @@
                 <td>{{payment.first_name}} {{payment.last_name}}</td>
                 <td><a href="#" class="text-primary">Paid - GHS{{payment.amount}}</a></td>
                 <td>{% if payment.delivered == True %} Delivered {% else %} Not Delivered {% endif %}</td>
-                <td><span class="badge bg-success">Manage</span></td>
+                <td><a href="{% url 'orderDetails' payment.id %}"><span class="badge bg-success">View</span></a></td>
             </tr>
             {% endfor %}
     

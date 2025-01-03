@@ -1,9 +1,9 @@
 import ast
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import ProductForm, RelatedImagesForm
+from .forms import ProductForm, RelatedImagesForm, CategoryForm
 from .models import Revenue, Notification 
-from home.models import Product, Newsletter, Payment, NewsletterBatch, RelatedImages
+from home.models import Product, Newsletter, Payment, NewsletterBatch, RelatedImages,Category
 from datetime import datetime
 
 #import for emails
@@ -61,6 +61,9 @@ def distribuition(request):
 
 def productManagement(request):
     productFormCreator = ProductForm()
+    categoryFormCreator = CategoryForm()
+    categories = Category.objects.all()
+
     products = Product.objects.all()
 
     if request.method == 'POST':
@@ -71,10 +74,19 @@ def productManagement(request):
                 return redirect(productManagement)  # Redirect to the same page or a success page
             else:
                 print('error')
+        if 'createCategory' in request.POST:
+            categoryFormCreator = CategoryForm(request.POST)
+            if categoryFormCreator.is_valid():
+                categoryFormCreator.save()
+                return redirect(productManagement)
+            else:
+                print('error')
 
     context = {
         'productFormCreator':productFormCreator,
         'products':products,
+        'categoryFormCreator':categoryFormCreator,
+        'categories':categories,
     }
 
     return render(request,'productsManagement.html',context)
@@ -178,3 +190,8 @@ class Notifications_view(View):
             'notifications':notifications,
         }
         return render(request,'notifications.html',context)
+    
+class OrderDetailsView(View):
+
+    def get(self,request,unique_id):
+        return render(request,'orderDetailsView.html')
