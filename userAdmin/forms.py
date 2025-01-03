@@ -1,5 +1,6 @@
 from django import forms
 from home.models import Product, RelatedImages, Category
+from .models import DeliveryPriceByRegion
 
 
 class ProductForm(forms.ModelForm):
@@ -16,3 +17,25 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ['name']
+    
+class DeliveryPriceByRegionForm(forms.ModelForm):
+    class Meta:
+        model = DeliveryPriceByRegion
+        fields = [
+            'delivery_method',
+            'ashanti',
+            'greater_accra',
+            'volta',
+            'western',
+            'eastern',
+            'northern',
+            'upper_east',
+            'upper_west',
+            'bono',
+            'bono_east',
+            'ahafo',
+            'savannah',
+            'western_north',
+            'oti',
+            'central',
+        ]

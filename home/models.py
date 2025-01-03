@@ -122,7 +122,7 @@ class Newsletter(models.Model):
 
 class Payment(models.Model):
     # personal details 
-    
+    unique_id = models.UUIDField(unique=True,editable=False,default=uuid.uuid4)
     first_name = models.CharField(max_length=255,blank=True)
     last_name = models.CharField(max_length=255,blank=True)
     country_code = models.CharField(max_length=255)
@@ -217,7 +217,7 @@ class Contact(models.Model):
     email = models.CharField(max_length=255)
     message = models.TextField()
     notification = models.OneToOneField(Notification,on_delete=models.CASCADE,null=True,blank=True)
-
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Message from {self.first_name}"

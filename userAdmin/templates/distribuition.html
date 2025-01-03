@@ -60,42 +60,49 @@
             <ul class="d-flex align-items-center">
 
 
-                <li class="nav-item dropdown">
-
-                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                        <i class="bi bi-bell"></i>
-                        <span class="badge bg-primary badge-number">1</span>
-                    </a><!-- End Notification Icon -->
-
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-                        <li class="dropdown-header">
-                            You have new notifications
-                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-
-                        <li class="notification-item">
-                            <i class="bi bi-info-circle text-primary"></i>
-                            <div>
-                                <h4>New Order</h4>
-                                <p>GHS 324 Paid for order #PO-0016</p>
-                                <p>4 hrs. ago</p>
-                            </div>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li class="dropdown-footer">
-                            <a href="#">Show all notifications</a>
-                        </li>
-
-                    </ul><!-- End Notification Dropdown Items -->
-
-                </li><!-- End Notification Nav -->
+            <li class="nav-item dropdown">
+            
+                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                    <i class="bi bi-bell"></i>
+                    <span class="badge bg-primary badge-number">{{notifications|length}}</span>
+                </a><!-- End Notification Icon -->
+            
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications"
+                    style="overflow-y: scroll; height: 90vh;">
+                    {% if notifications %}
+                    <li class="dropdown-header">
+                        You have new notifications
+                        <a href="{% url 'notifications' %}"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    {% for notification in notifications %}
+                    <li class="notification-item">
+                        <i class="bi bi-info-circle text-primary"></i>
+                        <div>
+                            <h4>{{notification.title}}</h4>
+                            <p>{{notification.message}}</p>
+                            <p>{{notification.date_created}}</p>
+                        </div>
+                    </li>
+            
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    {% endfor %}
+                    <li class="dropdown-footer">
+                        <a href="{% url 'notifications' %}">Show all notifications</a>
+                    </li>
+                    {% else %}
+                    <li class="dropdown-footer">
+                        <p>No notifications</p>
+                    </li>
+                    {% endif %}
+            
+                </ul><!-- End Notification Dropdown Items -->
+            
+            </li><!-- End Notification Nav -->
 
 
                 <li class="nav-item dropdown pe-3">
@@ -117,26 +124,39 @@
     <aside id="sidebar" class="sidebar">
 
         <ul class="sidebar-nav" id="sidebar-nav">
-
+        
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{% url 'managementDb' %}">
+                <a class="nav-link collapsed " href="{% url 'managementDb' %}">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
             </li><!-- End Dashboard Nav -->
-
-
+        
+        
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{% url 'ordersList' %}">
                     <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Orders List</span>
                 </a>
             </li>
-
+        
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{% url 'productManagement' %}">
                     <i class="bi bi-menu-button-wide"></i>
                     <span>Products Management</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{% url 'messagesReceived' %}">
+                    <i class="bi bi-envelope"></i>
+                    <span>Messages</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{% url 'notifications' %}">
+                    <i class="bi bi-bell"></i>
+                    <span>Notifications</span><span class="badge bg-primary badge-number"
+                        style="margin-left: 10px;">{{notifications|length}}</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -145,14 +165,15 @@
                     <span>Bulk Messaging</span>
                 </a>
             </li>
-
-
-
-
-
-
-
-
+        
+        
+        
+        
+        
+        
+        
+        
+        
         </ul>
 
     </aside><!-- End Sidebar-->
@@ -160,11 +181,11 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Dashboard</h1>
+            <h1>Newsletter Management</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard</li>
+                    <li class="breadcrumb-item active">Newsletter Management</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -256,42 +277,6 @@
                 </div><!-- End Left side columns -->
 
 
-                <!-- Right side columns -->
-                <div class="col-lg-4">
-
-                    <!-- Recent Activity -->
-                    <div class="card">
-
-
-                        <div class="card-body">
-                            <h5 class="card-title">Recent Activity <span>| Today</span></h5>
-
-                            <div class="activity">
-                                <!--                 
-                                <div class="activity-item d-flex">
-                                    <div class="activite-label">32 min</div>
-                                    <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                    <div class="activity-content">
-                                        Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
-                                    </div>
-                                </div>End activity item -->
-                                <div class="activity-item d-flex">
-                                    <div class="activite-label">---</div>
-                                    <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                    <div class="activity-content">
-                                        No activity
-                                    </div>
-                                </div><!-- End activity item-->
-                            </div>
-
-                        </div>
-                    </div><!-- End Recent Activity -->
-
-
-              
-
-
-                </div><!-- End Right side columns -->
 
             </div>
         </section>

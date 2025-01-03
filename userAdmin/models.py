@@ -48,3 +48,31 @@ class Notification(models.Model):
     viewed = models.BooleanField(default=False)
     def __str__(self):
         return self.title
+
+
+from django.db import models
+
+class DeliveryPriceByRegion(models.Model):
+    name = models.CharField(max_length=255,null=True,blank=True)
+    delivery_method = models.CharField(max_length=100, unique=True)  # Delivery method name (e.g., "Standard", "Express")
+    ashanti = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    greater_accra = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    volta = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    western = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    eastern = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    northern = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    upper_east = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    upper_west = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    bono = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    bono_east = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    ahafo = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    savannah = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    western_north = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    oti = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    central = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Delivery Method: {self.delivery_method}"
