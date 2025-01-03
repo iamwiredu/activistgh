@@ -125,6 +125,12 @@
             .notification .close-btn:hover {
                 color: #000;
             }
+
+            /*active box */
+            .single_product_thumbnails ul li.active::after, .single_product_thumbnails ul li:hover::after {
+  visibility: hidden;
+}
+.s
         </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
@@ -257,8 +263,9 @@
                                                 data-image="{{product.image.url}}"></li>
                                        
                                         {% for image in product.relatedImages.all %}
-                                        <li><img src="{{image.image.url}}" alt=""
-                                                data-image="{{image.image.url}}"></li>
+                                        {% if image.image %}
+                                            <li><img src="{{image.image.url}}" alt="" data-image="{{image.image.url}}"></li>
+                                        {% endif %}    
                                         {% endfor %}
                                     </ul>
                                 </div>
@@ -293,9 +300,10 @@
                 <div style="margin-top: 30px;">
                     <label for="size-select">Select Size:</label>
                     <select id="size-select" name="size">
-                        <option value="small">Small</option>
-                        <option value="medium">Medium</option>
-                        <option value="large">Large</option>
+                     {% for size in product.size_set.sizes.all %}
+                        <option value="{{size}}">{{size}}</option>
+                    {% endfor %}
+                        
                     </select>
                 </div>
 

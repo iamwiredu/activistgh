@@ -11,12 +11,19 @@ class Category(models.Model):
         return self.name
     
 
-class Size(models.Model):
-    size = models.CharField(max_length=255)
-    
+
 class SizeSet(models.Model):
     name = models.CharField(max_length=255,null=True,blank=True)
-    sizes = models.ForeignKey(Size,on_delete=models.SET_NULL,null=True,blank=True)
+
+    def __str__(self):
+        return self.name
+   
+class Size(models.Model):
+    size = models.CharField(max_length=255)
+    sizeSet = models.ForeignKey(SizeSet,on_delete=models.SET_NULL,null=True,blank=True, related_name='sizes')
+       
+    def __str__(self):
+        return f'{self.size}'
 
 class Product(models.Model):
     class Meta:
