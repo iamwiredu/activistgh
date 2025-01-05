@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Ordering</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        ul{
+            list-style-type: none;
+            display: flex;
+            flex-direction: column;
+        }
+        li{
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="order-form" method="POST">
+
+        {% csrf_token %}
+        <ul id="product-list">
+            {% for product in products %}
+            <li data-id="{{ product.id }}">
+               <div>
+                <span><img src="{{product.image.url}}" style="width: 40px; height: 40px;" alt=""></span>
+                <span>{{ product.name }}</span>
+               </div>
+               <div>
+                <button type="button" class="move-up">↑</button>
+                <button type="button" class="move-down">↓</button>
+               </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <input type="hidden" name="order" id="order-input">
+        <!-- <button id="viewSubmit">Save Order</button> -->
+        <button type="submit" id="saveOrder">Save Order</button>
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+                // Move the product up
+                document.querySelectorAll(".move-up").forEach(function (button) {
+                    button.addEventListener("click", function () {
+                        const listItem = this.closest("li");
+                        const previousItem = listItem.previousElementSibling;
+                        if (previousItem) {
+                            listItem.parentNode.insertBefore(listItem, previousItem);
+                        }
+                    });
+                });
+
+                // Move the product down
+                document.querySelectorAll(".move-down").forEach(function (button) {
+                    button.addEventListener("click", function () {
+                        const listItem = this.closest("li");
+                        const nextItem = listItem.nextElementSibling;
+                        if (nextItem) {
+                            listItem.parentNode.insertBefore(nextItem, listItem);
+                        }
+                    });
+                });
+
+                // Submit the form with the updated order
+                document.getElementById("order-form").addEventListener("submit", function (e) {
+                    e.preventDefault();
+                    const order = [];
+                    document.querySelectorAll("#product-list li").forEach(function (listItem) {
+                        order.push(listItem.dataset.id);
+                    });
+
+                    const orderInput = document.getElementById("order-input");
+                    orderInput.value = order.join(",");
+
+                    // Perform the AJAX request
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("POST", "", true);
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            const response = JSON.parse(xhr.responseText);
+                            alert(response.message);
+                        }
+                    };
+
+                    const formData = new FormData(document.getElementById("order-form"));
+                    xhr.send(new URLSearchParams(formData).toString());
+                    
+                });
+            });
+
+     </script>
+</body>
+
+</html>

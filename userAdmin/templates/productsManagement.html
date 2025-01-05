@@ -252,7 +252,10 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Product List</h5>
+                                    <div class="display:flex; justify-content: space-between;">
+                                        <h5 class="card-title">Product List</h5>
+                                        <a href="{% url 'product_order'  %}"><button>Order Product</button></a>
+                                    </div>
 
                                     <table class="table table-borderless datatable">
                                         <thead>

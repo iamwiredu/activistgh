@@ -26,19 +26,7 @@ class Size(models.Model):
         return f'{self.size}'
 
 class Product(models.Model):
-    class Meta:
-        ordering = [
-            Case(
-                When(product_category__name='Tees', then=0),
-                When(product_category__name='Slides', then=1),
-                When(product_category__name='Joggers', then=2),
-                When(product_category__name='Caps', then=3),
-                default=4,
-                output_field=IntegerField(),
-            ),
-            'name'  # Secondary ordering by name
-        ]
-    
+ 
     
     name = models.CharField(max_length=255)
     unique_id = models.UUIDField(editable=False,unique=True,default=uuid.uuid4)
@@ -46,7 +34,7 @@ class Product(models.Model):
     product_category = models.ForeignKey(Category,on_delete=models.SET_NULL,null=True,blank=True)
     color_tag = models.CharField(max_length=255,null=True,blank=True)
     description = models.TextField(null=True,blank=True)
-    product_ordering = models.PositiveIntegerField(null=True,blank=True)
+    product_ordering = models.PositiveIntegerField(default=0)
     price = models.DecimalField(max_digits=10, decimal_places=2,null=True,blank=True)
     stock = models.CharField(null=True,blank=True,default=0)
     created_at = models.DateTimeField(auto_now_add=True,null=True)
@@ -55,6 +43,8 @@ class Product(models.Model):
     size_set = models.ForeignKey(SizeSet,on_delete=models.CASCADE,null=True,blank=True)
     size_av = models.BooleanField(default=True)
     
+    class Meta:
+        ordering = ['product_ordering'] 
     
     def __str__(self):
         color_tag = self.color_tag

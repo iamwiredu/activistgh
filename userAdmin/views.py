@@ -13,7 +13,7 @@ from django.core.mail import EmailMultiAlternatives, send_mass_mail
 from django.template.loader import render_to_string
 
 # import view
-
+from django.db.models import F
 from django.views import View
 
 
@@ -202,6 +202,30 @@ def send_emails(request):
     }
     return render(request,'send_email.html')
 
+
+def product_order_view(request):
+    if request.method == "POST":
+        # Fetch the updated order from the POST request
+        order_data = request.POST.getlist('order')
+        try:
+            ids_list = order_data[0].split(',')  # Split the string into a list of IDs
+
+            # Prepare a list of Product objects with updated `product_ordering` values
+            products_to_update = []
+            for index, product_id in enumerate(ids_list):
+                products_to_update.append(Product(id=int(product_id), product_ordering=index))
+
+            # Perform a bulk update
+            Product.objects.bulk_update(products_to_update, ['product_ordering'])
+
+            return JsonResponse({'status': 'success', 'message': 'Product order updated successfully.'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})       
+        
+
+    # Handle the GET request to display the products
+    products = Product.objects.all().order_by('product_ordering')
+    return render(request, 'updateOrdering.html', {'products': products})
 
 # CBV
 
