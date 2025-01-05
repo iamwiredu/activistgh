@@ -18,10 +18,10 @@
     <link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
     <style>
         body {
-           
+
             background-repeat: no-repeat;
             background-size: cover;
-           
+
         }
 
         .slide-cart {
@@ -30,7 +30,7 @@
             bottom: 0;
             width: 50%;
             max-width: 400px;
-            background-color:rgba(255,255,255,0.95);
+            background-color: rgba(255, 255, 255, 0.95);
             opacity: 1;
 
             transform: translateX(-100%);
@@ -74,62 +74,74 @@
             display: none;
             z-index: 12;
         }
-        
-    
+
+
         @media (max-width: 768px) {
-            .slide-cart{
+            .slide-cart {
                 width: 100%;
             }
         }
-       #phone, #email, #fname, #lname{
-        width: 300px; 
-        height: 46px;
-        padding-left: 10px;
-       }
-      #phone::placeholder{
-        margin-left: 20px;
-        padding-left: 20px;
 
-      }
-    #phone::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-      margin-left: 20px;
-        padding-left: 20px;
-    }
-    #phone::-moz-placeholder { /* Firefox 19+ */
-      margin-left: 20px;
-        padding-left: 20px;
-    }
-    #phone:-ms-input-placeholder { /* IE 10+ */
-      margin-left: 20px;
-        padding-left: 20px;
-    }
-    #phone:-moz-placeholder { /* Firefox 18- */
-      margin-left: 20px;
-        padding-left: 20px;
-    }
-    #phone::-webkit-input-placeholder {
-    color: orange;
-    }
-   
+        #phone,
+        #email,
+        #fname,
+        #lname {
+            width: 300px;
+            height: 46px;
+            padding-left: 10px;
+        }
+
+        #phone::placeholder {
+            margin-left: 20px;
+            padding-left: 20px;
+
+        }
+
+        #phone::-webkit-input-placeholder {
+            /* Chrome/Opera/Safari */
+            margin-left: 20px;
+            padding-left: 20px;
+        }
+
+        #phone::-moz-placeholder {
+            /* Firefox 19+ */
+            margin-left: 20px;
+            padding-left: 20px;
+        }
+
+        #phone:-ms-input-placeholder {
+            /* IE 10+ */
+            margin-left: 20px;
+            padding-left: 20px;
+        }
+
+        #phone:-moz-placeholder {
+            /* Firefox 18- */
+            margin-left: 20px;
+            padding-left: 20px;
+        }
+
+        #phone::-webkit-input-placeholder {
+            color: orange;
+        }
     </style>
     <style>
         /* Ensure proper positioning for back image */
-.back-image {
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-}
+        .back-image {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
 
-.product-card:hover .back-image {
-    opacity: 1;
-}
+        .product-card:hover .back-image {
+            opacity: 1;
+        }
 
-.product-card:hover .front-image {
-    opacity: 0;
-}
-
+        .product-card:hover .front-image {
+            opacity: 0;
+        }
     </style>
     <style>
-     .notification {
+        .notification {
             position: fixed;
             top: 20px;
             left: 50%;
@@ -139,16 +151,19 @@
             font-size: 16px;
             width: 300px;
             z-index: 9999;
-            display: none; /* Hidden by default */
+            display: none;
+            /* Hidden by default */
         }
 
         .notification.success {
-            background-color: #28a745; /* Green for success */
+            background-color: #28a745;
+            /* Green for success */
             color: white;
         }
 
         .notification.error {
-            background-color: #dc3545; /* Red for error */
+            background-color: #dc3545;
+            /* Red for error */
             color: white;
         }
 
@@ -166,57 +181,63 @@
         .notification .close-btn:hover {
             color: #000;
         }
-
     </style>
     <style>
         .toggle-container {
-    display: flex;
-    justify-content: right;
-    overflow-x: auto; /* Enable horizontal scrolling */
-    gap: 10px; /* Add spacing between boxes */
-    padding: 10px; /* Add padding to make it look better */
-    scrollbar-width: none; /* For Firefox, hides scrollbar */
-    -ms-overflow-style: none; /* For Internet Explorer and Edge */
-}
+            display: flex;
+            justify-content: right;
+            overflow-x: auto;
+            /* Enable horizontal scrolling */
+            gap: 10px;
+            /* Add spacing between boxes */
+            padding: 10px;
+            /* Add padding to make it look better */
+            scrollbar-width: none;
+            /* For Firefox, hides scrollbar */
+            -ms-overflow-style: none;
+            /* For Internet Explorer and Edge */
+        }
 
-.toggle-container::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari, and Opera */
-}
+        .toggle-container::-webkit-scrollbar {
+            display: none;
+            /* For Chrome, Safari, and Opera */
+        }
 
-.toggle-box {
-    padding: 8px 16px;
-    border: 1px solid grey;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-    white-space: nowrap; /* Prevent text from wrapping */
-}
-.toggle-box:hover{
-    background-color: grey;
-    color: white;
-    font-weight: bold;
-}
+        .toggle-box {
+            padding: 8px 16px;
+            border: 1px solid grey;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            white-space: nowrap;
+            /* Prevent text from wrapping */
+        }
 
-.toggle-box.active {
-    background-color: grey;
-    color: white;
-    font-weight: bold;
-}
+        .toggle-box:hover {
+            background-color: grey;
+            color: white;
+            font-weight: bold;
+        }
 
-</style>
+        .toggle-box.active {
+            background-color: grey;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
 
-<!-- links fro phone -->
+    <!-- links fro phone -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
 </head>
 
 <body>
-<div id="notification" class="notification">
-    <button class="close-btn" onclick="closeNotification()">×</button>
-    <span id="notification-message"></span>
-</div>
+    <div id="notification" class="notification">
+        <button class="close-btn" onclick="closeNotification()">×</button>
+        <span id="notification-message"></span>
+    </div>
 
     <div class="overlay" id="overlay"></div>
 
@@ -224,7 +245,7 @@
 
         <!-- Header -->
 
-        <header class="header trans_300" id="navbar" >
+        <header class="header trans_300" id="navbar">
 
             <!-- Top Navigation -->
 
@@ -245,9 +266,9 @@
 
             <!-- Main Navigation -->
 
-     
 
-            <div class="main_nav_container" >
+
+            <div class="main_nav_container">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12 text-right">
@@ -263,7 +284,7 @@
                                 </ul>
                                 <ul class="navbar_user">
 
-                                    
+
                                     <li class="checkout" id="cart-btn">
                                         <a href="#">
                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -281,18 +302,18 @@
             </div>
 
         </header>
-               <!-- Sliding Cart -->
-            <div class="slide-cart" id="cart" style="height: 100vh;">
-                <div style="display: flex; justify-content: space-between;align-items: center; padding: 50px;">
-                    <div id="bag-header">CART</div>
-                    <div class="hamburger_close" id="close-cart-button"><i class="fa fa-times" aria-hidden="true"></i></div>
-                </div>
-                
-                <hr>
-                <div id="cartBox" style="overflow-y: auto; max-height: 90vh; ">
-
-                </div>
+        <!-- Sliding Cart -->
+        <div class="slide-cart" id="cart" style="height: 100vh;">
+            <div style="display: flex; justify-content: space-between;align-items: center; padding: 50px;">
+                <div id="bag-header">CART</div>
+                <div class="hamburger_close" id="close-cart-button"><i class="fa fa-times" aria-hidden="true"></i></div>
             </div>
+
+            <hr>
+            <div id="cartBox" style="overflow-y: auto; max-height: 90vh; ">
+
+            </div>
+        </div>
 
         <div class="fs_menu_overlay"></div>
         <div class="hamburger_menu">
@@ -313,54 +334,57 @@
 
             <!-- ✅ Grid Section - Starts Here 👇 -->
             <!-- ✅ Grid Section - Starts Here 👇 -->
-            <div class="toggle-container" style="margin-top: 20px;" >
+            <div class="toggle-container" style="margin-top: 20px;">
                 <div class="toggle-box" data-filter="All">All</div>
-               {% for category in categories %}
-                    <div class="toggle-box" data-filter="{{category.name}}">{{category.name}}</div>
+                {% for category in categories %}
+                <div class="toggle-box" data-filter="{{category.name}}">{{category.name}}</div>
                 {% endfor %}
                 <div class="toggle-box" data-filter="Women">Women</div>
                 <div class="toggle-box" data-filter="Events">Events</div>
-             
+
             </div>
 
             <section
                 class="container mx-auto px-4 grid grid-cols-2 gap-y-8 gap-x-4 sm:gap-y-10 sm:gap-x-8 md:grid-cols-2 lg:grid-cols-3 md:gap-y-14 lg:gap-y-20 md:gap-x-10 lg:gap-x-14 mt-10 mb-5">
-{% for product in products %}
-<!-- ✅ Product Card - Starts Here 👇 -->
-<div
-    class="max-w-xs rounded-xl duration-500 hover:scale-105 flex flex-col {{ product.product_category }} product-card {% if product.product_category.name == 'Tees' %} Women {% endif %} "  >
-    <a href="{% url 'productDetailPage' product.unique_id %}" class="flex flex-col h-full relative">
-        <!-- Product Image -->
-        <div class="relative h-56 sm:h-80 w-full rounded-t-xl overflow-hidden">
-            <img src="{{ product.image.url }}" alt="Product Front"
-                class="h-full w-full object-cover rounded-t-xl product-image" loading="lazy">
-            {% if product.relatedImages.all.0.image %}
-            <img src="{{ product.relatedImages.all.0.image.url}}" alt=""    class="h-full w-full object-cover rounded-t-xl product-image" loading="lazy">
-            {% endif %}
-        
-        </div>
+                {% for product in products %}
+                <!-- ✅ Product Card - Starts Here 👇 -->
+                <div
+                    class="max-w-xs rounded-xl duration-500 hover:scale-105 flex flex-col {{ product.product_category }} product-card {% if product.product_category.name == 'Tees' %} Women {% endif %} ">
+                    <a href="{% url 'productDetailPage' product.unique_id %}" class="flex flex-col h-full relative">
+                        <!-- Product Image -->
+                        <div class="relative h-56 sm:h-80 w-full rounded-t-xl overflow-hidden">
+                            <img src="{{ product.image.url }}" alt="Product Front"
+                                class="h-full w-full object-cover rounded-t-xl product-image" loading="lazy">
+                            {% if product.relatedImages.all.0.image %}
+                            <img src="{{ product.relatedImages.all.0.image.url}}" alt=""
+                                class="h-full w-full object-cover rounded-t-xl product-image" loading="lazy">
+                            {% endif %}
 
-        <!-- "Sold Out" Icon -->
-        {% if product.stock == '0' %}
-        <div class="absolute top-2 right-2 bg-red-500 text-white text-xs sm:text-sm px-2 py-1 rounded-lg font-bold z-1">
-            Sold Out
-        </div>
-        {% endif %}
+                        </div>
 
-        <!-- Product Details -->
-        <div class="px-4 py-3">
-            <div class="mb-4">
-                <p class="text-sm sm:text-sm font-bold text-black capitalize min-h-[3rem] sm:min-h-[4rem]"
-                    style="text-align: center;">
-                    {{ product.name }}
-                </p>
-                <p class="text-sm sm:text-lg font-bold" style="text-align: center;">GHS {{ product.price }}</p>
-            </div>
-        </div>
-    </a>
-</div>
-<!-- 🛑 Product Card - Ends Here -->
-{% endfor %}
+                        <!-- "Sold Out" Icon -->
+                        {% if product.stock == '0' %}
+                        <div
+                            class="absolute top-2 right-2 bg-red-500 text-white text-xs sm:text-sm px-2 py-1 rounded-lg font-bold z-1">
+                            Sold Out
+                        </div>
+                        {% endif %}
+
+                        <!-- Product Details -->
+                        <div class="px-4 py-3">
+                            <div class="mb-4">
+                                <p class="text-sm sm:text-sm font-bold text-black capitalize min-h-[3rem] sm:min-h-[4rem]"
+                                    style="text-align: center;">
+                                    {{ product.name }}
+                                </p>
+                                <p class="text-sm sm:text-lg font-bold" style="text-align: center;">GHS {{ product.price
+                                    }}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- 🛑 Product Card - Ends Here -->
+                {% endfor %}
 
                 {% for event in events %}
                 <div class="max-w-xs  rounded-xl duration-500 hover:scale-105 flex flex-col product-card Events">
@@ -400,22 +424,25 @@
 
         <div class="newsletter">
             <div class="container">
-                <div  style="display: flex; flex-direction: column;">
-                    <img src="{% static 'img/categories/logo.png' %}" style="width: 300px; height: auto; margin: 0 auto;" alt="">
+                <div style="display: flex; flex-direction: column;">
+                    <img src="{% static 'img/categories/logo.png' %}"
+                        style="width: 300px; height: auto; margin: 0 auto;" alt="">
                     <div style="display: flex; justify-content: center; gap: 8px;">
                         <span>
-                            <svg fill="#000000" width="25px" height="25px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <title>tiktok</title>
-                                <path
-                                    d="M16.656 1.029c1.637-0.025 3.262-0.012 4.886-0.025 0.054 2.031 0.878 3.859 2.189 5.213l-0.002-0.002c1.411 1.271 3.247 2.095 5.271 2.235l0.028 0.002v5.036c-1.912-0.048-3.71-0.489-5.331-1.247l0.082 0.034c-0.784-0.377-1.447-0.764-2.077-1.196l0.052 0.034c-0.012 3.649 0.012 7.298-0.025 10.934-0.103 1.853-0.719 3.543-1.707 4.954l0.020-0.031c-1.652 2.366-4.328 3.919-7.371 4.011l-0.014 0c-0.123 0.006-0.268 0.009-0.414 0.009-1.73 0-3.347-0.482-4.725-1.319l0.040 0.023c-2.508-1.509-4.238-4.091-4.558-7.094l-0.004-0.041c-0.025-0.625-0.037-1.25-0.012-1.862 0.49-4.779 4.494-8.476 9.361-8.476 0.547 0 1.083 0.047 1.604 0.136l-0.056-0.008c0.025 1.849-0.050 3.699-0.050 5.548-0.423-0.153-0.911-0.242-1.42-0.242-1.868 0-3.457 1.194-4.045 2.861l-0.009 0.030c-0.133 0.427-0.21 0.918-0.21 1.426 0 0.206 0.013 0.41 0.037 0.61l-0.002-0.024c0.332 2.046 2.086 3.59 4.201 3.59 0.061 0 0.121-0.001 0.181-0.004l-0.009 0c1.463-0.044 2.733-0.831 3.451-1.994l0.010-0.018c0.267-0.372 0.45-0.822 0.511-1.311l0.001-0.014c0.125-2.237 0.075-4.461 0.087-6.698 0.012-5.036-0.012-10.060 0.025-15.083z">
-                                </path>
-                            </g>
-                        </svg></span>
+                            <svg fill="#000000" width="25px" height="25px" viewBox="0 0 32 32" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <title>tiktok</title>
+                                    <path
+                                        d="M16.656 1.029c1.637-0.025 3.262-0.012 4.886-0.025 0.054 2.031 0.878 3.859 2.189 5.213l-0.002-0.002c1.411 1.271 3.247 2.095 5.271 2.235l0.028 0.002v5.036c-1.912-0.048-3.71-0.489-5.331-1.247l0.082 0.034c-0.784-0.377-1.447-0.764-2.077-1.196l0.052 0.034c-0.012 3.649 0.012 7.298-0.025 10.934-0.103 1.853-0.719 3.543-1.707 4.954l0.020-0.031c-1.652 2.366-4.328 3.919-7.371 4.011l-0.014 0c-0.123 0.006-0.268 0.009-0.414 0.009-1.73 0-3.347-0.482-4.725-1.319l0.040 0.023c-2.508-1.509-4.238-4.091-4.558-7.094l-0.004-0.041c-0.025-0.625-0.037-1.25-0.012-1.862 0.49-4.779 4.494-8.476 9.361-8.476 0.547 0 1.083 0.047 1.604 0.136l-0.056-0.008c0.025 1.849-0.050 3.699-0.050 5.548-0.423-0.153-0.911-0.242-1.42-0.242-1.868 0-3.457 1.194-4.045 2.861l-0.009 0.030c-0.133 0.427-0.21 0.918-0.21 1.426 0 0.206 0.013 0.41 0.037 0.61l-0.002-0.024c0.332 2.046 2.086 3.59 4.201 3.59 0.061 0 0.121-0.001 0.181-0.004l-0.009 0c1.463-0.044 2.733-0.831 3.451-1.994l0.010-0.018c0.267-0.372 0.45-0.822 0.511-1.311l0.001-0.014c0.125-2.237 0.075-4.461 0.087-6.698 0.012-5.036-0.012-10.060 0.025-15.083z">
+                                    </path>
+                                </g>
+                            </svg></span>
                         <span>
-                            <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                 <g id="SVGRepo_iconCarrier">
@@ -433,42 +460,44 @@
                         </span>
                     </div>
                     <div style="display: flex; flex-direction:column; align-items: center; justify-content: center;">
-                            <div>newsletter</div>
-                           <form method="POST" action="{% url 'shop' %}" id="newsletterForm" onsubmit="process(event)">
+                        <div>newsletter</div>
+                        <form method="POST" action="{% url 'shop' %}" id="newsletterForm" onsubmit="process(event)">
                             {% csrf_token %}
-                    <div
-                        style="max-width: 400px; margin: 20px auto; padding: 20px; ">
-                        <input type="text" name="fname" id="fname" placeholder="First Name"
-                            style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
-                         <input type="text" name="lname" id="lname" placeholder="Last Name"
-                            style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
-                        
-                            <input type="email" id="email" placeholder="Email" required="required" data-error="Valid email is required."
-                            name="email" style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
-                                      
-                            <input type="text" class="form-control" aria-label="Small" id="phone" name="phone" aria-describedby="inputGroup-sizing-sm"
-                            style="width: 360px; margin-bottom: 10px; padding: 10px; padding-left: 45px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
-                            
-                            <button id="demo_btn"  class="newsletter_submit_btn trans_300" 
-                                style="background-color:#fe4c00; margin-top: 10px; width: 100%; padding: 10px; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
-                                Subscribe
-                            </button>
+                            <div style="max-width: 400px; margin: 20px auto; padding: 20px; ">
+                                <input type="text" name="fname" id="fname" placeholder="First Name"
+                                    style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+                                <input type="text" name="lname" id="lname" placeholder="Last Name"
+                                    style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
 
-                            <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit" name="subscribe"
-                            style="background-color:#fe4c00; display: none; width: 100%; padding: 10px; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
-                            Subscribe
-                        </button>
-                    </div>
+                                <input type="email" id="email" placeholder="Email" required="required"
+                                    data-error="Valid email is required." name="email"
+                                    style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+
+                                <input type="text" class="form-control" aria-label="Small" id="phone" name="phone"
+                                    aria-describedby="inputGroup-sizing-sm"
+                                    style="width: 360px; margin-bottom: 10px; padding: 10px; padding-left: 45px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+
+                                <button id="demo_btn" class="newsletter_submit_btn trans_300"
+                                    style="background-color:#fe4c00; margin-top: 10px; width: 100%; padding: 10px; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
+                                    Subscribe
+                                </button>
+
+                                <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300"
+                                    value="Submit" name="subscribe"
+                                    style="background-color:#fe4c00; display: none; width: 100%; padding: 10px; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
+                                    Subscribe
+                                </button>
+                            </div>
 
                         </form>
                     </div>
 
                 </div>
-              
+
                 <div class="row">
                     <footer class="footer">
                         <div class="container">
-                           
+
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="footer_nav_container">
@@ -478,7 +507,7 @@
                             </div>
                         </div>
                     </footer>
-        
+
                 </div>
             </div>
         </div>
@@ -490,37 +519,37 @@
     <script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
 
     <script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
-    
+
     <script src="{% static 'js/custom.js' %}"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-                // Select all product cards
-                const productCards = document.querySelectorAll(".product-card");
+            // Select all product cards
+            const productCards = document.querySelectorAll(".product-card");
 
-                productCards.forEach((card) => {
-                    // Find all images within the card
-                    const images = card.querySelectorAll(".product-image");
-                    if (images.length === 2) { // Ensure there are both front and back images
-                        const frontImage = images[0];
-                        const backImage = images[1];
+            productCards.forEach((card) => {
+                // Find all images within the card
+                const images = card.querySelectorAll(".product-image");
+                if (images.length === 2) { // Ensure there are both front and back images
+                    const frontImage = images[0];
+                    const backImage = images[1];
 
-                        // Hide the back image initially
+                    // Hide the back image initially
+                    backImage.style.display = "none";
+
+                    // Add hover event listeners
+                    card.addEventListener("mouseenter", () => {
+                        frontImage.style.display = "none";
+                        backImage.style.display = "block";
+                    });
+
+                    card.addEventListener("mouseleave", () => {
                         backImage.style.display = "none";
-
-                        // Add hover event listeners
-                        card.addEventListener("mouseenter", () => {
-                            frontImage.style.display = "none";
-                            backImage.style.display = "block";
-                        });
-
-                        card.addEventListener("mouseleave", () => {
-                            backImage.style.display = "none";
-                            frontImage.style.display = "block";
-                        });
-                    }
-                });
+                        frontImage.style.display = "block";
+                    });
+                }
             });
+        });
 
     </script>
     <script>
@@ -537,20 +566,20 @@
             document.getElementById('newsletter_submit').click();
 
         });
-        
+
     </script>
     <script>
         const cart = document.getElementById('cart')
         const cartBtn = document.getElementById('cart-btn');
-       
+
         var closeCart = document.getElementById('close-cart-button')
-        closeCart.onclick = () =>{
+        closeCart.onclick = () => {
             cart.classList.remove('active');
             overlay.style.display = 'none';
             document.body.style.overflowY = 'scroll'
         }
 
-       
+
 
         const overlay = document.getElementById('overlay');
         cartBtn.addEventListener('click', () => {
@@ -559,7 +588,7 @@
             document.body.style.overflowY = 'hidden'
         });
 
-  
+
         overlay.addEventListener('click', () => {
 
             cart.classList.remove('active');
@@ -649,34 +678,34 @@
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-                const toggleBoxes = document.querySelectorAll(".toggle-box");
-                const productCards = document.querySelectorAll(".product-card");
+            const toggleBoxes = document.querySelectorAll(".toggle-box");
+            const productCards = document.querySelectorAll(".product-card");
 
-                toggleBoxes.forEach((box) => {
-                    box.addEventListener("click", () => {
-                        // Remove 'active' class from all toggle boxes
-                        toggleBoxes.forEach((box) => box.classList.remove("active"));
+            toggleBoxes.forEach((box) => {
+                box.addEventListener("click", () => {
+                    // Remove 'active' class from all toggle boxes
+                    toggleBoxes.forEach((box) => box.classList.remove("active"));
 
-                        // Add 'active' class to the clicked box
-                        box.classList.add("active");
+                    // Add 'active' class to the clicked box
+                    box.classList.add("active");
 
-                        // Get the filter value
-                        const filter = box.getAttribute("data-filter");
+                    // Get the filter value
+                    const filter = box.getAttribute("data-filter");
 
-                        // Show/Hide product cards based on filter
-                        productCards.forEach((card) => {
-                            if (filter === "All" || card.classList.contains(filter)) {
-                                card.style.display = "flex"; // Show the card
-                            } else {
-                                card.style.display = "none"; // Hide the card
-                            }
-                        });
+                    // Show/Hide product cards based on filter
+                    productCards.forEach((card) => {
+                        if (filter === "All" || card.classList.contains(filter)) {
+                            card.style.display = "flex"; // Show the card
+                        } else {
+                            card.style.display = "none"; // Hide the card
+                        }
                     });
                 });
-
-                // Trigger "All" by default
-                document.querySelector(".toggle-box[data-filter='All']").click();
             });
+
+            // Trigger "All" by default
+            document.querySelector(".toggle-box[data-filter='All']").click();
+        });
 
     </script>
     <script>
