@@ -33,13 +33,14 @@
 
 <body>
     <form id="order-form" method="POST">
-
         {% csrf_token %}
         <ul id="product-list">
             {% for product in products %}
             <li data-id="{{ product.id }}" draggable="true">
                 <div>
-                    <span><img src="{{product.image.url}}" style="width: 40px; height: 40px;" alt=""></span>
+                    {% if product.image.url %}
+                    <span><img src="{{ product.image.url }}" style="width: 40px; height: 40px;" alt=""></span>
+                    {% endif %}
                     <span>{{ product.name }}</span>
                 </div>
             </li>
@@ -53,23 +54,24 @@
         document.addEventListener("DOMContentLoaded", function () {
             const productList = document.getElementById("product-list");
             let draggedItem = null;
+            let touchStartY = 0;
 
-            // Handle drag start
+            // Handle drag start for desktop
             productList.addEventListener("dragstart", function (e) {
                 draggedItem = e.target;
                 e.target.classList.add("dragging");
             });
 
-            // Handle drag end
+            // Handle drag end for desktop
             productList.addEventListener("dragend", function (e) {
                 e.target.classList.remove("dragging");
                 draggedItem = null;
             });
 
-            // Handle drag over
+            // Handle drag over for desktop
             productList.addEventListener("dragover", function (e) {
                 e.preventDefault();
-                const afterElement = getDragAfterElement(productList, e.clientY);
+                const afterElement = getAfterElement(productList, e.clientY);
                 if (afterElement == null) {
                     productList.appendChild(draggedItem);
                 } else {
@@ -77,8 +79,36 @@
                 }
             });
 
-            // Helper function to get the element after the drag position
-            function getDragAfterElement(container, y) {
+            // Handle touch start for mobile
+            productList.addEventListener("touchstart", function (e) {
+                const touch = e.touches[0];
+                touchStartY = touch.clientY;
+                draggedItem = e.target.closest("li");
+                if (draggedItem) draggedItem.classList.add("dragging");
+            });
+
+            // Handle touch move for mobile
+            productList.addEventListener("touchmove", function (e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const afterElement = getAfterElement(productList, touch.clientY);
+                if (draggedItem) {
+                    if (afterElement == null) {
+                        productList.appendChild(draggedItem);
+                    } else {
+                        productList.insertBefore(draggedItem, afterElement);
+                    }
+                }
+            });
+
+            // Handle touch end for mobile
+            productList.addEventListener("touchend", function (e) {
+                if (draggedItem) draggedItem.classList.remove("dragging");
+                draggedItem = null;
+            });
+
+            // Helper function to determine the element after the drag/touch position
+            function getAfterElement(container, y) {
                 const draggableElements = [...container.querySelectorAll("li:not(.dragging)")];
 
                 return draggableElements.reduce(
