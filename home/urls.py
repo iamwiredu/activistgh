@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, Events,productDetailPage, shop, checkout, contactPage, makePayment, orderSuccess
+from .views import home,productDetailPage, shop, checkout, contactPage, makePayment, orderSuccess
 urlpatterns = [
     path('',home,name='home'),
     path('product/<str:unique_id>/',productDetailPage,name='productDetailPage'),
@@ -8,5 +8,5 @@ urlpatterns = [
     path('contactPage/',contactPage,name="contact"),
     path('makePayment/<str:ref>/',makePayment,name='makePayment'),
     path('orderSuccess/<str:ref>/',orderSuccess,name='orderSuccess'),
-    path('events/',Events.as_view(),name='events'),
+
 ]

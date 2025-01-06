@@ -1,0 +1,163 @@
+body {
+    background-repeat: no-repeat;
+    background-size: cover
+}
+
+.slide-cart {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    max-width: 400px;
+    background-color: rgba(255, 255, 255, .95);
+    opacity: 1;
+    transform: translateX(-100%);
+    transition: transform .3s ease-in-out;
+    z-index: 1000
+}
+
+.slide-cart {
+    right: 0;
+    transform: translateX(100%)
+}
+
+.slide-cart.active {
+    transform: translateX(0)
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 20px;
+    cursor: pointer
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .5);
+    display: none;
+    z-index: 12
+}
+
+@media(max-width:768px) {
+    .slide-cart {
+        width: 100%
+    }
+}
+
+#phone,
+#email,
+#fname,
+#lname {
+    width: 300px;
+    height: 46px;
+    padding-left: 10px
+}
+
+#phone::placeholder,
+#phone::-webkit-input-placeholder,
+#phone::-moz-placeholder,
+#phone:-ms-input-placeholder,
+#phone:-moz-placeholder {
+    margin-left: 20px;
+    padding-left: 20px
+}
+
+#phone::-webkit-input-placeholder {
+    color: orange
+}
+
+.back-image {
+    opacity: 0;
+    transition: opacity .5s ease-in-out
+}
+
+.product-card:hover .back-image {
+    opacity: 1
+}
+
+.product-card:hover .front-image {
+    opacity: 0
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 300px;
+    z-index: 9999;
+    display: none
+}
+
+.notification.success {
+    background-color: #28a745;
+    color: white
+}
+
+.notification.error {
+    background-color: #dc3545;
+    color: white
+}
+
+.notification .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer
+}
+
+.toggle-container {
+    display: flex;
+    justify-content: right;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 10px;
+    scrollbar-width: none;
+    -ms-overflow-style: none
+}
+
+.toggle-container::-webkit-scrollbar {
+    display: none
+}
+
+.toggle-box {
+    padding: 8px 16px;
+    border: 1px solid grey;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color .3s, color .3s;
+    white-space: nowrap
+}
+
+.toggle-box:hover {
+    background-color: grey;
+    color: white;
+    font-weight: bold
+}
+
+.toggle-box.active {
+    background-color: grey;
+    color: white;
+    font-weight: bold
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px
+}

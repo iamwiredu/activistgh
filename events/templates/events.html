@@ -3,520 +3,696 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <title>Strangers</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Colo Shop Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+    <link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: "Inter", sans-serif;
+
+            background-repeat: no-repeat;
+            background-size: cover;
+
         }
 
-        .formbold-main-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 48px;
-        }
-
-        .formbold-form-wrapper {
-            margin: 0 auto;
-            max-width: 550px;
-            width: 100%;
-            background: white;
-        }
-
-        .formbold-steps {
-            padding-bottom: 18px;
-            margin-bottom: 35px;
-            border-bottom: 1px solid #DDE3EC;
-        }
-
-        .formbold-steps ul {
-            padding: 0;
-            margin: 0;
-            list-style: none;
-            display: flex;
-            gap: 40px;
-        }
-
-        .formbold-steps li {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 24px;
-            color: #536387;
-        }
-
-        .formbold-steps li span {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #DDE3EC;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 24px;
-            color: #536387;
-        }
-
-        .formbold-steps li.active {
-            color: #07074D;
-            ;
-        }
-
-        .formbold-steps li.active span {
-            background: #d01696;
-            color: #FFFFFF;
-        }
-
-        .formbold-input-flex {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 22px;
-        }
-
-        .formbold-input-flex>div {
+        .slide-cart {
+            position: fixed;
+            top: 0;
+            bottom: 0;
             width: 50%;
+            max-width: 400px;
+            background-color: rgba(255, 255, 255, 0.95);
+            opacity: 1;
+
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
         }
 
-        .formbold-form-input {
+
+        .slide-cart {
+            right: 0;
+            transform: translateX(100%);
+        }
+
+        .slide-menu.active {
+            transform: translateX(0);
+        }
+
+        .slide-cart.active {
+            transform: translateX(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .slide-cart.active {
+            transform: translateX(0);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            padding: 13px 22px;
-            border-radius: 5px;
-            border: 1px solid #DDE3EC;
-            background: #FFFFFF;
-            font-weight: 500;
-            font-size: 16px;
-            color: #536387;
-            outline: none;
-            resize: none;
-        }
-
-        .formbold-form-input:focus {
-            border-color: #d01696;
-            box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
-        }
-
-        .formbold-form-label {
-            color: #07074D;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 24px;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .formbold-form-confirm {
-            border-bottom: 1px solid #DDE3EC;
-            padding-bottom: 35px;
-        }
-
-        .formbold-form-confirm p {
-            font-size: 16px;
-            line-height: 24px;
-            color: #536387;
-            margin-bottom: 22px;
-            width: 75%;
-        }
-
-        .formbold-form-confirm>div {
-            display: flex;
-            gap: 15px;
-        }
-
-        .formbold-confirm-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #FFFFFF;
-            border: 0.5px solid #DDE3EC;
-            border-radius: 5px;
-            font-size: 16px;
-            line-height: 24px;
-            color: #536387;
-            cursor: pointer;
-            padding: 10px 20px;
-            transition: all .3s ease-in-out;
-        }
-
-        .formbold-confirm-btn {
-            box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.12);
-        }
-
-        .formbold-confirm-btn.active {
-            background: #d01696;
-            color: #FFFFFF;
-        }
-
-        .formbold-form-step-1,
-        .formbold-form-step-2,
-        .formbold-form-step-3 {
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
             display: none;
+            z-index: 12;
         }
 
-        .formbold-form-step-1.active,
-        .formbold-form-step-2.active,
-        .formbold-form-step-3.active {
-            display: block;
+
+        @media (max-width: 768px) {
+            .slide-cart {
+                width: 100%;
+            }
         }
 
-        .formbold-form-btn-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 25px;
-            margin-top: 25px;
+        #phone,
+        #email,
+        #fname,
+        #lname {
+            width: 300px;
+            height: 46px;
+            padding-left: 10px;
         }
 
-        .formbold-back-btn {
-            cursor: pointer;
-            background: #FFFFFF;
-            border: none;
-            color: #07074D;
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 24px;
-            display: none;
+        #phone::placeholder {
+            margin-left: 20px;
+            padding-left: 20px;
+
         }
 
-        .formbold-back-btn.active {
-            display: block;
+        #phone::-webkit-input-placeholder {
+            /* Chrome/Opera/Safari */
+            margin-left: 20px;
+            padding-left: 20px;
         }
 
-        .formbold-btn {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 16px;
-            border-radius: 5px;
-            padding: 10px 25px;
-            border: none;
-            font-weight: 500;
-            background-color: #d01696;
-            color: white;
-            cursor: pointer;
+        #phone::-moz-placeholder {
+            /* Firefox 19+ */
+            margin-left: 20px;
+            padding-left: 20px;
         }
 
-        .formbold-btn:hover {
-            box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+        #phone:-ms-input-placeholder {
+            /* IE 10+ */
+            margin-left: 20px;
+            padding-left: 20px;
+        }
+
+        #phone:-moz-placeholder {
+            /* Firefox 18- */
+            margin-left: 20px;
+            padding-left: 20px;
+        }
+
+        #phone::-webkit-input-placeholder {
+            color: orange;
         }
     </style>
+    <style>
+        /* Ensure proper positioning for back image */
+        .back-image {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .product-card:hover .back-image {
+            opacity: 1;
+        }
+
+        .product-card:hover .front-image {
+            opacity: 0;
+        }
+    </style>
+    <style>
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 300px;
+            z-index: 9999;
+            display: none;
+            /* Hidden by default */
+        }
+
+        .notification.success {
+            background-color: #28a745;
+            /* Green for success */
+            color: white;
+        }
+
+        .notification.error {
+            background-color: #dc3545;
+            /* Red for error */
+            color: white;
+        }
+
+        .notification .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .notification .close-btn:hover {
+            color: #000;
+        }
+    </style>
+    <style>
+        .toggle-container {
+            display: flex;
+            justify-content: right;
+            overflow-x: auto;
+            /* Enable horizontal scrolling */
+            gap: 10px;
+            /* Add spacing between boxes */
+            padding: 10px;
+            /* Add padding to make it look better */
+            scrollbar-width: none;
+            /* For Firefox, hides scrollbar */
+            -ms-overflow-style: none;
+            /* For Internet Explorer and Edge */
+        }
+
+        .toggle-container::-webkit-scrollbar {
+            display: none;
+            /* For Chrome, Safari, and Opera */
+        }
+
+        .toggle-box {
+            padding: 8px 16px;
+            border: 1px solid grey;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            white-space: nowrap;
+            /* Prevent text from wrapping */
+        }
+
+        .toggle-box:hover {
+            background-color: grey;
+            color: white;
+            font-weight: bold;
+        }
+
+        .toggle-box.active {
+            background-color: grey;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+
+    <!-- links fro phone -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
 </head>
 
 <body>
-    <div style="top:0; left: 0; right: 0; position: relative;">
-        <img src="{% static  'EventImage.jpg' %}" alt="" style="width: 100%; height: auto; margin-bottom: 50px;">
+    <div id="notification" class="notification">
+        <button class="close-btn" onclick="closeNotification()">×</button>
+        <span id="notification-message"></span>
     </div>
-    <div class="formbold-main-wrapper" style="display: flex; align-items: center; justify-content: center; margin: 0;">
-        <div class="formbold-form-wrapper">
-            <div style="display: flex; justify-content: right;">
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="super_container">
+
+        <!-- Header -->
+
+        <header class="header trans_300" id="navbar">
+
+            <!-- Top Navigation -->
+
+            <div class="top_nav">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="top_nav_left">They Don't Know Us.</div>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <div class="top_nav_right">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Navigation -->
+
+
+
+            <div class="main_nav_container">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-right">
+                            <div class="logo_container">
+                                <a href="#"><img style="width: 100px; height: auto;"
+                                        src="{% static 'img/categories/wordlogo.png' %}" alt=""></a>
+                            </div>
+                            <nav class="navbar">
+                                <ul class="navbar_menu">
+                                    <li><a href="{% url 'home' %}">home</a></li>
+                                    <li><a href="{% url 'shop' %}">shop</a></li>
+                                    <li><a href="{% url 'events' %}">Events</a></li>
+                                    <li><a href="{% url 'contact' %}">contact</a></li>
+                                </ul>
+                                <ul class="navbar_user">
+
+
+                                    <li class="checkout" id="cart-btn">
+                                        <a href="#">
+                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                            <span id="checkout_items" class="checkout_items" id="cart-total">0</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="hamburger_container">
+                                    <i class="fa fa-bars" aria-hidden="true"></i>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+        <!-- Sliding Cart -->
+        <div class="slide-cart" id="cart" style="height: 100vh;">
+            <div style="display: flex; justify-content: space-between;align-items: center; padding: 50px;">
+                <div id="bag-header">CART</div>
+                <div class="hamburger_close" id="close-cart-button"><i class="fa fa-times" aria-hidden="true"></i></div>
+            </div>
+
+            <hr>
+            <div id="cartBox" style="overflow-y: auto; max-height: 90vh; ">
 
             </div>
-            <form action="" method="POST">
-                <div class="formbold-steps">
-                    <ul>
-                        <li class="formbold-step-menu1 active">
-                            <span>1</span>
-                            Create Request
-                        </li>
-                        <li class="formbold-step-menu2">
-                            <span>2</span>
-                            Make Payment
-                        </li>
-                        <li class="formbold-step-menu3">
-                            <span>3</span>
-                            Get Ticket
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="formbold-form-step-1 active">
-                    <div class="formbold-input-flex">
-                        <div>
-                            <label for="firstname" class="formbold-form-label"> First name </label>
-                            <input type="text" name="firstname" placeholder="First Name" id="firstname"
-                                class="formbold-form-input" required />
-                        </div>
-                        <div>
-                            <label for="lastname" class="formbold-form-label"> Last name </label>
-                            <input type="text" name="lastname" placeholder="Last Name" id="lastname"
-                                class="formbold-form-input" />
-                        </div>
-                    </div>
-
-                    <div class="formbold-input-flex">
-                        <div>
-                            <label for="dob" class="formbold-form-label">Phone</label>
-                            <input id="phone" type="tel" name="phone" style="min-width: 100%;"
-                                class="formbold-form-input" />
-                        </div>
-                        <div>
-                            <label for="email" class="formbold-form-label"> Email Address </label>
-                            <input type="email" name="email" placeholder="Email Address" id="email"
-                                class="formbold-form-input" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="formbold-form-step-2">
-                    <div style="display: flex; justify-content: center;">
-                        <span onclick="PaywithPaystack()"
-                            style="padding: 10px; border-radius: 10px;  background-color: #d01696; color: white;">Pay
-                            with Paystack</span>
-                    </div>
-                </div>
-
-                <div class="formbold-form-step-3">
-                    <div class="formbold-form-confirm">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
-                        </p>
-
-                        <div>
-                            <button class="formbold-confirm-btn active">
-                                <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="11" cy="11" r="10.5" fill="white" stroke="#DDE3EC" />
-                                    <g clip-path="url(#clip0_1667_1314)">
-                                        <path
-                                            d="M9.83343 12.8509L15.1954 7.48828L16.0208 8.31311L9.83343 14.5005L6.12109 10.7882L6.94593 9.96336L9.83343 12.8509Z"
-                                            fill="#536387" />
-                                    </g>
-                                    <defs>
-                                        <clipPath id="clip0_1667_1314">
-                                            <rect width="14" height="14" fill="white" transform="translate(4 4)" />
-                                        </clipPath>
-                                    </defs>
-                                </svg>
-                                Yes! I want it.
-                            </button>
-
-                            <button class="formbold-confirm-btn">
-                                <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="11" cy="11" r="10.5" fill="white" stroke="#DDE3EC" />
-                                    <g clip-path="url(#clip0_1667_1314)">
-                                        <path
-                                            d="M9.83343 12.8509L15.1954 7.48828L16.0208 8.31311L9.83343 14.5005L6.12109 10.7882L6.94593 9.96336L9.83343 12.8509Z"
-                                            fill="#536387" />
-                                    </g>
-                                    <defs>
-                                        <clipPath id="clip0_1667_1314">
-                                            <rect width="14" height="14" fill="white" transform="translate(4 4)" />
-                                        </clipPath>
-                                    </defs>
-                                </svg>
-                                No! I don’t want it.
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="formbold-form-btn-wrapper">
-                    <button class="formbold-back-btn">
-                        Back
-                    </button>
-
-                    <button class="formbold-btn" id="nextStepButton">
-                        Next Step <button id="AttendeeRequest" onclick="createAccount()"></button>
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_1675_1807)">
-                                <path
-                                    d="M10.7814 7.33312L7.20541 3.75712L8.14808 2.81445L13.3334 7.99979L8.14808 13.1851L7.20541 12.2425L10.7814 8.66645H2.66675V7.33312H10.7814Z"
-                                    fill="white" />
-                            </g>
-                            <defs>
-                                <clipPath id="clip0_1675_1807">
-                                    <rect width="16" height="16" fill="white" />
-                                </clipPath>
-                            </defs>
-                        </svg>
-                    </button>
-                </div>
-            </form>
         </div>
+
+        <div class="fs_menu_overlay"></div>
+        <div class="hamburger_menu">
+            <div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
+            <div class="hamburger_menu_content text-right">
+                <ul class="menu_top_nav">
+
+                    <li class="menu_item"><a href="{% url 'home' %}">home</a></li>
+                    <li class="menu_item"><a href="{% url 'shop' %}">shop</a></li>
+
+
+                    <li class="menu_item"><a href="{% url 'contact' %}">contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <div style="padding: 70px;"></div>
+
+            <!-- ✅ Grid Section - Starts Here 👇 -->
+            <!-- ✅ Grid Section - Starts Here 👇 -->
+            <div class="toggle-container" style="margin-top: 20px;">
+                <div class="toggle-box" data-filter="All">All</div>
+                {% for category in categories %}
+                <div class="toggle-box" data-filter="{{category.name}}">{{category.name}}</div>
+                {% endfor %}
+                <div class="toggle-box" data-filter="Women">Women</div>
+                <div class="toggle-box" data-filter="Events">Events</div>
+
+            </div>
+
+            <section
+                class="container mx-auto px-4 grid grid-cols-2 gap-y-8 gap-x-4 sm:gap-y-10 sm:gap-x-8 md:grid-cols-2 lg:grid-cols-3 md:gap-y-14 lg:gap-y-20 md:gap-x-10 lg:gap-x-14 mt-10 mb-5">
+                {% for product in products %}
+                <!-- ✅ Product Card - Starts Here 👇 -->
+                <div
+                    class="max-w-xs rounded-xl duration-500 hover:scale-105 flex flex-col {{ product.product_category }} product-card {% if product.product_category.name == 'Tees' %} Women {% endif %} ">
+                    <a href="{% url 'productDetailPage' product.unique_id %}" class="flex flex-col h-full relative">
+                        <!-- Product Image -->
+                        <div class="relative h-56 sm:h-80 w-full rounded-t-xl overflow-hidden">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="Product Front" class="h-full w-full object-cover rounded-t-xl product-image"
+                                    loading="lazy">
+                            
+                            {% endif %}
+                            {% if product.relatedImages.all.0.image %}
+                            <img src="{{ product.relatedImages.all.0.image.url}}" alt=""
+                                class="h-full w-full object-cover rounded-t-xl product-image" loading="lazy">
+                            {% endif %}
+
+                        </div>
+
+                        <!-- "Sold Out" Icon -->
+                        {% if product.stock == '0' %}
+                        <div
+                            class="absolute top-2 right-2 bg-red-500 text-white text-xs sm:text-sm px-2 py-1 rounded-lg font-bold z-1">
+                            Sold Out
+                        </div>
+                        {% endif %}
+
+                        <!-- Product Details -->
+                        <div class="px-4 py-3">
+                            <div class="mb-4">
+                                <p class="text-sm sm:text-sm font-bold text-black capitalize min-h-[3rem] sm:min-h-[4rem]"
+                                    style="text-align: center;">
+                                    {{ product.name }}
+                                </p>
+                                <p class="text-sm sm:text-lg font-bold" style="text-align: center;">GHS {{ product.price
+                                    }}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- 🛑 Product Card - Ends Here -->
+                {% endfor %}
+
+                {% for event in events %}
+                <div class="max-w-xs  rounded-xl duration-500 hover:scale-105 flex flex-col product-card Events">
+                    <a href="{% url 'event' event.id %}" class="flex flex-col h-full">
+                        <img src="{{ event.cover_image.url }}" alt="Product"
+                            class="h-56 sm:h-80 w-full object-cover rounded-t-xl" loading="lazy" />
+                        <div class="px-4 py-3">
+                            <div class="mb-4">
+                                <span class="text-gray-400 uppercase text-xs sm:text-sm block">Brand</span>
+                                <p
+                                    class="text-sm sm:text-sm font-bold text-black capitalize min-h-[3rem] sm:min-h-[4rem]">
+                                    {{event.name}}
+                                </p>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="ml-auto">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                        class="bi bi-bag-plus" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
+                                        <path
+                                            d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                    </a>
+                </div>
+                {% endfor %}
+            </section>
+
+            <!-- 🛑 Grid Section - Ends Here -->
+
+
+        </div>
+
+        <div class="newsletter">
+            <div class="container">
+                <div style="display: flex; flex-direction: column;">
+                    <img src="{% static 'img/categories/logo.png' %}"
+                        style="width: 300px; height: auto; margin: 0 auto;" alt="">
+                    <div style="display: flex; justify-content: center; gap: 8px;">
+                        <span>
+                            <svg fill="#000000" width="25px" height="25px" viewBox="0 0 32 32" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <title>tiktok</title>
+                                    <path
+                                        d="M16.656 1.029c1.637-0.025 3.262-0.012 4.886-0.025 0.054 2.031 0.878 3.859 2.189 5.213l-0.002-0.002c1.411 1.271 3.247 2.095 5.271 2.235l0.028 0.002v5.036c-1.912-0.048-3.71-0.489-5.331-1.247l0.082 0.034c-0.784-0.377-1.447-0.764-2.077-1.196l0.052 0.034c-0.012 3.649 0.012 7.298-0.025 10.934-0.103 1.853-0.719 3.543-1.707 4.954l0.020-0.031c-1.652 2.366-4.328 3.919-7.371 4.011l-0.014 0c-0.123 0.006-0.268 0.009-0.414 0.009-1.73 0-3.347-0.482-4.725-1.319l0.040 0.023c-2.508-1.509-4.238-4.091-4.558-7.094l-0.004-0.041c-0.025-0.625-0.037-1.25-0.012-1.862 0.49-4.779 4.494-8.476 9.361-8.476 0.547 0 1.083 0.047 1.604 0.136l-0.056-0.008c0.025 1.849-0.050 3.699-0.050 5.548-0.423-0.153-0.911-0.242-1.42-0.242-1.868 0-3.457 1.194-4.045 2.861l-0.009 0.030c-0.133 0.427-0.21 0.918-0.21 1.426 0 0.206 0.013 0.41 0.037 0.61l-0.002-0.024c0.332 2.046 2.086 3.59 4.201 3.59 0.061 0 0.121-0.001 0.181-0.004l-0.009 0c1.463-0.044 2.733-0.831 3.451-1.994l0.010-0.018c0.267-0.372 0.45-0.822 0.511-1.311l0.001-0.014c0.125-2.237 0.075-4.461 0.087-6.698 0.012-5.036-0.012-10.060 0.025-15.083z">
+                                    </path>
+                                </g>
+                            </svg></span>
+                        <span>
+                            <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"
+                                        fill="#0F0F0F"></path>
+                                    <path
+                                        d="M18 5C17.4477 5 17 5.44772 17 6C17 6.55228 17.4477 7 18 7C18.5523 7 19 6.55228 19 6C19 5.44772 18.5523 5 18 5Z"
+                                        fill="#0F0F0F"></path>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M1.65396 4.27606C1 5.55953 1 7.23969 1 10.6V13.4C1 16.7603 1 18.4405 1.65396 19.7239C2.2292 20.8529 3.14708 21.7708 4.27606 22.346C5.55953 23 7.23969 23 10.6 23H13.4C16.7603 23 18.4405 23 19.7239 22.346C20.8529 21.7708 21.7708 20.8529 22.346 19.7239C23 18.4405 23 16.7603 23 13.4V10.6C23 7.23969 23 5.55953 22.346 4.27606C21.7708 3.14708 20.8529 2.2292 19.7239 1.65396C18.4405 1 16.7603 1 13.4 1H10.6C7.23969 1 5.55953 1 4.27606 1.65396C3.14708 2.2292 2.2292 3.14708 1.65396 4.27606ZM13.4 3H10.6C8.88684 3 7.72225 3.00156 6.82208 3.0751C5.94524 3.14674 5.49684 3.27659 5.18404 3.43597C4.43139 3.81947 3.81947 4.43139 3.43597 5.18404C3.27659 5.49684 3.14674 5.94524 3.0751 6.82208C3.00156 7.72225 3 8.88684 3 10.6V13.4C3 15.1132 3.00156 16.2777 3.0751 17.1779C3.14674 18.0548 3.27659 18.5032 3.43597 18.816C3.81947 19.5686 4.43139 20.1805 5.18404 20.564C5.49684 20.7234 5.94524 20.8533 6.82208 20.9249C7.72225 20.9984 8.88684 21 10.6 21H13.4C15.1132 21 16.2777 20.9984 17.1779 20.9249C18.0548 20.8533 18.5032 20.7234 18.816 20.564C19.5686 20.1805 20.1805 19.5686 20.564 18.816C20.7234 18.5032 20.8533 18.0548 20.9249 17.1779C20.9984 16.2777 21 15.1132 21 13.4V10.6C21 8.88684 20.9984 7.72225 20.9249 6.82208C20.8533 5.94524 20.7234 5.49684 20.564 5.18404C20.1805 4.43139 19.5686 3.81947 18.816 3.43597C18.5032 3.27659 18.0548 3.14674 17.1779 3.0751C16.2777 3.00156 15.1132 3 13.4 3Z"
+                                        fill="#0F0F0F"></path>
+                                </g>
+                            </svg>
+                        </span>
+                    </div>
+                    <div style="display: flex; flex-direction:column; align-items: center; justify-content: center;">
+                        <div>newsletter</div>
+                        <form method="POST" action="{% url 'shop' %}" id="newsletterForm" onsubmit="process(event)">
+                            {% csrf_token %}
+                            <div style="max-width: 400px; margin: 20px auto; padding: 20px; ">
+                                <input type="text" name="fname" id="fname" placeholder="First Name"
+                                    style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+                                <input type="text" name="lname" id="lname" placeholder="Last Name"
+                                    style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+
+                                <input type="email" id="email" placeholder="Email" required="required"
+                                    data-error="Valid email is required." name="email"
+                                    style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+
+                                <input type="text" class="form-control" aria-label="Small" id="phone" name="phone"
+                                    aria-describedby="inputGroup-sizing-sm"
+                                    style="width: 360px; margin-bottom: 10px; padding: 10px; padding-left: 45px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+
+                                <button id="demo_btn" class="newsletter_submit_btn trans_300"
+                                    style="background-color:#fe4c00; margin-top: 10px; width: 100%; padding: 10px; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
+                                    Subscribe
+                                </button>
+
+                                <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300"
+                                    value="Submit" name="subscribe"
+                                    style="background-color:#fe4c00; display: none; width: 100%; padding: 10px; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
+                                    Subscribe
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <footer class="footer">
+                        <div class="container">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="footer_nav_container">
+                                        <div class="cr">©2024 Strangers</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+
+                </div>
+            </div>
+        </div>
+
     </div>
-</body>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://js.paystack.co/v2/inline.js"></script>
-<script>
-    const phoneInputField = document.querySelector("#phone");
 
-    const phoneInput = window.intlTelInput(phoneInputField, {
-        preferredCountries: ["gh"],
-        utilsScript:
-            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-    });
-    function PaywithPaystack() {
-        const popup = new PaystackPop()
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
+    <script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
 
+    <script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
 
-        popup.newTransaction({
+  
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+                // Cache reusable DOM elements
+                const productCards = document.querySelectorAll(".product-card");
+                const toggleContainer = document.querySelector(".toggle-container");
+                const cartBox = document.getElementById("cartBox");
+                const overlay = document.getElementById("overlay");
+                const cart = document.getElementById("cart");
+                const cartBtn = document.getElementById("cart-btn");
+                const closeCart = document.getElementById("close-cart-button");
+                const checkoutItems = document.getElementById("checkout_items");
+                const notification = document.getElementById("notification");
+                const notificationMessage = document.getElementById("notification-message");
 
-            key: 'pk_test_b861b5ffacd3f3a4039ef8952f4a13b9cdff9c2a',
+                // Function to toggle hover images for product cards
+                const setupProductCardHover = () => {
+                    productCards.forEach((card) => {
+                        const images = card.querySelectorAll(".product-image");
+                        if (images.length === 2) {
+                            const [frontImage, backImage] = images;
+                            backImage.style.display = "none";
 
-            email: 'sample@email.com',
+                            card.addEventListener("mouseenter", () => {
+                                frontImage.style.display = "none";
+                                backImage.style.display = "block";
+                            });
 
-            amount: 23400,
+                            card.addEventListener("mouseleave", () => {
+                                backImage.style.display = "none";
+                                frontImage.style.display = "block";
+                            });
+                        }
+                    });
+                };
 
-            onSuccess: (transaction) => {
+                // Function to handle toggle filtering
+                const setupToggleFiltering = () => {
+                    toggleContainer.addEventListener("click", (event) => {
+                        const box = event.target.closest(".toggle-box");
+                        if (box) {
+                            document.querySelectorAll(".toggle-box").forEach((b) => b.classList.remove("active"));
+                            box.classList.add("active");
 
-                console.log(transaction);
+                            const filter = box.getAttribute("data-filter");
+                            productCards.forEach((card) => {
+                                card.style.display = filter === "All" || card.classList.contains(filter) ? "flex" : "none";
+                            });
+                        }
+                    });
 
+                    // Trigger "All" filter by default
+                    document.querySelector(".toggle-box[data-filter='All']").click();
+                };
 
-                document.getElementById('nextStepButton').click()
-                document.getElementById('AttendeeRequest').click()
+                // Cart functionality
+                const setupCart = () => {
+                    closeCart.addEventListener("click", () => {
+                        cart.classList.remove("active");
+                        overlay.style.display = "none";
+                        document.body.style.overflowY = "scroll";
+                    });
 
+                    overlay.addEventListener("click", () => {
+                        cart.classList.remove("active");
+                        overlay.style.display = "none";
+                        document.body.style.overflowY = "scroll";
+                    });
 
-                // successfull transaction have to create user and attendee code with
-                // api request
+                    cartBtn.addEventListener("click", () => {
+                        cart.classList.add("active");
+                        overlay.style.display = "block";
+                        document.body.style.overflowY = "hidden";
+                    });
 
+                    const displayCartItems = () => {
+                        const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+                        checkoutItems.innerText = cartItems.length;
 
+                        if (cartItems.length > 0) {
+                            let cartHTML = "";
+                            let totalPrice = 0;
 
-            },
+                            cartItems.forEach(({ image_url, product_name, quantity, selectedSize, price, product_id_date }) => {
+                                cartHTML += `
+                        <div class="cart-item" style="padding: 10px; margin: 10px; display: flex; align-items: center; position: relative;">
+                            <img src="${image_url}" alt="Product Image" width="100" style="border-radius: 8px; margin-right: 15px;">
+                            <div style="flex: 1;">
+                                <div style="display: flex; gap: 5px;">
+                                    <p style="margin: 0; font-weight: bold; font-size: 14px;">${product_name}</p>
+                                    <p style="margin: 0; font-size: 14px;"> x${quantity}</p>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <p style="margin: 0; font-size: 14px;">${selectedSize}</p>
+                                    <p style="margin: 0; font-size: 14px;">GHS ${price}</p>
+                                </div>
+                            </div>
+                            <button class="close-button" onclick="removeFromCart('${product_id_date}')" style="position: absolute; top: 10px; right: 10px; background: #fff; border: none; cursor: pointer; font-size: 16px; color: #FF5722;">&times;</button>
+                        </div>`;
+                                totalPrice += price;
+                            });
 
-            onLoad: (response) => {
+                            cartHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-left: 20px;">
+                        <div>Total:</div>
+                        <div class="total-price" style="color: #28a745; font-weight: bold; margin-right: 20px;">GHS ${totalPrice.toFixed(2)}</div>
+                    </div>
+                    <div style="text-align: center; margin: 20px;">
+                        <a href="{% url 'checkout' %}">
+                            <button style="padding: 10px 20px; width: 100%; background-color: #228B22; color: white; border: none; border-radius: 5px; cursor: pointer;">Checkout</button>
+                        </a>
+                    </div>`;
 
-                console.log("onLoad: ", response);
+                            cartBox.innerHTML = cartHTML;
+                        } else {
+                            cartBox.innerHTML = '<div class="empty-cart" style="text-align: center; margin-top: 40px;">Nothing in Cart</div>';
+                        }
+                    };
 
-            },
+                    const removeFromCart = (productId) => {
+                        const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+                        const updatedCart = cartItems.filter((item) => item.product_id_date !== productId);
+                        localStorage.setItem("cart", JSON.stringify(updatedCart));
+                        displayCartItems();
+                    };
 
-            onCancel: () => {
+                    // Expose `removeFromCart` globally
+                    window.removeFromCart = removeFromCart;
 
-                console.log("onCancel");
+                    // Display cart on load
+                    displayCartItems();
+                };
 
-            },
+                // Notification system
+                const setupNotification = () => {
+                    const showNotification = (type, message) => {
+                        notificationMessage.textContent = message;
+                        notification.classList.add(type);
+                        notification.style.display = "block";
 
-            onError: (error) => {
+                        setTimeout(() => {
+                            notification.style.display = "none";
+                            notification.classList.remove(type);
+                        }, 5000);
+                    };
 
-                console.log("Error: ", error.message);
+                    window.showNotification = showNotification;
 
-            }
+                    // Django message handling
+                    {% if messages %}
+                    {% for message in messages %}
+                    {% if message.tags == "success" %}
+                    showNotification("success", "{{ message }}");
+                    {% elif message.tags == "error" %}
+                    showNotification("error", "{{ message }}");
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                };
 
-        })
-    }
-
-</script>
-<script>
-    createAccount = () => {
-
-        // Set CSRF token as default headers for Axios
-        axios.defaults.xsrfCookieName = "csrftoken"; // CSRF cookie name
-        axios.defaults.xsrfHeaderName = "X-CSRFToken"; // CSRF header name
-
-        // Retrieve user data from local storage
-        const user = JSON.parse(localStorage.getItem('user'));
-
-        // Ensure user data is valid
-        if (!user) {
-            console.error('No user data found in local storage');
-            return;
-        }
-
-        // Make POST request to create an attendee
-        axios.post('/api/create/attendee/', {
-            "first_name": user.firstName,
-            "last_name": user.lastName, // Corrected from last_Name to last_name
-            "email": user.email,
-            "phone": user.phone,
-        })
-            .then((response) => {
-                console.log('Response:', response);
-            })
-            .catch((error) => {
-                console.error('Error creating attendee:', error);
+                // Initialize all functionalities
+                setupProductCardHover();
+                setupToggleFiltering();
+                setupCart();
+                setupNotification();
             });
-    }
 
-</script>
-<script>
-    const stepMenuOne = document.querySelector('.formbold-step-menu1')
-    const stepMenuTwo = document.querySelector('.formbold-step-menu2')
-    const stepMenuThree = document.querySelector('.formbold-step-menu3')
-
-    const stepOne = document.querySelector('.formbold-form-step-1')
-    const stepTwo = document.querySelector('.formbold-form-step-2')
-    const stepThree = document.querySelector('.formbold-form-step-3')
-
-    const formSubmitBtn = document.querySelector('.formbold-btn')
-    const formBackBtn = document.querySelector('.formbold-back-btn')
-
-    formSubmitBtn.addEventListener("click", function (event) {
-        event.preventDefault()
-        if (stepMenuOne.className == 'formbold-step-menu1 active') {
-            event.preventDefault()
-            // the active form was the first box
-            firstName = document.getElementById('firstname')
-            lastName = document.getElementById('lastname')
-            email = document.getElementById('email')
-            phone = document.getElementById('phone') // have to cater for other phone contacts or just use 
-            // ghana image svg
-
-            //manually check if all the data have been filled 
-            if ([firstName.value, lastName.value, email.value, phone.value].some(value => value === '')) {
-                alert('Fill all Details');
-                return;
-            }
-
-            // create user object
-            let user = { firstName: firstName.value, lastName: lastName.vlaue, email: email.value, phone: phone.value }
-
-            localStorage.setItem('user', JSON.stringify(user));
-            console.log(JSON.parse(localStorage.getItem('user')))
-
-
-            stepMenuOne.classList.remove('active')
-            stepMenuTwo.classList.add('active')
-
-            stepOne.classList.remove('active')
-            stepTwo.classList.add('active')
-
-            formBackBtn.classList.add('active')
-            formBackBtn.addEventListener("click", function (event) {
-                event.preventDefault()
-
-                stepMenuOne.classList.add('active')
-                stepMenuTwo.classList.remove('active')
-
-                stepOne.classList.add('active')
-                stepTwo.classList.remove('active')
-
-                formBackBtn.classList.remove('active')
-
-            })
-
-        } else if (stepMenuTwo.className == 'formbold-step-menu2 active') {
-            event.preventDefault()
-
-            stepMenuTwo.classList.remove('active')
-            stepMenuThree.classList.add('active')
-
-            stepTwo.classList.remove('active')
-            stepThree.classList.add('active')
-
-            formBackBtn.classList.remove('active')
-            formSubmitBtn.textContent = 'Submit'
-        } else if (stepMenuThree.className == 'formbold-step-menu3 active') {
-            document.querySelector('form').submit()
-        }
-    })
-
-
-
-</script>
+    </script>
+</body>
 
 </html>

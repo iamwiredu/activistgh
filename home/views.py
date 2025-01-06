@@ -3,7 +3,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.shortcuts import render, redirect
-from .models import Product, Outing, Payment, Cart, CartObject, Newsletter, UserLogin, Contact, Category
+from .models import Product, Outing, Payment, Cart, Category,CartObject, Newsletter, UserLogin, Contact, Category
 from .deliveryRatesGen import generate_shipping_cost
 from .password import generate_password
 from django.contrib import messages
@@ -16,7 +16,10 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
 
+
+
 def home(request):
+    categories = Category.objects.all()
     if request.method == 'POST':
         if 'giveUserPassword' in request.POST:
             email = request.POST.get('email')
@@ -67,7 +70,7 @@ def home(request):
                 return redirect('/')
 
     context = {
-        # You can add context data if necessary for rendering home page
+     'categories':categories,
     }
     return render(request, 'home.html', context)
 
@@ -143,14 +146,6 @@ def shop(request):
 
 # page to list events
 
-class Events(View):
-
-    def get(self,request):
-        events = Outing.objects.all()
-        context = {
-            'events':events
-        }
-        return render(request,'events.html',context)
     
 def makePayment(request,ref):
     if request.method == 'POST':

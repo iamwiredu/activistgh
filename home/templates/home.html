@@ -14,14 +14,145 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: url('{% static "cover.jpg" %}') no-repeat center center/cover;
             color: #fff;
+            overflow: hidden;
+        }
+
+        .slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .slideshow div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            animation: slideshow 85s infinite;
+            /* 85 seconds = 5 seconds per image x 17 images */
+            opacity: 0;
+        }
+
+        @keyframes slideshow {
+
+            0%,
+            5.88% {
+                opacity: 1;
+            }
+
+            5.89%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .slideshow div:nth-child(1) {
+            background-image: url('{% static "images/image1.jpg" %}');
+            animation-delay: 0s;
+        }
+
+        .slideshow div:nth-child(2) {
+            background-image: url('{% static "images/image2.jpg" %}');
+            animation-delay: 5s;
+        }
+
+        .slideshow div:nth-child(3) {
+            background-image: url('{% static "images/image3.jpeg" %}');
+            animation-delay: 10s;
+        }
+
+        .slideshow div:nth-child(4) {
+            background-image: url('{% static "images/image4.jpeg" %}');
+            animation-delay: 15s;
+        }
+
+        .slideshow div:nth-child(5) {
+            background-image: url('{% static "images/image5.jpeg" %}');
+            animation-delay: 20s;
+        }
+
+        .slideshow div:nth-child(6) {
+            background-image: url('{% static "images/image6.jpeg" %}');
+            animation-delay: 25s;
+        }
+
+        .slideshow div:nth-child(7) {
+            background-image: url('{% static "images/image7.jpeg" %}');
+            animation-delay: 30s;
+        }
+
+        .slideshow div:nth-child(8) {
+            background-image: url('{% static "images/image8.jpeg" %}');
+            animation-delay: 35s;
+        }
+
+        .slideshow div:nth-child(9) {
+            background-image: url('{% static "images/image9.jpeg" %}');
+            animation-delay: 40s;
+        }
+
+        .slideshow div:nth-child(10) {
+            background-image: url('{% static "images/image10.jpeg" %}');
+            animation-delay: 45s;
+        }
+
+        .slideshow div:nth-child(11) {
+            background-image: url('{% static "images/image11.jpeg" %}');
+            animation-delay: 50s;
+        }
+
+        .slideshow div:nth-child(12) {
+            background-image: url('{% static "images/image12.jpeg" %}');
+            animation-delay: 55s;
+        }
+
+        .slideshow div:nth-child(13) {
+            background-image: url('{% static "images/image13.jpeg" %}');
+            animation-delay: 60s;
+        }
+
+        .slideshow div:nth-child(14) {
+            background-image: url('{% static "images/image14.jpeg" %}');
+            animation-delay: 65s;
+        }
+
+        .slideshow div:nth-child(15) {
+            background-image: url('{% static "images/image15.jpeg" %}');
+            animation-delay: 70s;
+        }
+
+        .slideshow div:nth-child(16) {
+            background-image: url('{% static "images/image16.jpeg" %}');
+            animation-delay: 75s;
+        }
+
+        .slideshow div:nth-child(17) {
+            background-image: url('{% static "images/image17.jpeg" %}');
+            animation-delay: 80s;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 1;
         }
 
         .logo-container {
             position: absolute;
             top: 20px;
             perspective: 1000px;
+            z-index: 2;
         }
 
         .logo {
@@ -44,240 +175,194 @@
 
         .container {
             text-align: center;
-            background: rgba(0, 0, 0, 0.75);
-            /* Adjusted transparency */
             padding: 40px;
-          
             width: 100%;
-          
             margin: 0 auto;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            z-index: 2;
         }
 
         .form-row {
             display: flex;
             justify-content: center;
+            flex-direction: column;
+            gap: 10px;
             align-items: center;
             margin-bottom: 20px;
         }
 
-        .form-row input {
+        .form-row input,
+        .waitlist-form input {
             padding: 10px;
             border: none;
             border-bottom: 1px solid #ccc;
             background-color: rgba(255, 255, 255, 0.1);
-            /* Darker background for contrast */
             width: 300px;
             color: white;
         }
 
-        .form-row button {
+        .form-row button,
+        .waitlist-button {
             padding: 10px 20px;
             border: none;
             background-color: #d95900;
-            /* Darker orange for better contrast */
             color: white;
             cursor: pointer;
-        }
-
-        .waitlist-button {
-            background-color: #d95900;
-            /* Darker orange for better contrast */
-            width: 300px;
-            padding: 5px;
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            margin-bottom: 20px;
         }
 
         .waitlist-button:hover {
             text-decoration: underline;
         }
 
-        .waitlist-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            text-align: left;
-            overflow: hidden;
-            max-height: 0;
-            opacity: 0;
-            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
-        }
-
-        .waitlist-form.visible {
-            max-height: 500px;
-            /* Adjust based on form content height */
-            opacity: 1;
-        }
-
-        .waitlist-form input {
-            padding: 10px;
-            border: none;
-            border-bottom: 1px solid #ccc;
-            background-color: rgba(255, 255, 255, 0.1);
-            /* Darker background for contrast */
-            width: 300px;
-            color: white;
-            margin-right: 10px;
-        }
-
-        .waitlist-form input:focus {
-            outline: none;
-            /* Removes the default blue outline */
-        }
-
-        .waitlist-form button {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            background-color: #d95900;
-            /* Darker orange for better contrast */
-            color: white;
-            cursor: pointer;
-        }
-        @media screen and (max-width:700px){
-            .waitlist-button{
+        @media screen and (max-width: 700px) {
+            .waitlist-button {
                 width: 200px;
             }
-            .waitlist-form input{
+
+            .waitlist-form input {
                 width: 200px;
             }
-            .container input{
+
+            .form-row input {
                 width: 200px;
             }
         }
+        /* Hamburger Icon */
+.hamburger-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 3;
+    color: white;
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Initially offscreen */
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    z-index: 5;
+    transition: right 0.3s ease-in-out;
+    overflow-y: auto;
+}
+
+/* Sliding Menu on Different Screens */
+@media screen and (max-width: 700px) {
+    .hamburger-menu {
+        width: 100%; /* Full width on mobile */
+    }
+}
+
+@media screen and (min-width: 701px) {
+    .hamburger-menu {
+        width: 50%; /* Half width on larger screens */
+    }
+}
+
+/* Close Button */
+.menu-header {
+    padding: 15px;
+    text-align: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Menu Content */
+.menu-content {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    
+}
+
+.menu-item {
+    margin-bottom: 15px;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 20px 0;
+   
+}
+
+.menu-item:hover {
+    text-decoration: underline;
+}
+
     </style>
-    <style>
-        .notification {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 15px;
-            border-radius: 5px;
-            font-size: 16px;
-            width: 300px;
-            z-index: 9999;
-            display: none;
-            /* Hidden by default */
-        }
-    
-        .notification.success {
-            background-color: #28a745;
-            /* Green for success */
-            color: white;
-        }
-    
-        .notification.error {
-            background-color: #dc3545;
-            /* Red for error */
-            color: white;
-        }
-    
-        .notification .close-btn {
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-        }
-    
-        .notification .close-btn:hover {
-            color: #000;
-        }
-    </style>
-
 </head>
 
 <body>
-    <div id="notification" class="notification">
-        <button class="close-btn" onclick="closeNotification()">×</button>
-        <span id="notification-message"></span>
+    <div class="slideshow">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
     </div>
+    <div class="overlay"></div>
+    <div class="hamburger-menu-container">
+        <!-- Hamburger Icon -->
+        <div class="hamburger-icon" onclick="toggleHamburgerMenu()">☰</div>
+    
+        <!-- Sliding Menu -->
+        <div class="hamburger-menu" id="hamburgerMenu">
+            <div class="menu-header">
+                <span onclick="toggleHamburgerMenu()">✕</span>
+            </div>
+            <div class="menu-content">
+                {% for category in categories %}
+                <div class="menu-item toggle-box" data-filter="{{ category.name }}">
+                    {{ category.name }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
     <div class="logo-container">
         <div class="logo"></div>
     </div>
     <div class="container">
         <form class="form-row" method="POST">
             {% csrf_token %}
+            <input type="text" name="Email" id="email" placeholder="Enter email" required>
             <input type="password" placeholder="Enter password" name="passwordLogin" required>
-            <button type="submit" name="passwordLoginSubmit">Submit</button>
+            
+            <button type="submit"  name="passwordLoginSubmit">Sign in</button>
         </form>
-        <button class="waitlist-button" onclick="toggleWaitlistForm()">Join the Waitlist</button>
-        <form class="waitlist-form" id="waitlistForm" method="POST" >
-            {% csrf_token %}
-            <input type="email" placeholder="Email" name="email" required>
-            <input type="text" placeholder="First Name" name="fname" required>
-            <input type="text" placeholder="Last Name" name="lname" required>
-            <button type="submit" name="giveUserPassword">
-                <svg width="25px" height="25px" viewBox="0 0 1024 1024" class="icon" version="1.1"
-                    xmlns="http://www.w3.org/2000/svg" fill="#000000">
-                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                    <g id="SVGRepo_iconCarrier">
-                        <path d="M256 120.768L306.432 64 768 512l-461.568 448L256 903.232 659.072 512z" fill="#ffffff">
-                        </path>
-                    </g>
-                </svg>
-            </button>
-        </form>
+        <a href="{% url 'shop' %}"><button class="waitlist-button">Shop as Guest</button></a>
     </div>
-
-    <script>
-        function toggleWaitlistForm() {
-            const form = document.getElementById('waitlistForm');
-            if (!form.classList.contains('visible')) {
-                form.classList.add('visible');
+</body>
+<script>
+    function toggleHamburgerMenu() {
+            const menu = document.getElementById("hamburgerMenu");
+            if (menu.style.right === "0px") {
+                menu.style.right = "-100%";
             } else {
-                form.classList.remove('visible');
+                menu.style.right = "0px";
             }
         }
-    </script>
-    <script>
-        // Function to show the notification
-        function showNotification(type, message) {
-            const notification = document.getElementById('notification');
-            const messageElement = document.getElementById('notification-message');
 
-            // Set message text and class based on type
-            messageElement.textContent = message;
-            notification.classList.add(type);  // Add the success/error class
-            notification.style.display = 'block';  // Show the notification
-
-            // Auto-hide notification after 5 seconds
-            setTimeout(function () {
-                closeNotification();
-            }, 5000);
-        }
-
-        // Function to close the notification
-        function closeNotification() {
-            const notification = document.getElementById('notification');
-            notification.style.display = 'none';  // Hide the notification
-            notification.classList.remove('success', 'error');  // Remove the classes
-        }
-
-        // Django will automatically render the messages
-        {% if messages %}
-        {% for message in messages %}
-        {% if message.tags == "success" %}
-        showNotification("success", "{{ message }}");
-        {% elif message.tags == "error" %}
-        showNotification("error", "{{ message }}");
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-    </script>
-</body>
+</script>
 
 </html>
