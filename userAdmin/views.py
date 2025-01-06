@@ -114,10 +114,9 @@ def productEdit(request,unique_id):
     productFormCreator = ProductForm(instance=product)
     notifications = Notification.objects.all().filter(viewed=False)
 
-    try:
-        relatedImage = product.relatedImages.all()[0]
-    except:
-        relatedImage = RelatedImages.objects.get_or_create(product=product)
+  
+    relatedImage = product.relatedImages.all()
+   
     
 
     if request.method == 'POST':
@@ -128,12 +127,12 @@ def productEdit(request,unique_id):
                 return redirect(productEdit,unique_id)  # Redirect to the same page or a success page
             else:
                 print('error')
-        if 'updateBackImage' in request.POST:
-            backImage = request.FILES.get('backImage')
+        if 'addBackImage' in request.POST:
+            new_relatedImage = request.FILES.get('backImage')
             try:
-                if backImage:
-                    relatedImage.image = backImage
-                    relatedImage.save()
+                if new_relatedImage:
+                    new_relatedImage = RelatedImages(product=product,image=new_relatedImage)
+                    new_relatedImage.save()
                     return redirect(f'/productEdit/{unique_id}')
             except:
                 print('error')
@@ -259,3 +258,8 @@ class MessagesReceived(View):
             'contacts':contacts,
         }
         return render(request,'messagesReceived.html',context)
+    
+def deleteRelatedImages(request,id,unique_id):
+    relatedImage = RelatedImages.objects.get(id=id)
+    relatedImage.delete()
+    return redirect(f'/productEdit/{unique_id}')

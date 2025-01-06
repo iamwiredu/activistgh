@@ -6,7 +6,7 @@ from .models import DeliveryPriceByRegion
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name','image','product_category','size_set','price','stock']
+        fields = ['name','image','product_category','description','size_set','price','stock']
 
 class RelatedImagesForm(forms.ModelForm):
     class Meta:

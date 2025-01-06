@@ -298,6 +298,9 @@
                             <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
                         </ul> -->
                 <div style="margin-top: 30px;">
+                    {{product.description}}
+                </div>
+                <div style="margin-top: 30px;">
                     <label for="size-select">Select Size:</label>
                     <select id="size-select" name="size">
                      {% for size in product.size_set.sizes.all %}

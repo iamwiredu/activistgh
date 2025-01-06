@@ -182,49 +182,7 @@
             color: #000;
         }
     </style>
-    <style>
-        .toggle-container {
-            display: flex;
-            justify-content: right;
-            overflow-x: auto;
-            /* Enable horizontal scrolling */
-            gap: 10px;
-            /* Add spacing between boxes */
-            padding: 10px;
-            /* Add padding to make it look better */
-            scrollbar-width: none;
-            /* For Firefox, hides scrollbar */
-            -ms-overflow-style: none;
-            /* For Internet Explorer and Edge */
-        }
 
-        .toggle-container::-webkit-scrollbar {
-            display: none;
-            /* For Chrome, Safari, and Opera */
-        }
-
-        .toggle-box {
-            padding: 8px 16px;
-            border: 1px solid grey;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-            white-space: nowrap;
-            /* Prevent text from wrapping */
-        }
-
-        .toggle-box:hover {
-            background-color: grey;
-            color: white;
-            font-weight: bold;
-        }
-
-        .toggle-box.active {
-            background-color: grey;
-            color: white;
-            font-weight: bold;
-        }
-    </style>
 
     <!-- links fro phone -->
 
@@ -333,17 +291,7 @@
         <div>
             <div style="padding: 70px;"></div>
 
-            <!-- ✅ Grid Section - Starts Here 👇 -->
-            <!-- ✅ Grid Section - Starts Here 👇 -->
-            <div class="toggle-container" style="margin-top: 20px;">
-                <div class="toggle-box" data-filter="All">All</div>
-                {% for category in categories %}
-                <div class="toggle-box" data-filter="{{category.name}}">{{category.name}}</div>
-                {% endfor %}
-                <div class="toggle-box" data-filter="Women">Women</div>
-                <div class="toggle-box" data-filter="Events">Events</div>
-
-            </div>
+  
 
             <section
                 class="container mx-auto px-4 grid grid-cols-2 gap-y-8 gap-x-4 sm:gap-y-10 sm:gap-x-8 md:grid-cols-2 lg:grid-cols-3 md:gap-y-14 lg:gap-y-20 md:gap-x-10 lg:gap-x-14 mt-10 mb-5">
@@ -355,9 +303,9 @@
                         <!-- Product Image -->
                         <div class="relative h-56 sm:h-80 w-full rounded-t-xl overflow-hidden">
                             {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="Product Front" class="h-full w-full object-cover rounded-t-xl product-image"
-                                    loading="lazy">
-                            
+                            <img src="{{ product.image.url }}" alt="Product Front"
+                                class="h-full w-full object-cover rounded-t-xl product-image" loading="lazy">
+
                             {% endif %}
                             {% if product.relatedImages.all.0.image %}
                             <img src="{{ product.relatedImages.all.0.image.url}}" alt=""
@@ -392,7 +340,7 @@
 
                 {% for event in events %}
                 <div class="max-w-xs  rounded-xl duration-500 hover:scale-105 flex flex-col product-card Events">
-                    <a href="{% url 'event' event.id %}" class="flex flex-col h-full">
+                    <a href="{% url 'event' event.unique_id %}" class="flex flex-col h-full">
                         <img src="{{ event.cover_image.url }}" alt="Product"
                             class="h-56 sm:h-80 w-full object-cover rounded-t-xl" loading="lazy" />
                         <div class="px-4 py-3">
@@ -524,92 +472,92 @@
 
     <script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
 
-  
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-                // Cache reusable DOM elements
-                const productCards = document.querySelectorAll(".product-card");
-                const toggleContainer = document.querySelector(".toggle-container");
-                const cartBox = document.getElementById("cartBox");
-                const overlay = document.getElementById("overlay");
-                const cart = document.getElementById("cart");
-                const cartBtn = document.getElementById("cart-btn");
-                const closeCart = document.getElementById("close-cart-button");
-                const checkoutItems = document.getElementById("checkout_items");
-                const notification = document.getElementById("notification");
-                const notificationMessage = document.getElementById("notification-message");
+            // Cache reusable DOM elements
+            const productCards = document.querySelectorAll(".product-card");
+            const toggleContainer = document.querySelector(".toggle-container");
+            const cartBox = document.getElementById("cartBox");
+            const overlay = document.getElementById("overlay");
+            const cart = document.getElementById("cart");
+            const cartBtn = document.getElementById("cart-btn");
+            const closeCart = document.getElementById("close-cart-button");
+            const checkoutItems = document.getElementById("checkout_items");
+            const notification = document.getElementById("notification");
+            const notificationMessage = document.getElementById("notification-message");
 
-                // Function to toggle hover images for product cards
-                const setupProductCardHover = () => {
-                    productCards.forEach((card) => {
-                        const images = card.querySelectorAll(".product-image");
-                        if (images.length === 2) {
-                            const [frontImage, backImage] = images;
+            // Function to toggle hover images for product cards
+            const setupProductCardHover = () => {
+                productCards.forEach((card) => {
+                    const images = card.querySelectorAll(".product-image");
+                    if (images.length === 2) {
+                        const [frontImage, backImage] = images;
+                        backImage.style.display = "none";
+
+                        card.addEventListener("mouseenter", () => {
+                            frontImage.style.display = "none";
+                            backImage.style.display = "block";
+                        });
+
+                        card.addEventListener("mouseleave", () => {
                             backImage.style.display = "none";
+                            frontImage.style.display = "block";
+                        });
+                    }
+                });
+            };
 
-                            card.addEventListener("mouseenter", () => {
-                                frontImage.style.display = "none";
-                                backImage.style.display = "block";
-                            });
+            // Function to handle toggle filtering
+            const setupToggleFiltering = () => {
+                toggleContainer.addEventListener("click", (event) => {
+                    const box = event.target.closest(".toggle-box");
+                    if (box) {
+                        document.querySelectorAll(".toggle-box").forEach((b) => b.classList.remove("active"));
+                        box.classList.add("active");
 
-                            card.addEventListener("mouseleave", () => {
-                                backImage.style.display = "none";
-                                frontImage.style.display = "block";
-                            });
-                        }
-                    });
-                };
+                        const filter = box.getAttribute("data-filter");
+                        productCards.forEach((card) => {
+                            card.style.display = filter === "All" || card.classList.contains(filter) ? "flex" : "none";
+                        });
+                    }
+                });
 
-                // Function to handle toggle filtering
-                const setupToggleFiltering = () => {
-                    toggleContainer.addEventListener("click", (event) => {
-                        const box = event.target.closest(".toggle-box");
-                        if (box) {
-                            document.querySelectorAll(".toggle-box").forEach((b) => b.classList.remove("active"));
-                            box.classList.add("active");
+                // Trigger "All" filter by default
+                document.querySelector(".toggle-box[data-filter='All']").click();
+            };
 
-                            const filter = box.getAttribute("data-filter");
-                            productCards.forEach((card) => {
-                                card.style.display = filter === "All" || card.classList.contains(filter) ? "flex" : "none";
-                            });
-                        }
-                    });
+            // Cart functionality
+            const setupCart = () => {
+                closeCart.addEventListener("click", () => {
+                    cart.classList.remove("active");
+                    overlay.style.display = "none";
+                    document.body.style.overflowY = "scroll";
+                });
 
-                    // Trigger "All" filter by default
-                    document.querySelector(".toggle-box[data-filter='All']").click();
-                };
+                overlay.addEventListener("click", () => {
+                    cart.classList.remove("active");
+                    overlay.style.display = "none";
+                    document.body.style.overflowY = "scroll";
+                });
 
-                // Cart functionality
-                const setupCart = () => {
-                    closeCart.addEventListener("click", () => {
-                        cart.classList.remove("active");
-                        overlay.style.display = "none";
-                        document.body.style.overflowY = "scroll";
-                    });
+                cartBtn.addEventListener("click", () => {
+                    cart.classList.add("active");
+                    overlay.style.display = "block";
+                    document.body.style.overflowY = "hidden";
+                });
 
-                    overlay.addEventListener("click", () => {
-                        cart.classList.remove("active");
-                        overlay.style.display = "none";
-                        document.body.style.overflowY = "scroll";
-                    });
+                const displayCartItems = () => {
+                    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+                    checkoutItems.innerText = cartItems.length;
 
-                    cartBtn.addEventListener("click", () => {
-                        cart.classList.add("active");
-                        overlay.style.display = "block";
-                        document.body.style.overflowY = "hidden";
-                    });
+                    if (cartItems.length > 0) {
+                        let cartHTML = "";
+                        let totalPrice = 0;
 
-                    const displayCartItems = () => {
-                        const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-                        checkoutItems.innerText = cartItems.length;
-
-                        if (cartItems.length > 0) {
-                            let cartHTML = "";
-                            let totalPrice = 0;
-
-                            cartItems.forEach(({ image_url, product_name, quantity, selectedSize, price, product_id_date }) => {
-                                cartHTML += `
+                        cartItems.forEach(({ image_url, product_name, quantity, selectedSize, price, product_id_date }) => {
+                            cartHTML += `
                         <div class="cart-item" style="padding: 10px; margin: 10px; display: flex; align-items: center; position: relative;">
                             <img src="${image_url}" alt="Product Image" width="100" style="border-radius: 8px; margin-right: 15px;">
                             <div style="flex: 1;">
@@ -624,10 +572,10 @@
                             </div>
                             <button class="close-button" onclick="removeFromCart('${product_id_date}')" style="position: absolute; top: 10px; right: 10px; background: #fff; border: none; cursor: pointer; font-size: 16px; color: #FF5722;">&times;</button>
                         </div>`;
-                                totalPrice += price;
-                            });
+                            totalPrice += price;
+                        });
 
-                            cartHTML += `
+                        cartHTML += `
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-left: 20px;">
                         <div>Total:</div>
                         <div class="total-price" style="color: #28a745; font-weight: bold; margin-right: 20px;">GHS ${totalPrice.toFixed(2)}</div>
@@ -638,59 +586,59 @@
                         </a>
                     </div>`;
 
-                            cartBox.innerHTML = cartHTML;
-                        } else {
-                            cartBox.innerHTML = '<div class="empty-cart" style="text-align: center; margin-top: 40px;">Nothing in Cart</div>';
-                        }
-                    };
+                        cartBox.innerHTML = cartHTML;
+                    } else {
+                        cartBox.innerHTML = '<div class="empty-cart" style="text-align: center; margin-top: 40px;">Nothing in Cart</div>';
+                    }
+                };
 
-                    const removeFromCart = (productId) => {
-                        const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-                        const updatedCart = cartItems.filter((item) => item.product_id_date !== productId);
-                        localStorage.setItem("cart", JSON.stringify(updatedCart));
-                        displayCartItems();
-                    };
-
-                    // Expose `removeFromCart` globally
-                    window.removeFromCart = removeFromCart;
-
-                    // Display cart on load
+                const removeFromCart = (productId) => {
+                    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+                    const updatedCart = cartItems.filter((item) => item.product_id_date !== productId);
+                    localStorage.setItem("cart", JSON.stringify(updatedCart));
                     displayCartItems();
                 };
 
-                // Notification system
-                const setupNotification = () => {
-                    const showNotification = (type, message) => {
-                        notificationMessage.textContent = message;
-                        notification.classList.add(type);
-                        notification.style.display = "block";
+                // Expose `removeFromCart` globally
+                window.removeFromCart = removeFromCart;
 
-                        setTimeout(() => {
-                            notification.style.display = "none";
-                            notification.classList.remove(type);
-                        }, 5000);
-                    };
+                // Display cart on load
+                displayCartItems();
+            };
 
-                    window.showNotification = showNotification;
+            // Notification system
+            const setupNotification = () => {
+                const showNotification = (type, message) => {
+                    notificationMessage.textContent = message;
+                    notification.classList.add(type);
+                    notification.style.display = "block";
 
-                    // Django message handling
-                    {% if messages %}
-                    {% for message in messages %}
-                    {% if message.tags == "success" %}
-                    showNotification("success", "{{ message }}");
-                    {% elif message.tags == "error" %}
-                    showNotification("error", "{{ message }}");
-                    {% endif %}
-                    {% endfor %}
-                    {% endif %}
+                    setTimeout(() => {
+                        notification.style.display = "none";
+                        notification.classList.remove(type);
+                    }, 5000);
                 };
 
-                // Initialize all functionalities
-                setupProductCardHover();
-                setupToggleFiltering();
-                setupCart();
-                setupNotification();
-            });
+                window.showNotification = showNotification;
+
+                // Django message handling
+                {% if messages %}
+                {% for message in messages %}
+                {% if message.tags == "success" %}
+                showNotification("success", "{{ message }}");
+                {% elif message.tags == "error" %}
+                showNotification("error", "{{ message }}");
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+            };
+
+            // Initialize all functionalities
+            setupProductCardHover();
+            setupToggleFiltering();
+            setupCart();
+            setupNotification();
+        });
 
     </script>
 </body>

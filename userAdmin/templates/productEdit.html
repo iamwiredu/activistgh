@@ -300,16 +300,25 @@
                                     <h5 class="card-title">Product Image Back</h5>
 
                                     <div>
-                                        {% if product.relatedImages.all.0.image %}
-                                        <img src="{{product.relatedImages.all.0.image.url}}" alt="" style="width: 70px; height: 70px;">
-                                        {% else %}
-                                        No Image
-                                        {% endif %}
+                                        {% for image in product.relatedImages.all %}
+                                            {% if image.image %}
+                                              <div>
+                                                <img src="{{image.image.url}}" alt="" style="width: 70px; height: 70px;">
+                                                <a href="{% url 'deleteRelatedImages' image.id product.unique_id %}">X</a>
+                                            </div>
+                                            {% else %}
+                                                <p>No back image</p>
+                                            {% endif %}
+                                       {% endfor %}
                                         <form action="" method="POST" 
                                         enctype="multipart/form-data">
                                         {% csrf_token %}
-                                            <input type="file" name="backImage" class="form-control" accept="image/*" id="id_image">
-                                            <input type="submit" value="Update Back Image" name="updateBackImage">
+                                            {% if product.relatedImages.all|length >= 3 %}
+                                            {% else %}
+                                            <input type="file" name="backImage" class="form-control" accept="image/*" id="id_image" required>
+                                            <input type="submit" value="Add Back Image" name="addBackImage">
+                                            {% endif %}
+                                         
                                         </form>
                                     </div>
 
