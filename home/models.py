@@ -25,9 +25,7 @@ class Size(models.Model):
     def __str__(self):
         return f'{self.size}'
 
-class Product(models.Model):
- 
-    
+class Product(models.Model):   
     name = models.CharField(max_length=255)
     unique_id = models.UUIDField(editable=False,unique=True,default=uuid.uuid4)
     image = models.ImageField(upload_to='productImages/',null=True,blank=True)
@@ -36,7 +34,7 @@ class Product(models.Model):
     description = models.TextField(null=True,blank=True)
     product_ordering = models.PositiveIntegerField(default=0)
     price = models.DecimalField(max_digits=10, decimal_places=2,null=True,blank=True)
-    stock = models.CharField(null=True,blank=True,default=0)
+    stock = models.CharField(null=True,blank=True,default=0,max_length=255)
     created_at = models.DateTimeField(auto_now_add=True,null=True)
     updated_at = models.DateTimeField(auto_now=True,null=True)
     is_active = models.BooleanField(default=True)
@@ -53,6 +51,28 @@ class Product(models.Model):
         else:
             return f'{self.name}  {color_tag} Category:{self.product_category}' 
             color_tag = ''
+
+class MediumLargeStock(models.Model):
+    product = models.OneToOneField(Product,on_delete=models.CASCADE,related_name='mediumLargeStock')
+    size_set = models.ForeignKey(SizeSet,on_delete=models.CASCADE,null=True,blank=True)
+    Medium = models.PositiveIntegerField(default=0)
+    large = models.PositiveIntegerField(default=0)
+    xl = models.PositiveIntegerField(default=0)
+    xl2 = models.PositiveIntegerField(default=0)
+    xl3 = models.PositiveIntegerField(default=0)
+
+class Size39to46(models.Model):
+    product = models.OneToOneField(Product,on_delete=models.CASCADE,related_name='size39to46')
+    size_set = models.ForeignKey(SizeSet,on_delete=models.CASCADE,null=True,blank=True)
+    size39 = models.PositiveIntegerField(default=0)
+    size40 = models.PositiveIntegerField(default=0)
+    size41 = models.PositiveIntegerField(default=0)
+    size42 = models.PositiveIntegerField(default=0)
+    size43 = models.PositiveIntegerField(default=0)
+    size44 = models.PositiveIntegerField(default=0)
+    size45 = models.PositiveIntegerField(default=0)
+    size46 = models.PositiveIntegerField(default=0)
+
 
 class RelatedImages(models.Model):
     product = models.ForeignKey(Product,on_delete=models.CASCADE,related_name='relatedImages')

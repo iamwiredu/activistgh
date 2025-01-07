@@ -107,8 +107,8 @@ def productDetailPage(request,unique_id):
     }
     return render(request,'productDetails.html',context)
 
-def shop(request):
-    products = Product.objects.all()
+def shop(request,category_name):
+    products = Product.objects.all().filter(product_category=category_name)
     events = Outing.objects.all()
     categories = Category.objects.all()
 
