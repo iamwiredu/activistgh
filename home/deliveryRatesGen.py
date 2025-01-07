@@ -4,9 +4,6 @@ import os
 # Define item dimensions, weights, and base shipping rate per kg in USD
 ITEM_SPECS = {
     "hoodie": {"weight": 600, "length": 30, "width": 25, "height": 5},
-    "tee": {"weight": 200, "length": 25, "width": 20, "height": 2},
-    "shorts": {"weight": 300, "length": 20, "width": 15, "height": 3},
-    "joggers": {"weight": 500, "length": 30, "width": 20, "height": 5}
 }
 
 # Estimated distances in kilometers from Accra to each country (sample provided)

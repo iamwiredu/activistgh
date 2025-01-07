@@ -55,7 +55,7 @@ class Product(models.Model):
 class MediumLargeStock(models.Model):
     product = models.OneToOneField(Product,on_delete=models.CASCADE,related_name='mediumLargeStock')
     size_set = models.ForeignKey(SizeSet,on_delete=models.CASCADE,null=True,blank=True)
-    Medium = models.PositiveIntegerField(default=0)
+    medium = models.PositiveIntegerField(default=0)
     large = models.PositiveIntegerField(default=0)
     xl = models.PositiveIntegerField(default=0)
     xl2 = models.PositiveIntegerField(default=0)

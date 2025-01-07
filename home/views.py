@@ -3,11 +3,11 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.shortcuts import render, redirect
-from .models import Product, Outing, Payment, Cart, Category,CartObject, Newsletter, UserLogin, Contact, Category
+from .models import Product, Outing, Payment, MediumLargeStock,Size39to46,Cart, Category,CartObject, Newsletter, UserLogin, Contact, Category
 from .deliveryRatesGen import generate_shipping_cost
 from .password import generate_password
 from django.contrib import messages
-from userAdmin.models import Revenue, Notification
+from userAdmin.models import Revenue, Notification, DeliveryPriceByRegion
 
 # Create your views here.
 from django.core.mail import EmailMultiAlternatives
@@ -108,7 +108,8 @@ def productDetailPage(request,unique_id):
     return render(request,'productDetails.html',context)
 
 def shop(request,category_name):
-    products = Product.objects.all().filter(product_category=category_name)
+    category = Category.objects.get(name=category_name)
+    products = Product.objects.all().filter(product_category=category)
     events = Outing.objects.all()
     categories = Category.objects.all()
 
@@ -181,13 +182,12 @@ def makePayment(request,ref):
             # need to quantify the item's into right data form
 
             items = {
-                'tee':0,
+               
                 'hoodie':0,
-                'shorts':0,
-                'joggers':0,
+               
             }
             for item in payment.cart.cart_objects.all():
-                items[item.product.category.lower()] += item.quantity
+                items['hoodie'] += item.quantity
             delivery_cost = generate_shipping_cost(items,payment.destination_country)
             print(delivery_cost)
             if 'N/A' in str(delivery_cost):
@@ -198,7 +198,12 @@ def makePayment(request,ref):
                 payment.save()
 
             print(items,delivery_cost)
-
+        else:
+            delivery_price_object = DeliveryPriceByRegion.objects.all()[0]
+            delivery_cost = getattr(delivery_price_object,payment.city.lower())
+            payment.delivery_price =  delivery_cost
+            payment.save()
+            
         
         context ={
             'payment':payment,
@@ -298,27 +303,46 @@ def orderSuccess(request,ref):
                 return redirect(f'/orderSuccess/{ref}/')
 
 
-
     payment = Payment.objects.get(ref=ref)
-    payment.verified = True
-    payment.save()
+
+    if not payment.verified:  # Simplified comparison
+        for item in payment.cart.cart_objects.all():
+            if item.product.size_set == 'Medium Large Xl 2xl 3xl':  
+               
+                mediumLarge,created = MediumLargeStock.objects.get_or_create(product=item.product)
+                stock_field = getattr(mediumLarge, item.size.lower(), None)
+                if stock_field is not None:
+                 
+                    setattr(item.product.mediumLargeStock, item.size.lower(), stock_field - item.quantity)
+            elif item.product.size_set == '39 -46':
+                size39to46,created = Size39to46.objects.get_or_create(product=item.product)
+                stock_field = getattr(size39to46,item.size.lower,None)
+                if stock_field is not None:
+                    setattr(item.product, item.size.lower(), stock_field - item.quantity)
+            else:
+                item.product.stock  -= 1
+                item.product.save()
+                
+
+            payment.verified = True
+            payment.save()
 
     #code for revenue
     
 
-    year = payment.date_created.year
-    month = payment.date_created.month
-    amount = payment.amount
+        year = payment.date_created.year
+        month = payment.date_created.month
+        amount = payment.amount
 
-    # Get or create the Revenue object for the year
-    revenue, created = Revenue.objects.get_or_create(year=year)
-    revenue.update_monthly_revenue(month, amount)
-    print(f'the month is {month} and the amount is {amount}')
-    cart = Cart.objects.get(payment=payment)
+       
+        revenue, created = Revenue.objects.get_or_create(year=year)
+        revenue.update_monthly_revenue(month, amount)
+        print(f'the month is {month} and the amount is {amount}')
+        cart = Cart.objects.get(payment=payment)
 
-    # create notification
-    new_Notification = Notification(title='Product Sold',message=f'GHS{payment.total_actual} paid for order #{payment.order_id}.',notification_type='Contact Form')
-    new_Notification.save()
+        # create notification
+        new_Notification = Notification(title='Product Sold',message=f'GHS{payment.total_actual} paid for order #{payment.order_id}.',notification_type='Contact Form')
+        new_Notification.save()
 
     context ={
         'payment':payment,

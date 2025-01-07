@@ -20,9 +20,9 @@ class Size39to46Form(forms.ModelForm):
 class MediumLargeStockForm(forms.ModelForm):
     class Meta:
         model = MediumLargeStock
-        fields = ['Medium','large','xl','xl2','xl3']
+        fields = ['medium','large','xl','xl2','xl3']
         labels = {
-            'Medium': 'Medium',
+            'medium': 'Medium',
             'large': 'Large',
             'xl': 'XL',
             'xl2': '2xl',
