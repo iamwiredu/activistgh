@@ -160,7 +160,7 @@ class productEdit(View):
             productFormCreator = ProductForm(request.POST, request.FILES,instance=product)    
             if productFormCreator.is_valid(): 
                 productFormCreator.save() 
-                return redirect(productEdit,unique_id)  # Redirect to the same page or a success page
+                return redirect(f'/productEdit/{unique_id}') # Redirect to the same page or a success page
             else:
                 print('error')
         if 'addBackImage' in request.POST:

@@ -436,7 +436,7 @@
                         <img src="{{ product.relatedImages.all.0.image.url }}" alt="" class="product-image" loading="lazy">
                         {% endif %}
                     </div>
-                    {% if product.stock == '0' %}
+                    {% if product.stock_actual == '0' %}
                     <div class="sold-out">Sold Out</div>
                     {% endif %}
                     <div class="product-details">

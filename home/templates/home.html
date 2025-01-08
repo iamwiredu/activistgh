@@ -1,153 +1,92 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strangers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body {
+        body,
+        html {
+            height: 100%;
             margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: #fff;
-            overflow: hidden;
         }
 
-        .slideshow {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
+        .bg {
+            /* The image used */
+            background-image: url("images/c1.jpeg");
 
-        .slideshow div {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+            /* Full height */
             height: 100%;
-            background-size: cover;
+
+            /* Center and scale the image nicely */
             background-position: center;
-            animation: slideshow 85s infinite;
-            /* 85 seconds = 5 seconds per image x 17 images */
-            opacity: 0;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
-        @keyframes slideshow {
-
-            0%,
-            5.88% {
-                opacity: 1;
-            }
-
-            5.89%,
-            100% {
-                opacity: 0;
-            }
+        #shop {
+            padding: 10px;
+            background-color: white;
+            color: black;
+            font-size: smaller;
+            font-weight: bolder;
+            font-family: sans-serif;
         }
 
-        .slideshow div:nth-child(1) {
-            background-image: url('{% static "images/image1.jpg" %}');
-            animation-delay: 0s;
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            /* Add spacing between columns */
+            margin: 8px 0;
+            justify-content: center;
+            /* Center the grid items */
         }
 
-        .slideshow div:nth-child(2) {
-            background-image: url('{% static "images/image2.jpg" %}');
-            animation-delay: 5s;
+        .column {
+            flex: 1 1 calc(25% - 16px);
+            /* Four columns on larger screens */
+            max-width: calc(25% - 16px);
         }
 
-        .slideshow div:nth-child(3) {
-            background-image: url('{% static "images/image3.jpeg" %}');
-            animation-delay: 10s;
+        .content {
+            background-color: white;
+            padding: 10px;
+            aspect-ratio: 1 / 1;
+            /* Ensures square boxes */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+         
         }
 
-        .slideshow div:nth-child(4) {
-            background-image: url('{% static "images/image4.jpeg" %}');
-            animation-delay: 15s;
-        }
-
-        .slideshow div:nth-child(5) {
-            background-image: url('{% static "images/image5.jpeg" %}');
-            animation-delay: 20s;
-        }
-
-        .slideshow div:nth-child(6) {
-            background-image: url('{% static "images/image6.jpeg" %}');
-            animation-delay: 25s;
-        }
-
-        .slideshow div:nth-child(7) {
-            background-image: url('{% static "images/image7.jpeg" %}');
-            animation-delay: 30s;
-        }
-
-        .slideshow div:nth-child(8) {
-            background-image: url('{% static "images/image8.jpeg" %}');
-            animation-delay: 35s;
-        }
-
-        .slideshow div:nth-child(9) {
-            background-image: url('{% static "images/image9.jpeg" %}');
-            animation-delay: 40s;
-        }
-
-        .slideshow div:nth-child(10) {
-            background-image: url('{% static "images/image10.jpeg" %}');
-            animation-delay: 45s;
-        }
-
-        .slideshow div:nth-child(11) {
-            background-image: url('{% static "images/image11.jpeg" %}');
-            animation-delay: 50s;
-        }
-
-        .slideshow div:nth-child(12) {
-            background-image: url('{% static "images/image12.jpeg" %}');
-            animation-delay: 55s;
-        }
-
-        .slideshow div:nth-child(13) {
-            background-image: url('{% static "images/image13.jpeg" %}');
-            animation-delay: 60s;
-        }
-
-        .slideshow div:nth-child(14) {
-            background-image: url('{% static "images/image14.jpeg" %}');
-            animation-delay: 65s;
-        }
-
-        .slideshow div:nth-child(15) {
-            background-image: url('{% static "images/image15.jpeg" %}');
-            animation-delay: 70s;
-        }
-
-        .slideshow div:nth-child(16) {
-            background-image: url('{% static "images/image16.jpeg" %}');
-            animation-delay: 75s;
-        }
-
-        .slideshow div:nth-child(17) {
-            background-image: url('{% static "images/image17.jpeg" %}');
-            animation-delay: 80s;
-        }
-
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .content img {
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            z-index: 1;
+            object-fit: cover;
+            /* Ensures the image fits within the box */
         }
 
+        /* Responsive layout - makes a two-column layout */
+        @media screen and (max-width: 1024px) {
+            .column {
+                flex: 1 1 calc(50% - 16px);
+                /* Two columns on smaller screens */
+                max-width: calc(50% - 16px);
+            }
+        }
+        .strangersbox{
+            height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+           
+        }
+    </style>
+    <style>
+        
+       
         .logo-container {
             position: absolute;
             top: 20px;
@@ -158,7 +97,7 @@
         .logo {
             width: 340px;
             height: 150px;
-            background: url('{% static "wordlogo3.png" %}') no-repeat center center/cover;
+            background: url('/static/wordlogo3.png') no-repeat center center/cover;
             animation: rotateLogo 5s infinite linear;
             transform-style: preserve-3d;
         }
@@ -172,53 +111,7 @@
                 transform: rotateY(360deg);
             }
         }
-
-        .container {
-            text-align: center;
-            padding: 40px;
-            width: 100%;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            z-index: 2;
-        }
-
-        .form-row {
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .form-row input,
-        .waitlist-form input {
-            padding: 10px;
-            border: none;
-            border-bottom: 1px solid #ccc;
-            background-color: rgba(255, 255, 255, 0.1);
-            width: 300px;
-            color: white;
-        }
-
-        .form-row button,
-        .waitlist-button {
-            padding: 10px 20px;
-            border: none;
-            background-color: #d95900;
-            color: white;
-            cursor: pointer;
-        }
-
-        .waitlist-button:hover {
-            text-decoration: underline;
-        }
-
-        @media screen and (max-width: 700px) {
+       @media screen and (max-width: 700px) {
             .waitlist-button {
                 width: 200px;
             }
@@ -296,73 +189,199 @@
     text-decoration: underline;
 }
 
+    
     </style>
 </head>
 
 <body>
-    <div class="slideshow">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-    <div class="overlay"></div>
-    <div class="hamburger-menu-container">
-        <!-- Hamburger Icon -->
-        <div class="hamburger-icon" onclick="toggleHamburgerMenu()">☰</div>
-    
-        <!-- Sliding Menu -->
-        <div class="hamburger-menu" id="hamburgerMenu">
-            <div class="menu-header">
-                <span onclick="toggleHamburgerMenu()">✕</span>
-            </div>
-            <div class="menu-content">
-                {% for category in categories %}
-                <div class="menu-item toggle-box" data-filter="{{ category.name }}">
-                    {{ category.name }}
+
+    <div class="bg">
+        <div class="nav">
+            <span>Strangers</span>
+            <div class="hamburger-menu-container">
+                <!-- Hamburger Icon -->
+                <div class="hamburger-icon" onclick="toggleHamburgerMenu()">☰</div>
+            
+                <!-- Sliding Menu -->
+                <div class="hamburger-menu" id="hamburgerMenu" style="right: -100%;">
+                    <div class="menu-header">
+                        <span onclick="toggleHamburgerMenu()">✕</span>
+                    </div>
+                    <div class="menu-content">
+            
+                        <div class="menu-item toggle-box" data-filter="Tees">
+                            Home
+                        </div>
+                            <div class="menu-item toggle-box" data-filter="Tees">
+                                Shop
+                            </div>
+                                <div class="menu-item toggle-box" data-filter="Tees">
+                                    Contact
+                                </div>
+                    </div>
                 </div>
-                {% endfor %}
+            </div>
+        </div>
+        <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);">
+            <span id="shop">SHOP</span>
+        </div>
+    </div>
+    <div class="strangersbox">
+       <span style="padding-bottom: 30px;">
+        Strangers
+       </span>
+    </div>
+    
+    <div class="row4x4">
+        <div class="row">
+            <div class="column">
+                <div class="content">
+                    <img src="images/c1.jpeg" alt="Mountains">
+                </div>
+            </div>
+            <div class="column">
+                <div class="content">
+                    <img src="images/c1.jpeg" alt="Lights">
+                </div>
+            </div>
+            <div class="column">
+                <div class="content">
+                    <img src="images/c1.jpeg" alt="Nature">
+                </div>
+            </div>
+            <div class="column">
+                <div class="content">
+                    <img src="images/c1.jpeg" alt="Mountains">
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="logo-container">
-        <div class="logo"></div>
+    <div>
+        <div>Brand Identity</div>
     </div>
-    <div class="container">
-        <form class="form-row" method="POST">
-            {% csrf_token %}
-            <input type="text" name="Email" id="email" placeholder="Enter email" required>
-            <input type="password" placeholder="Enter password" name="passwordLogin" required>
-            
-            <button type="submit"  name="passwordLoginSubmit">Sign in</button>
-        </form>
-        <a href="{% url 'shop' %}"><button class="waitlist-button">Shop as Guest</button></a>
+    <div class="row">
+        <div class="column">
+            <div class="content">
+                <img src="images/c1.jpeg" alt="Mountains">
+            </div>
+        </div>
+        <div class="column">
+            <div class="content">
+                <img src="images/c1.jpeg" alt="Lights">
+            </div>
+        </div>
+        <div class="column">
+            <div class="content">
+                <img src="images/c1.jpeg" alt="Nature">
+            </div>
+        </div>
+        <div class="column">
+            <div class="content">
+                <img src="images/c1.jpeg" alt="Mountains">
+            </div>
+        </div>
     </div>
-</body>
-<script>
-    function toggleHamburgerMenu() {
-            const menu = document.getElementById("hamburgerMenu");
-            if (menu.style.right === "0px") {
-                menu.style.right = "-100%";
-            } else {
-                menu.style.right = "0px";
+        <div class="newsletter">
+            <div class="container">
+                <div style="display: flex; flex-direction: column;">
+                    <img src="{% static 'img/categories/logo.png' %}" style="width: 300px; height: auto; margin: 0 auto;"
+                        alt="">
+                    <div style="display: flex; justify-content: center; gap: 8px;">
+                        <span>
+                            <svg fill="#000000" width="25px" height="25px" viewBox="0 0 32 32" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <title>tiktok</title>
+                                    <path
+                                        d="M16.656 1.029c1.637-0.025 3.262-0.012 4.886-0.025 0.054 2.031 0.878 3.859 2.189 5.213l-0.002-0.002c1.411 1.271 3.247 2.095 5.271 2.235l0.028 0.002v5.036c-1.912-0.048-3.71-0.489-5.331-1.247l0.082 0.034c-0.784-0.377-1.447-0.764-2.077-1.196l0.052 0.034c-0.012 3.649 0.012 7.298-0.025 10.934-0.103 1.853-0.719 3.543-1.707 4.954l0.020-0.031c-1.652 2.366-4.328 3.919-7.371 4.011l-0.014 0c-0.123 0.006-0.268 0.009-0.414 0.009-1.73 0-3.347-0.482-4.725-1.319l0.040 0.023c-2.508-1.509-4.238-4.091-4.558-7.094l-0.004-0.041c-0.025-0.625-0.037-1.25-0.012-1.862 0.49-4.779 4.494-8.476 9.361-8.476 0.547 0 1.083 0.047 1.604 0.136l-0.056-0.008c0.025 1.849-0.050 3.699-0.050 5.548-0.423-0.153-0.911-0.242-1.42-0.242-1.868 0-3.457 1.194-4.045 2.861l-0.009 0.030c-0.133 0.427-0.21 0.918-0.21 1.426 0 0.206 0.013 0.41 0.037 0.61l-0.002-0.024c0.332 2.046 2.086 3.59 4.201 3.59 0.061 0 0.121-0.001 0.181-0.004l-0.009 0c1.463-0.044 2.733-0.831 3.451-1.994l0.010-0.018c0.267-0.372 0.45-0.822 0.511-1.311l0.001-0.014c0.125-2.237 0.075-4.461 0.087-6.698 0.012-5.036-0.012-10.060 0.025-15.083z">
+                                    </path>
+                                </g>
+                            </svg></span>
+                        <span>
+                            <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"
+                                        fill="#0F0F0F"></path>
+                                    <path
+                                        d="M18 5C17.4477 5 17 5.44772 17 6C17 6.55228 17.4477 7 18 7C18.5523 7 19 6.55228 19 6C19 5.44772 18.5523 5 18 5Z"
+                                        fill="#0F0F0F"></path>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M1.65396 4.27606C1 5.55953 1 7.23969 1 10.6V13.4C1 16.7603 1 18.4405 1.65396 19.7239C2.2292 20.8529 3.14708 21.7708 4.27606 22.346C5.55953 23 7.23969 23 10.6 23H13.4C16.7603 23 18.4405 23 19.7239 22.346C20.8529 21.7708 21.7708 20.8529 22.346 19.7239C23 18.4405 23 16.7603 23 13.4V10.6C23 7.23969 23 5.55953 22.346 4.27606C21.7708 3.14708 20.8529 2.2292 19.7239 1.65396C18.4405 1 16.7603 1 13.4 1H10.6C7.23969 1 5.55953 1 4.27606 1.65396C3.14708 2.2292 2.2292 3.14708 1.65396 4.27606ZM13.4 3H10.6C8.88684 3 7.72225 3.00156 6.82208 3.0751C5.94524 3.14674 5.49684 3.27659 5.18404 3.43597C4.43139 3.81947 3.81947 4.43139 3.43597 5.18404C3.27659 5.49684 3.14674 5.94524 3.0751 6.82208C3.00156 7.72225 3 8.88684 3 10.6V13.4C3 15.1132 3.00156 16.2777 3.0751 17.1779C3.14674 18.0548 3.27659 18.5032 3.43597 18.816C3.81947 19.5686 4.43139 20.1805 5.18404 20.564C5.49684 20.7234 5.94524 20.8533 6.82208 20.9249C7.72225 20.9984 8.88684 21 10.6 21H13.4C15.1132 21 16.2777 20.9984 17.1779 20.9249C18.0548 20.8533 18.5032 20.7234 18.816 20.564C19.5686 20.1805 20.1805 19.5686 20.564 18.816C20.7234 18.5032 20.8533 18.0548 20.9249 17.1779C20.9984 16.2777 21 15.1132 21 13.4V10.6C21 8.88684 20.9984 7.72225 20.9249 6.82208C20.8533 5.94524 20.7234 5.49684 20.564 5.18404C20.1805 4.43139 19.5686 3.81947 18.816 3.43597C18.5032 3.27659 18.0548 3.14674 17.1779 3.0751C16.2777 3.00156 15.1132 3 13.4 3Z"
+                                        fill="#0F0F0F"></path>
+                                </g>
+                            </svg>
+                        </span>
+                    </div>
+                    <div style="display: flex; flex-direction:column; align-items: center; justify-content: center;">
+                        <div>newsletter</div>
+                        <form method="POST" id="newsletterForm" onsubmit="process(event)">
+                            {% csrf_token %}
+                            <div style="max-width: 400px; margin: 20px auto; padding: 20px; ">
+                                <input type="text" name="fname" id="fname" placeholder="First Name"
+                                    style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+                                <input type="text" name="lname" id="lname" placeholder="Last Name"
+                                    style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+        
+                                <input type="email" id="email" placeholder="Email" required="required"
+                                    data-error="Valid email is required." name="email"
+                                    style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+        
+                                <input type="text" class="form-control" aria-label="Small" id="phone" name="phone"
+                                    aria-describedby="inputGroup-sizing-sm"
+                                    style="width: 360px; margin-bottom: 10px; padding: 10px; padding-left: 45px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+        
+                                <button id="demo_btn" class="newsletter_submit_btn trans_300"
+                                    style="background-color:#fe4c00; margin-top: 10px; width: 100%; padding: 10px; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
+                                    Subscribe
+                                </button>
+        
+                                <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300"
+                                    value="Submit" name="subscribe"
+                                    style="background-color:#fe4c00; display: none; width: 100%; padding: 10px; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
+                                    Subscribe
+                                </button>
+                            </div>
+        
+                        </form>
+                    </div>
+        
+                </div>
+        
+                <div class="row">
+                    <footer class="footer">
+                        <div class="container">
+        
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="footer_nav_container">
+                                        <div class="cr">©2024 Strangers</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+        
+                </div>
+            </div>
+        </div>
+    <script>
+        
+            function toggleHamburgerMenu() {
+                const menu = document.getElementById("hamburgerMenu");
+                if (menu.style.right === "0px") {
+                    menu.style.right = "-100%";
+                } else {
+                    menu.style.right = "0px";
+                }
             }
-        }
+        
 
-</script>
+    </script>
+</body>
 
 </html>

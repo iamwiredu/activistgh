@@ -1,4 +1,4 @@
-import ast
+import ast, json
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
@@ -15,6 +15,7 @@ from django.template.loader import render_to_string
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
+from django.http import JsonResponse
 
 
 
@@ -106,6 +107,30 @@ def productDetailPage(request,unique_id):
         'product': product,
     }
     return render(request,'productDetails.html',context)
+
+
+def get_stock(request):
+    if request.method == 'POST':
+        try:
+            # Parse JSON data from request body
+            data = json.loads(request.body)
+            product_id = data.get('product_id')
+            size = data.get('size')
+
+            # Fetch the product and calculate stock for the selected size
+            product = Product.objects.get(id=product_id)
+            stock = product.get_size(size)  # Adjust as needed for your model method
+
+            return JsonResponse({'stock': stock})
+
+        except Product.DoesNotExist:
+            return JsonResponse({'error': 'Product not found'}, status=404)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
 
 def shop(request,category_name):
     category = Category.objects.get(name=category_name)

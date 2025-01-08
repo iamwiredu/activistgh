@@ -20,6 +20,7 @@ class SizeSet(models.Model):
    
 class Size(models.Model):
     size = models.CharField(max_length=255)
+    value = models.CharField(max_length=255,null=True,blank=True)
     sizeSet = models.ForeignKey(SizeSet,on_delete=models.SET_NULL,null=True,blank=True, related_name='sizes')
        
     def __str__(self):
@@ -34,10 +35,10 @@ class Product(models.Model):
     description = models.TextField(null=True,blank=True)
     product_ordering = models.PositiveIntegerField(default=0)
     price = models.DecimalField(max_digits=10, decimal_places=2,null=True,blank=True)
-    stock = models.CharField(null=True,blank=True,default=0,max_length=255)
     created_at = models.DateTimeField(auto_now_add=True,null=True)
     updated_at = models.DateTimeField(auto_now=True,null=True)
     is_active = models.BooleanField(default=True)
+    stock = models.PositiveIntegerField(default=0)
     size_set = models.ForeignKey(SizeSet,on_delete=models.CASCADE,null=True,blank=True)
     size_av = models.BooleanField(default=True)
     
@@ -51,6 +52,24 @@ class Product(models.Model):
         else:
             return f'{self.name}  {color_tag} Category:{self.product_category}' 
             color_tag = ''
+    
+    @property
+    def stock_actual(self):
+        if self.size_set:
+            if self.size_set.name == '39 - 46':
+                return self.size39to46.size39 + self.size39to46.size40 + self.size39to46.size41 + self.size39to46.size42 + self.size39to46.size43 + self.size39to46.size44 + self.size39to46.size45 + self.size39to46.size46
+            elif self.size_set.name == 'Medium Large Xl 2xl 3xl':
+                return self.mediumLargeStock.medium + self.mediumLargeStock.large + self.mediumLargeStock.xl + self.mediumLargeStock.xl2 + self.mediumLargeStock.xl3
+            else:
+                return self.stock
+    
+    def get_size(self,size):
+        get = getattr(self.size_set,size,0)
+        if get:
+            return get
+        else:
+            return 0
+        
 
 class MediumLargeStock(models.Model):
     product = models.OneToOneField(Product,on_delete=models.CASCADE,related_name='mediumLargeStock')

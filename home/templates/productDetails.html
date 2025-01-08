@@ -178,7 +178,7 @@
                             <nav class="navbar">
                                 <ul class="navbar_menu">
                                     <li><a href="{% url 'home' %}">home</a></li>
-                                    <li><a href="{% url 'shop' %}">shop</a></li>
+                                    <li><a href="#">shop</a></li>
                                     
                                     <li><a href="{% url 'contact' %}">contact</a></li>
                                 </ul>
@@ -226,7 +226,7 @@
                 <ul class="menu_top_nav">
               
                     <li class="menu_item"><a href="{% url 'home' %}">home</a></li>
-                    <li class="menu_item"><a href="{% url 'shop' %}">shop</a></li>
+                    <li class="menu_item"><a href="#">shop</a></li>
                  
                    
                     <li class="menu_item"><a href="{% url 'contact' %}">contact</a></li>
@@ -242,8 +242,8 @@
 
                     <div class="breadcrumbs d-flex flex-row align-items-center" >
                         <ul>
-                            <li><a href="{% url 'shop' %}" >Shop</a></li>
-                            <li ><a href="{% url 'shop'  %}" ><i class="fa fa-angle-right" aria-hidden="true"></i>{{product.category}}</a>
+                            <li><a href="#" >Shop</a></li>
+                            <li ><a href="#" ><i class="fa fa-angle-right" aria-hidden="true"></i>{{product.category}}</a>
                             </li>
                             <li class="active" ><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>{{product.name}}</a></li>
                         </ul>
@@ -283,7 +283,8 @@
                     <div class="product_details">
                         <div class="product_details_title">
                             <h2>{{product.name}}</h2>
-                            <p>{{product.description}}</p>
+                      
+
                         </div>
                         <div class="free_delivery d-flex flex-row align-items-center justify-content-center">
                             <span class="ti-truck"></span><span>Delivery Fee At Checkout</span>
@@ -298,13 +299,15 @@
                             <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
                         </ul> -->
                 <div style="margin-top: 30px;">
-                    {{product.description}}
+                    {% if product.description and product.description != "None" %}
+                    <p>{{ product.description }}</p>
+                    {% endif %}
                 </div>
                 <div style="margin-top: 30px;">
                     <label for="size-select">Select Size:</label>
                     <select id="size-select" name="size">
                      {% for size in product.size_set.sizes.all %}
-                        <option value="{{size}}">{{size}}</option>
+                        <option value="{{size.value}}">{{size}}</option>
                     {% endfor %}
                         
                     </select>
@@ -331,6 +334,7 @@
                                         d="M 129.753906 90.910156 L 20.253906 90.910156 L 20.253906 59.089844 L 129.753906 59.089844 Z M 126.835938 61.992188 L 23.164062 61.992188 L 23.164062 88.007812 L 126.835938 88.007812 L 126.835938 61.992188 " />
                                 </g>
                             </svg>
+                            {{product.stock_actual}}
 
                             {% else %}
                             <div class="red_button add_to_cart_button"><a href="#" id="addToCartDiv">add to cart</a></div>
@@ -664,6 +668,38 @@
     <script src="{% static 'plugins/easing/easing.js' %}"></script>
     <script src="{% static 'plugins/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
     <script src="{% static 'js/single_custom.js' %}"></script>
+    <script>
+        document.getElementById('size-select').addEventListener('change', function () {
+            const selectedSize = this.value.trim();
+            const productId = '{{ product.id }}';  // Ensure product ID is passed correctly
+
+            // Example POST request to fetch stock
+            fetch('/get-stock/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',  // Set content type to JSON
+                    'X-CSRFToken': '{{ csrf_token }}',  // Include CSRF token if using Django
+                },
+                body: JSON.stringify({  // Send data in JSON format
+                    product_id: productId,
+                    size: selectedSize
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.stock > 0) {
+                        document.getElementById('addToCartDiv').innerHTML = 'Add to Cart';
+                    } else {
+                        document.getElementById('addToCartDiv').innerHTML = 'Sold Out';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching stock:', error); // Handle fetch errors
+                });
+        });
+    </script>
+
+
     <script>
         //code for phone
         const phoneInputField = document.querySelector("#phone");
