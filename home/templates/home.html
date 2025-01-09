@@ -1,18 +1,24 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        @font-face {
+            font-family: 'NewFont';
+            src: url("{% static 'fonts/Poppins-Regular.ttf' %}");
+        }
         body,
         html {
             height: 100%;
             margin: 0;
+            font-family: NewFont;
         }
 
         .bg {
             /* The image used */
-            background-image: url("images/c1.jpeg");
+            background-image: url("{% static 'img/cover.jpeg' %}");
 
             /* Full height */
             height: 100%;
@@ -24,14 +30,25 @@
         }
 
         #shop {
-            padding: 10px;
+            
             background-color: white;
+            padding: 10px 50px;
             color: black;
             font-size: smaller;
             font-weight: bolder;
             font-family: sans-serif;
+            margin-top: -50px;
         }
-
+        #shop {  
+  text-align:center;
+  opacity: 1;
+ 
+  
+  animation: bounce .7s infinite alternate;
+}
+@keyframes bounce {
+  to { transform: scale(1.2); }
+}
         .row {
             display: flex;
             flex-wrap: wrap;
@@ -83,6 +100,7 @@
             align-items: center;
            
         }
+
     </style>
     <style>
         
@@ -191,13 +209,109 @@
 
     
     </style>
+    <style>
+
+.video-card {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.video-grid-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    overflow-x: auto; /* Allows horizontal scrolling on smaller screens */
+    scroll-behavior: smooth;
+    width: 100%;
+    margin: 50px 0px;
+    
+}
+
+.video-card {
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-card video {
+    width: 33%;
+    height: auto;
+    display: block;
+}
+
+
+.video-card video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+  </style>
+  <style>
+      .menu-content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .menu-item {
+        position: relative;
+        padding: 10px;
+     
+        cursor: pointer;
+        
+    }
+
+    .menu-item.dropdown .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background:black;
+        width: 100%;
+        border: 1px solid #ccc;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+    .menu-item{
+        text-decoration: none;
+        color: white;
+    }
+    .dropdown-menu a{
+        text-decoration: none;
+        color: white;
+    }
+    .menu-item.dropdown.open .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-item {
+        padding: 8px 12px;
+        cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+        background: #eee;
+        color: black;
+    }
+</style>
+
+  <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
 </head>
 
 <body>
 
     <div class="bg">
         <div class="nav">
-            <span>Strangers</span>
+            <span><img src="{% static 'wordlogo2.png' %}" style="width: 200px; height:auto; padding: 20px 0px 0px 20px;" alt=""></span>
             <div class="hamburger-menu-container">
                 <!-- Hamburger Icon -->
                 <div class="hamburger-icon" onclick="toggleHamburgerMenu()">☰</div>
@@ -207,28 +321,34 @@
                     <div class="menu-header">
                         <span onclick="toggleHamburgerMenu()">✕</span>
                     </div>
-                    <div class="menu-content">
-            
-                        <div class="menu-item toggle-box" data-filter="Tees">
-                            Home
-                        </div>
-                            <div class="menu-item toggle-box" data-filter="Tees">
-                                Shop
-                            </div>
-                                <div class="menu-item toggle-box" data-filter="Tees">
-                                    Contact
-                                </div>
+            <div class="menu-content">
+                <div class="menu-item toggle-box">
+                    <a href="{% url 'home' %}">Home</a>
+                </div>
+                <div class="menu-item toggle-box dropdown">
+                    Shop
+                    <div class="dropdown-menu">
+                       {% for category in categories %}
+                        <a href="{% url 'shop' category.name %}">
+                            <div class="dropdown-item" data-filter="{{category}}">{{category.name}}</div>
+                        </a>
+                        {% endfor %}
                     </div>
+                </div>
+                <div class="menu-item toggle-box">
+                    <a href="{% url 'contact' %}">Contact</a>
+                </div>
+            </div>
                 </div>
             </div>
         </div>
-        <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);">
+        <div style=" bottom: 20px; display: flex; justify-content: center; padding-top: 85vh;">
             <span id="shop">SHOP</span>
         </div>
     </div>
     <div class="strangersbox">
-       <span style="padding-bottom: 30px;">
-        Strangers
+       <span style="padding-bottom: 15px;">
+        <img src="{% static 'wordlogo3.png' %}" alt="" style="width: 500px;">
        </span>
     </div>
     
@@ -236,52 +356,62 @@
         <div class="row">
             <div class="column">
                 <div class="content">
-                    <img src="images/c1.jpeg" alt="Mountains">
+                    <img src="{% static 'images/image3.jpeg' %}" alt="Mountains">
                 </div>
             </div>
             <div class="column">
                 <div class="content">
-                    <img src="images/c1.jpeg" alt="Lights">
+                    <img src="{% static 'images/image4.jpeg' %}" alt="Lights">
                 </div>
             </div>
             <div class="column">
                 <div class="content">
-                    <img src="images/c1.jpeg" alt="Nature">
+                    <img src="{% static 'images/image5.jpeg' %}" alt="Nature">
                 </div>
             </div>
             <div class="column">
-                <div class="content">
-                    <img src="images/c1.jpeg" alt="Mountains">
+                <div class="content">z
+                    <img src="{% static 'images/image7.jpeg' %}" alt="Mountains">
                 </div>
             </div>
         </div>
     </div>
-    <div>
-        <div>Brand Identity</div>
-    </div>
-    <div class="row">
-        <div class="column">
-            <div class="content">
-                <img src="images/c1.jpeg" alt="Mountains">
-            </div>
-        </div>
-        <div class="column">
-            <div class="content">
-                <img src="images/c1.jpeg" alt="Lights">
-            </div>
-        </div>
-        <div class="column">
-            <div class="content">
-                <img src="images/c1.jpeg" alt="Nature">
-            </div>
-        </div>
-        <div class="column">
-            <div class="content">
-                <img src="images/c1.jpeg" alt="Mountains">
-            </div>
+    <div style="display: flex; justify-content: center; flex-direction: column;text-justify:unset; align-items: center;">
+       
+        <h1>WHO IS STRNAGERS?</h1>
+        <div style="text-align: center;">    
+            STRANGERS a word that best describes each and everyone one of us that walks this earth.
+            Till we get to know each other & even after we get to know each other we remain STRANGERS to each other.
+            
+            there’s nothing wrong with being STRANGERS, there’s nothing wrong with being different or Misunderstood.
+            
+            but don’t be a stranger to change, starting afresh, Growth, Healing, GOD, loving yourself & BLESSINGS.
+            cause at the end of the day the only stranger world doesn’t know is our pain, struggle & recovery behind close doors.
+            
         </div>
     </div>
-        <div class="newsletter">
+    <div class="video-grid-container">
+        <div class="video-card">
+            <video id="streaming-video" class="video-js vjs-default-skin" controls preload="auto" data-setup='{}'>
+    
+                <source src="{% static 'video/video3.mp4' %}" type="video/mp4">
+            </video>
+        </div>
+        <div class="video-card">
+            <video id="streaming-video" class="video-js vjs-default-skin" controls preload="auto" data-setup='{}'>
+    
+                <source src="{% static 'video/video1.mp4' %}" type="video/mp4">
+            </video>
+        </div>
+        <div class="video-card">
+            <video id="streaming-video" class="video-js vjs-default-skin" controls preload="auto" data-setup='{}'>
+    
+                <source src="{% static 'video/video2.mp4' %}" type="video/mp4">
+            </video>
+        </div>
+
+    </div>
+        <div class="newsletter" style="background-color: #f2f2f2;">
             <div class="container">
                 <div style="display: flex; flex-direction: column;">
                     <img src="{% static 'img/categories/logo.png' %}" style="width: 300px; height: auto; margin: 0 auto;"
@@ -381,6 +511,49 @@
             }
         
 
+    </script>
+    <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
+    <script>
+        //code for phone
+        const phoneInputField = document.querySelector("#phone");
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+
+        demo_btn.addEventListener('click', () => {
+            const phoneNumber = phoneInput.getNumber();
+            document.getElementById('phone').value = phoneNumber;
+            document.getElementById('newsletter_submit').click();
+
+        });
+
+    </script>
+    <script>
+    // Add click event listener to toggle dropdown visibility
+    document.querySelectorAll('.menu-item.dropdown').forEach(menuItem => {
+                menuItem.addEventListener('click', function () {
+                    // Close other dropdowns (optional, if you have multiple dropdowns)
+                    document.querySelectorAll('.menu-item.dropdown').forEach(item => {
+                        if (item !== menuItem) {
+                            item.classList.remove('open');
+                        }
+                    });
+
+                    // Toggle the dropdown menu
+                    this.classList.toggle('open');
+                });
+    });
+
+            // Optional: Close dropdowns when clicking outside
+            document.addEventListener('click', function (event) {
+        const isClickInside = event.target.closest('.menu-item.dropdown');
+            if (!isClickInside) {
+                document.querySelectorAll('.menu-item.dropdown').forEach(item => {
+                    item.classList.remove('open');
+                });
+        }
+    });
     </script>
 </body>
 
