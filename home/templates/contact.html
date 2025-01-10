@@ -8,8 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Colo Shop Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+    <link rel="icon" href="{% static 'img/logohead.png' %}" sizes="100x100" type="image/png">
     <link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
@@ -423,6 +425,50 @@ hr {
   }
 }
     </style>
+    <style>
+        /* Dropdown Container */
+        .dropdown {
+            position: relative;
+        }
+    
+        /* Dropdown Menu */
+        .dropdown_menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            top: 100%;
+            /* Position below the parent item */
+            left: 0;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            display: none;
+            /* Hide by default */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            min-width: 10rem;
+        }
+    
+        .dropdown_menu li {
+            padding: 0.5rem 1rem;
+        }
+    
+        .dropdown_menu li a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+    
+        .dropdown_menu li a:hover {
+            background-color: #f4f4f4;
+        }
+    
+        /* Show Dropdown on Hover */
+        .dropdown:hover .dropdown_menu {
+            display: block;
+        }
+    </style>
 
     <!-- links fro phone -->
 
@@ -489,7 +535,15 @@ hr {
                             <nav class="navbar">
                                 <ul class="navbar_menu">
                                     <li><a href="{% url 'home' %}">home</a></li>
-                                    <li><a href="{% url 'shop' %}">shop</a></li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">shop</a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            {% for category in categories %}
+                                            <li><a class="dropdown-item" href="{% url 'shop' category.name %}">{{category.name}}</a></li>
+                                            {% endfor %}
+                                    
+                                        </ul>
+                                    </li>
                                     <li><a href="{% url 'contact' %}">contact</a></li>
                                 </ul>
                                 <ul class="navbar_user">
@@ -520,7 +574,15 @@ hr {
                 <ul class="menu_top_nav">
 
                     <li class="menu_item"><a href="{% url 'home' %}">home</a></li>
-                    <li class="menu_item"><a href="{% url 'shop' %}">shop</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">shop</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            {% for category in categories %}
+                            <li><a class="dropdown-item" href="{% url 'shop' category.name %}">{{category.name}}</a></li>
+                            {% endfor %}
+                    
+                        </ul>
+                    </li>
 
 
                     <li class="menu_item"><a href="{% url 'contact' %}">contact</a></li>
@@ -688,12 +750,8 @@ hr {
 
     </div>
 
-    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-    <script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
-    <script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
-    <script src="{% static 'plugins/Isotope/isotope.pkgd.min.js' %}"></script>
-    <script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
-    <script src="{% static 'plugins/easing/easing.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script src="{% static 'js/custom.js' %}"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>

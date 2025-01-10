@@ -22,7 +22,11 @@ class Size(models.Model):
     size = models.CharField(max_length=255)
     value = models.CharField(max_length=255,null=True,blank=True)
     sizeSet = models.ForeignKey(SizeSet,on_delete=models.SET_NULL,null=True,blank=True, related_name='sizes')
-       
+    size_ordering = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['size_ordering']  
+        
     def __str__(self):
         return f'{self.size}'
 

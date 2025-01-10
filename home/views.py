@@ -78,7 +78,14 @@ def home(request):
 
 def productDetailPage(request,unique_id):
     product = Product.objects.get(unique_id=unique_id)
-
+    categories = Category.objects.all()
+    product_sizeset = product.size_set
+    if product_sizeset.name == 'Medium Large Xl 2xl 3xl':
+        sizeset_stock,created = MediumLargeStock.objects.get_or_create(product=product)  
+    elif product_sizeset.name == '39 - 46':
+        sizeset_stock,created = Size39to46.objects.get_or_create(product=product)
+    
+    print(product_sizeset)
     if request.method == 'POST':
         if 'subscribe' in request.POST:
             try:
@@ -105,6 +112,8 @@ def productDetailPage(request,unique_id):
 
     context ={
         'product': product,
+        'sizeset_stock':sizeset_stock,
+        'categories':categories,
     }
     return render(request,'productDetails.html',context)
 
@@ -376,6 +385,7 @@ def orderSuccess(request,ref):
     return render(request,'orderSuccess.html',context)
 
 def contactPage(request):
+    categories = Category.objects.all()
     if request.method == 'POST':
         if 'contactSend' in request.POST:
             try:
@@ -434,6 +444,7 @@ def contactPage(request):
 
 
     context = {
+        'categories':categories,
 
     }
     return render(request,'contact.html',context)

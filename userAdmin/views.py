@@ -84,6 +84,7 @@ def productManagement(request):
 
     products = Product.objects.all()
 
+   
     if request.method == 'POST':
         if 'addProduct' in request.POST:
             productFormCreator = ProductForm(request.POST, request.FILES)    
@@ -177,9 +178,9 @@ class productEdit(View):
                 stockform = ProductStockForm(request.POST,instance=product)
             elif product.size_set.name == 'Medium Large Xl 2xl 3xl':
                 stockform = MediumLargeStockForm(request.POST,instance=stock)
-            elif product.size_set.name == '39 to 46':
+            elif product.size_set.name == '39 - 46':
                 stockform = Size39to46Form(request.POST,instance=stock)
-           
+
                
         
             if stockform.is_valid():
