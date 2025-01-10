@@ -50,25 +50,31 @@
 @keyframes bounce {
   to { transform: scale(1.2); }
 }
+.row4x4{
+    display: flex;
+    justify-content: center;
+}
         .row {
             display: flex;
             flex-wrap: wrap;
-            gap: 16px;
+            
             /* Add spacing between columns */
             margin: 8px 0;
             justify-content: center;
+            width: 100%;
+            margin-left: 10px;
             /* Center the grid items */
         }
 
         .column {
-            flex: 1 1 calc(25% - 16px);
+            flex: 1 1 calc(19% - 200px);
             /* Four columns on larger screens */
-            max-width: calc(25% - 16px);
+            max-width: calc(19% - 200px);
         }
 
         .content {
             background-color: white;
-            padding: 10px;
+            
             aspect-ratio: 1 / 1;
             /* Ensures square boxes */
             display: flex;
@@ -101,6 +107,67 @@
             align-items: center;
            
         }
+
+    </style>
+    <style>
+                .slide-cart {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            max-width: 400px;
+            background-color:rgba(255,255,255,0.95);
+            opacity: 1;
+
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+        }
+
+
+        .slide-cart {
+            right: 0;
+            transform: translateX(100%);
+        }
+
+        .slide-menu.active {
+            transform: translateX(0);
+        }
+
+        .slide-cart.active {
+            transform: translateX(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .slide-cart.active {
+            transform: translateX(0);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 12;
+        }
+        
+    
+        @media (max-width: 768px) {
+            .slide-cart{
+                width: 100%;
+            }
+        }
+    </style>
 
     </style>
     <style>
@@ -213,14 +280,16 @@
     <style>
 
 .video-card {
-    margin: 0;
+  
     padding: 0;
     font-family: Arial, sans-serif;
+    min-width: 300px;
+    height: 300px;
 }
 
 .video-grid-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     gap: 30px;
     overflow-x: auto; /* Allows horizontal scrolling on smaller screens */
     scroll-behavior: smooth;
@@ -301,8 +370,15 @@
         color: black;
     }
 </style>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="icon" href="{% static 'img/logohead.png' %}" sizes="100x100" type="image/png">
-  <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+<link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
+
+<link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
@@ -311,45 +387,149 @@
 <body>
 
     <div class="bg">
-        <div class="nav">
-            <span><img src="{% static 'wordlogo2.png' %}" style="width: 200px; height:auto; padding: 20px 0px 0px 20px;" alt=""></span>
-            <div class="hamburger-menu-container">
-                <!-- Hamburger Icon -->
-                <div class="hamburger-icon" onclick="toggleHamburgerMenu()">☰</div>
+        <div class="overlay" id="overlay"></div>
+            <div class="super_container">
             
-                <!-- Sliding Menu -->
-                <div class="hamburger-menu" id="hamburgerMenu" style="right: -100%;">
-                    <div class="menu-header">
-                        <span onclick="toggleHamburgerMenu()">✕</span>
+                <!-- Header -->
+            
+                <header class="header trans_300" id="navbar">
+            
+                    <!-- Top Navigation -->
+            
+                    <div class="top_nav">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="top_nav_left">They Don't Know Us.</div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div class="top_nav_right">
+            
+                                    </div>
+                       
+                                </div>
+                            </div>
+                        </div>
                     </div>
-            <div class="menu-content">
-                <div class="menu-item toggle-box">
-                    <a href="{% url 'home' %}">Home</a>
+            
+                    <!-- Main Navigation -->
+            
+            
+            
+                    <div class="main_nav_container">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 text-right">
+                                    <div class="logo_container">
+                                        <a href="#"><img style="width: 100px; height: auto;"
+                                                src="{% static 'img/categories/wordlogo.png' %}" alt=""></a>
+                                    </div>
+                                    <nav class="navbar">
+                                        <ul class="navbar_menu">
+                                            <li><a href="{% url 'home' %}">home</a></li>
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" id="dropdownMenuButton"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">shop</a>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    {% for category in categories %}
+                                                    <li><a class="dropdown-item"
+                                                            href="{% url 'shop' category.name %}">{{category.name}}</a></li>
+                                                    {% endfor %}
+            
+                                                </ul>
+                                            </li>
+            
+                                            <li><a href="{% url 'contact' %}">contact</a></li>
+                                        </ul>
+                                        <ul class="navbar_user">
+            
+            
+                                            <li class="checkout" id="cart-btn">
+                                                <a href="#">
+                                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                    <span id="checkout_items" class="checkout_items" id="cart-total">0</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div class="hamburger_container">
+                                            <i class="fa fa-bars" aria-hidden="true"></i>
+                                        </div>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                </header>
+                <!-- Sliding Cart -->
+                <div class="slide-cart" id="cart" style="height: 100vh;">
+                    <div style="display: flex; justify-content: space-between;align-items: center; padding: 50px;">
+                        <div id="bag-header">CART</div>
+                        <div class="hamburger_close" id="close-cart-button"><i class="fa fa-times" aria-hidden="true"></i></div>
+                    </div>
+            
+                    <hr>
+                    <div id="cartBox" style="overflow-y: auto; max-height: 90vh; ">
+            
+                    </div>
                 </div>
-                <div class="menu-item toggle-box dropdown">
-                    Shop
-                    <div class="dropdown-menu">
-                       {% for category in categories %}
-                        <a href="{% url 'shop' category.name %}">
-                            <div class="dropdown-item" data-filter="{{category}}">{{category.name}}</div>
-                        </a>
+            
+                <div class="fs_menu_overlay"></div>
+                <div class="hamburger_menu">
+                    <div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
+                    <div class="hamburger_menu_content text-right">
+                        <ul class="menu_top_nav">
+            
+                            <li class="menu_item"><a href="{% url 'home' %}">home</a></li>
+                            <li class="menu_item"><a href="#">shop</a></li>
+            
+            
+                            <li class="menu_item"><a href="{% url 'contact' %}">contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div style="padding: 70px;"></div>
+            
+            
+            
+                    <section class="product-container">
+                        {% for product in products %}
+                        <div
+                            class="product-card {{ product.product_category }} {% if product.product_category.name == 'Tees' %} Women {% endif %}">
+                            <a href="{% url 'productDetailPage' product.unique_id %}" class="flex flex-col h-full relative">
+                                <div class="relative">
+                                    {% if product.image %}
+                                    <img src="{{ product.image.url }}" alt="Product Front" class="product-image" loading="lazy">
+                                    {% endif %}
+                                    {% if product.relatedImages.all.0.image %}
+                                    <img src="{{ product.relatedImages.all.0.image.url }}" alt="" class="product-image"
+                                        loading="lazy">
+                                    {% endif %}
+                                    {% if product.stock_actual == '0' %}
+                                    <div class="sold-out">Sold Out</div>
+                                    {% endif %}
+                                </div>
+                                <div class="product-details">
+                                    <p class="product-name">{{ product.name }}</p>
+                                    <p class="product-price">GHS {{ product.price }}</p>
+                                </div>
+                            </a>
+                        </div>
                         {% endfor %}
-                    </div>
+                    </section>
+                    <!-- 🛑 Grid Section - Ends Here -->
+            
+            
                 </div>
-                <div class="menu-item toggle-box">
-                    <a href="{% url 'contact' %}">Contact</a>
-                </div>
+            
+            
             </div>
-                </div>
-            </div>
-        </div>
-        <div style=" bottom: 20px; display: flex; justify-content: center; padding-top: 85vh;">
-            <span id="shop">SHOP</span>
-        </div>
+ 
     </div>
     <div class="strangersbox">
-       <span style="padding-bottom: 15px;">
-        <img src="{% static 'wordlogo3.png' %}" alt="" style="width: 500px;">
+       <span style="margin-bottom: -185px;">
+        <img src="{% static 'They.png' %}" alt="" style="width: 500px;">
        </span>
     </div>
     
@@ -371,7 +551,7 @@
                 </div>
             </div>
             <div class="column">
-                <div class="content">z
+                <div class="content">
                     <img src="{% static 'images/image7.jpeg' %}" alt="Mountains">
                 </div>
             </div>
@@ -380,7 +560,7 @@
     <div style="display: flex; justify-content: center; flex-direction: column;text-justify:unset; align-items: center;">
        
         <h1>WHO IS STRNAGERS?</h1>
-        <div style="text-align: center;">    
+        <div style="text-align: center; max-width: 80%;">    
             STRANGERS a word that best describes each and everyone one of us that walks this earth.
             Till we get to know each other & even after we get to know each other we remain STRANGERS to each other.
             
@@ -392,7 +572,7 @@
         </div>
     </div>
     <div class="video-grid-container">
-        <div class="video-card">
+        <div class="video-card" >
             <video id="streaming-video" class="video-js vjs-default-skin" controls preload="auto" data-setup='{}'>
     
                 <source src="{% static 'video/video3.mp4' %}" type="video/mp4">
@@ -500,6 +680,9 @@
                 </div>
             </div>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
     <script>
         
             function toggleHamburgerMenu() {
@@ -531,31 +714,114 @@
 
     </script>
     <script>
-    // Add click event listener to toggle dropdown visibility
-    document.querySelectorAll('.menu-item.dropdown').forEach(menuItem => {
-                menuItem.addEventListener('click', function () {
-                    // Close other dropdowns (optional, if you have multiple dropdowns)
-                    document.querySelectorAll('.menu-item.dropdown').forEach(item => {
-                        if (item !== menuItem) {
-                            item.classList.remove('open');
-                        }
-                    });
+        const cart = document.getElementById('cart')
+        const cartBtn = document.getElementById('cart-btn');
 
-                    // Toggle the dropdown menu
-                    this.classList.toggle('open');
-                });
-    });
-
-            // Optional: Close dropdowns when clicking outside
-            document.addEventListener('click', function (event) {
-        const isClickInside = event.target.closest('.menu-item.dropdown');
-            if (!isClickInside) {
-                document.querySelectorAll('.menu-item.dropdown').forEach(item => {
-                    item.classList.remove('open');
-                });
+        var closeCart = document.getElementById('close-cart-button')
+        closeCart.onclick = () => {
+            cart.classList.remove('active');
+            overlay.style.display = 'none';
+            document.body.style.overflowY = 'scroll'
         }
-    });
+
+
+
+        const overlay = document.getElementById('overlay');
+        cartBtn.addEventListener('click', () => {
+            cart.classList.add('active');
+            overlay.style.display = 'block';
+            document.body.style.overflowY = 'hidden'
+        });
+
+
+        overlay.addEventListener('click', () => {
+
+            cart.classList.remove('active');
+            overlay.style.display = 'none';
+            document.body.style.overflowY = 'scroll'
+        });
+
+        function formatPrice(price) {
+            return 'GHS' + price.toFixed(2);
+        }
+
+        function displayCartItems() {
+            let cartBox = document.getElementById('cartBox');  // Div to display cart items
+            cartBox.innerHTML = '';  // Clear existing content
+            checkoutBox = document.getElementById('checkoutBox')
+            let totalPrice = 0;
+
+
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('checkout_items').innerText = cart.length
+            // document.getElementById('cart-total').innerText = cart.length
+            if (cart.length > 0) {
+                cart.forEach(item => {
+                    // Create HTML for each cart item
+                    let cartItemDiv = `
+                                <div class="cart-item" style="padding: 10px; margin: 10px; display: flex; align-items: center;  position: relative;">
+                                    <img src="${item.image_url}" alt="Product Image" width="100" style="border-radius: 8px; margin-right: 15px;">
+                                    <div style="flex: 1; ">
+                                    <div style="display:flex; gap:5px;">
+                                        <p style="margin: 0; font-weight: bold; font-size: 14px;">${item.product_name}</p>
+                                        <p style="margin: 0; font-size: 14px; "> x${item.quantity}</p>
+                                    </div>
+                                    <div style='display:flex; justify-content:space-between;'>
+                                    <p style="margin: 0; font-size: 14px;">${item.selectedSize}</p>
+                                        <p style="margin: 0; font-size: 14px;"> GHS ${item.price}</p>
+                                    </div>
+                                    </div>
+                                    <button class="close-button" onclick="removeFromCart('${item.product_id_date}')" style="position: absolute; top: 10px; right: 10px; background: transparent; border: none; cursor: pointer; font-size: 16px; color: #FF5722;">&times;</button>
+                                </div>
+                                `;
+
+                    cartBox.innerHTML += cartItemDiv;  // Add the cart item to the cart box
+                    totalPrice += item.price
+                });
+                cartBox.innerHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center;margin-left: 20px;" id="total-price-div" >
+                        <div>Total:</div>
+                        <div class="total-price" id="total-price" style="color: #28a745; font-weight: bold; margin-right: 20px;">${formatPrice(totalPrice)}</div>
+                    </div>
+                    <div style="text-align: center; margin: 20px;">
+                            <a href="{% url 'checkout' %}">       <button style="padding: 10px 20px; width:100%; background-color: #228B22; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            Checkout
+                        </button></a>
+                    </div>
+                    <div style="width:100%; height:150px"></div>
+                    `;
+
+            }
+            else {
+                cartBox.innerHTML = '<div class="empty-cart" style="display:flex; justify-content:center;">Nothing in Cart</div>'
+
+
+            }
+        }
+        // Add the checkout button below the last cart item
+
+        // Placeholder function for checkout action
+
+        function removeFromCart(productId) {
+            // Retrieve the current cart from localStorage
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            // Filter out the item to be removed
+            cart = cart.filter(item => item.product_id_date !== productId);
+
+            // Save the updated cart back to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Update the display
+            displayCartItems();
+        }
+
+        // Load and display cart items when the page loads
+        window.onload = displayCartItems;
+
     </script>
+
 </body>
 
 </html>
