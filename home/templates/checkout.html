@@ -823,8 +823,8 @@
     
     <script>
         // Add an event listener to the <select> element
-        document.getElementById('Ghana').addEventListener('click', function (event) {
-            const selectedValue = event.target.value; // Get the selected value
+        document.getElementById('Ghana').onclick = () => {
+           
           
            
                 regionDiv = document.getElementById('regionDiv')
@@ -849,7 +849,7 @@
     </select>`
             }
 
-        );
+    
     </script>
     <script>
         //code for phone
