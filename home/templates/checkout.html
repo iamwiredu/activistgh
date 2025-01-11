@@ -498,7 +498,7 @@
                             <option value="Gambia">Gambia</option>
                             <option value="Georgia">Georgia</option>
                             <option value="Germany">Germany</option>
-                            <option id="Ghana" value="Ghana">Ghana</option>
+                            <option id="Ghana" onclick="ShowRegions()" value="Ghana">Ghana</option>
                             <option value="Gibraltar">Gibraltar</option>
                             <option value="Greece">Greece</option>
                             <option value="Greenland">Greenland</option>
@@ -823,9 +823,9 @@
     
     <script>
         // Add an event listener to the <select> element
-        document.getElementById('Ghana').onclick = () => {
+        function ShowRegions(){
            
-          
+    
            
                 regionDiv = document.getElementById('regionDiv')
                 regionDiv.innerHTML = `
@@ -899,7 +899,7 @@
 <script>
 
     const cartBtn = document.getElementById('cart-btn');
-    const closeMenuBtn = document.getElementById('close-menu');
+   
     const closeCartBtn = document.getElementById('close-cart');
     const menu = document.getElementById('menu');
     const overlay = document.getElementById('overlay');
