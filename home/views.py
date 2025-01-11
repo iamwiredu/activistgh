@@ -80,11 +80,14 @@ def productDetailPage(request,unique_id):
     product = Product.objects.get(unique_id=unique_id)
     categories = Category.objects.all()
     product_sizeset = product.size_set
-    if product_sizeset.name == 'Medium Large Xl 2xl 3xl':
-        sizeset_stock,created = MediumLargeStock.objects.get_or_create(product=product)  
-    elif product_sizeset.name == '39 - 46':
-        sizeset_stock,created = Size39to46.objects.get_or_create(product=product)
-    
+    if product.size_set:
+        if product_sizeset.name == 'Medium Large Xl 2xl 3xl':
+            sizeset_stock,created = MediumLargeStock.objects.get_or_create(product=product)  
+        elif product_sizeset.name == '39 - 46':
+            sizeset_stock,created = Size39to46.objects.get_or_create(product=product)
+    else:
+        sizeset_stock = product.stock
+        
     print(product_sizeset)
     if request.method == 'POST':
         if 'subscribe' in request.POST:
@@ -248,6 +251,7 @@ def makePayment(request,ref):
 
 
 def checkout(request):
+    categories = Category.objects.all()
     if request.method == 'POST':
         if 'pay' in request.POST:
             cartData = request.POST.get('cartData')
@@ -308,8 +312,10 @@ def checkout(request):
                 print(e)
                 messages.error(request,'Error. Try again later.')
                 return redirect(checkout)
-
-    return render(request,'checkout.html')
+    context ={
+        'categories':categories,
+    }
+    return render(request,'checkout.html',context)
 
 def orderSuccess(request,ref):
     if request.method == 'POST':
@@ -341,6 +347,7 @@ def orderSuccess(request,ref):
 
     if not payment.verified:  # Simplified comparison
         for item in payment.cart.cart_objects.all():
+
             if item.product.size_set == 'Medium Large Xl 2xl 3xl':  
                
                 mediumLarge,created = MediumLargeStock.objects.get_or_create(product=item.product)

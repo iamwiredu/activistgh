@@ -537,9 +537,9 @@ hr {
                                     <li><a href="{% url 'home' %}">home</a></li>
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">shop</a>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="height: 400px; overflow-y: scroll;">
                                             {% for category in categories %}
-                                            <li><a class="dropdown-item" href="{% url 'shop' category.name %}">{{category.name}}</a></li>
+                                            <li style="width: 100%;"><a class="dropdown-item" href="{% url 'shop' category.name %}">{{category.name}}</a></li>
                                             {% endfor %}
                                     
                                         </ul>
@@ -573,17 +573,17 @@ hr {
             <div class="hamburger_menu_content text-right">
                 <ul class="menu_top_nav">
 
-                    <li class="menu_item"><a href="{% url 'home' %}">home</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">shop</a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            {% for category in categories %}
-                            <li><a class="dropdown-item" href="{% url 'shop' category.name %}">{{category.name}}</a></li>
-                            {% endfor %}
-                    
-                        </ul>
-                    </li>
-
+                <li class="dropdown" style="padding: 5px 0px; border-bottom: 1px solid rgba(181, 174,196,0.5);">
+                    <a href="#" class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="color: black;"
+                        aria-expanded="false">SHOP</a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {% for category in categories %}
+                        <li><a class="dropdown-item" href="{% url 'shop' category.name %}" style="color: black;">{{category.name}}</a>
+                        </li>
+                        {% endfor %}
+                
+                    </ul>
+                </li>
 
                     <li class="menu_item"><a href="{% url 'contact' %}">contact</a></li>
                 </ul>
@@ -770,6 +770,12 @@ hr {
         </div>
 
     </div>
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'plugins/easing/easing.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>

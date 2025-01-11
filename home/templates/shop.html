@@ -8,13 +8,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Colo Shop Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="icon" href="{% static 'img/logohead.png' %}" sizes="100x100" type="image/png">
     <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
     <link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
-    <style>
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/themify-icons/themify-icons.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/jquery-ui-1.12.1.custom/jquery-ui.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/single_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/single_responsive.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
         body {
 
             background-repeat: no-repeat;
@@ -368,17 +374,17 @@
                             </div>
                             <nav class="navbar">
                                 <ul class="navbar_menu">
-                                    <div><li><a href="{% url 'home' %}">home</a></li></div>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle"  id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">shop</a>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                         {% for category in categories %}
-                                            <li><a class="dropdown-item" href="{% url 'shop' category.name %}">{{category.name}}</a></li>
+                                    <li><a href="{% url 'home' %}">home</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">shop</a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="height: 400px; overflow-y: scroll;">
+                                        {% for category in categories %}
+                                        <li style="width: 100%;"><a class="dropdown-item" href="{% url 'shop' category.name %}">{{category.name}}</a>
+                                        </li>
                                         {% endfor %}
-                                         
-                                        </ul>
-                                    </li>
-                                   
+                                
+                                    </ul>
+                                </li>
                                     <li><a href="{% url 'contact' %}">contact</a></li>
                                 </ul>
 <ul class="navbar_user">
@@ -578,7 +584,13 @@
 
   
 
-  
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
+    <script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
+    <script src="{% static 'plugins/Isotope/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+    <script src="{% static 'plugins/easing/easing.js' %}"></script>
+    <script src="{% static 'js/single_custom.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script>
