@@ -602,6 +602,22 @@
     <script src="{% static 'js/single_custom.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+        <script>
+            //code for phone
+            const phoneInputField = document.querySelector("#phone");
+            const phoneInput = window.intlTelInput(phoneInputField, {
+                utilsScript:
+                    "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+            });
+
+            demo_btn.addEventListener('click', () => {
+                const phoneNumber = phoneInput.getNumber();
+                document.getElementById('phone').value = phoneNumber;
+                document.getElementById('newsletter_submit').click();
+
+            });
+
+        </script>
     <script>
         
         document.addEventListener("DOMContentLoaded", () => {
