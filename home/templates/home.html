@@ -19,7 +19,7 @@
 
         .bg {
             /* The image used */
-            background-image: url("{% static 'img/cover.jpeg' %}");
+            background-image: url("{% static 'img/cover1.jpeg' %}");
 
             /* Full height */
             height: 100%;
@@ -107,7 +107,23 @@
             align-items: center;
            
         }
-
+        .responsive-img {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            
+           
+            
+        }
+        .responsive-img img{
+            height: 50%;
+            width:50%;
+            min-width: 40%;
+            
+        }
+        @media screen  and (max-width:px){
+            
+        }
     </style>
     <style>
                 .slide-cart {
@@ -373,7 +389,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="icon" href="{% static 'img/logohead.png' %}" sizes="100x100" type="image/png">
-<link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+
 <link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
@@ -422,7 +438,7 @@
                                 <div class="col-lg-12 text-right">
                                     <div class="logo_container">
                                         <a href="{% url 'home' %}"><img style="width: 100px; height: auto;"
-                                                src="{% static 'img/categories/wordlogo.png' %}" alt=""></a>
+                                                src="{% static 'img/categorie/wordlogo.png' %}" alt=""></a>
                                     </div>
                                     <nav class="navbar">
                                         <ul class="navbar_menu">
@@ -481,7 +497,18 @@
                         <ul class="menu_top_nav">
             
                             <li class="menu_item"><a href="{% url 'home' %}">home</a></li>
-                            <li class="menu_item"><a href="#">shop</a></li>
+                            
+                                     <li class="dropdown" style="padding: 5px 0px; border-bottom: 1px solid rgba(181, 174,196,0.5);"  >
+                                                <a href="#" class="dropdown-toggle" id="dropdownMenuButton"
+                                                    data-bs-toggle="dropdown" style="color: black;" aria-expanded="false">SHOP</a>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    {% for category in categories %}
+                                                    <li><a class="dropdown-item"
+                                                            href="{% url 'shop' category.name %}" style="color: black;" >{{category.name}}</a></li>
+                                                    {% endfor %}
+            
+                                                </ul>
+                                        </li>
             
             
                             <li class="menu_item"><a href="{% url 'contact' %}">contact</a></li>
@@ -527,10 +554,9 @@
             </div>
  
     </div>
-    <div class="strangersbox">
-       <span style="margin-bottom: -185px;">
-        <img src="{% static 'They.png' %}" alt="" style="width: 500px;">
-       </span>
+
+    <div class="responsive-img">
+        <img src="{% static 'Theyy.png' %}" alt="">
     </div>
     
     <div class="row4x4">
@@ -597,7 +623,7 @@
                 <div style="display: flex; flex-direction: column;">
                     <img src="{% static 'img/categories/logo.png' %}" style="width: 300px; height: auto; margin: 0 auto;"
                         alt="">
-                    <div style="display: flex; justify-content: center; gap: 8px;">
+                    <div style="display: flex; justify-content: center; gap: 16px; margin:20px 0px;">
                         <span>
                             <svg fill="#000000" width="25px" height="25px" viewBox="0 0 32 32" version="1.1"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -624,6 +650,21 @@
                                     <path fill-rule="evenodd" clip-rule="evenodd"
                                         d="M1.65396 4.27606C1 5.55953 1 7.23969 1 10.6V13.4C1 16.7603 1 18.4405 1.65396 19.7239C2.2292 20.8529 3.14708 21.7708 4.27606 22.346C5.55953 23 7.23969 23 10.6 23H13.4C16.7603 23 18.4405 23 19.7239 22.346C20.8529 21.7708 21.7708 20.8529 22.346 19.7239C23 18.4405 23 16.7603 23 13.4V10.6C23 7.23969 23 5.55953 22.346 4.27606C21.7708 3.14708 20.8529 2.2292 19.7239 1.65396C18.4405 1 16.7603 1 13.4 1H10.6C7.23969 1 5.55953 1 4.27606 1.65396C3.14708 2.2292 2.2292 3.14708 1.65396 4.27606ZM13.4 3H10.6C8.88684 3 7.72225 3.00156 6.82208 3.0751C5.94524 3.14674 5.49684 3.27659 5.18404 3.43597C4.43139 3.81947 3.81947 4.43139 3.43597 5.18404C3.27659 5.49684 3.14674 5.94524 3.0751 6.82208C3.00156 7.72225 3 8.88684 3 10.6V13.4C3 15.1132 3.00156 16.2777 3.0751 17.1779C3.14674 18.0548 3.27659 18.5032 3.43597 18.816C3.81947 19.5686 4.43139 20.1805 5.18404 20.564C5.49684 20.7234 5.94524 20.8533 6.82208 20.9249C7.72225 20.9984 8.88684 21 10.6 21H13.4C15.1132 21 16.2777 20.9984 17.1779 20.9249C18.0548 20.8533 18.5032 20.7234 18.816 20.564C19.5686 20.1805 20.1805 19.5686 20.564 18.816C20.7234 18.5032 20.8533 18.0548 20.9249 17.1779C20.9984 16.2777 21 15.1132 21 13.4V10.6C21 8.88684 20.9984 7.72225 20.9249 6.82208C20.8533 5.94524 20.7234 5.49684 20.564 5.18404C20.1805 4.43139 19.5686 3.81947 18.816 3.43597C18.5032 3.27659 18.0548 3.14674 17.1779 3.0751C16.2777 3.00156 15.1132 3 13.4 3Z"
                                         fill="#0F0F0F"></path>
+                                </g>
+                            </svg>
+                        </span>
+                        <span>
+                            <svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" width="25px" height="25px" viewBox="0 0 395.71 395.71"
+                                xml:space="preserve">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <g>
+                                        <path
+                                            d="M197.849,0C122.131,0,60.531,61.609,60.531,137.329c0,72.887,124.591,243.177,129.896,250.388l4.951,6.738 c0.579,0.792,1.501,1.255,2.471,1.255c0.985,0,1.901-0.463,2.486-1.255l4.948-6.738c5.308-7.211,129.896-177.501,129.896-250.388 C335.179,61.609,273.569,0,197.849,0z M197.849,88.138c27.13,0,49.191,22.062,49.191,49.191c0,27.115-22.062,49.191-49.191,49.191 c-27.114,0-49.191-22.076-49.191-49.191C148.658,110.2,170.734,88.138,197.849,88.138z">
+                                        </path>
+                                    </g>
                                 </g>
                             </svg>
                         </span>
@@ -680,6 +721,13 @@
                 </div>
             </div>
         </div>
+            <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+            <script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
+            <script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
+            <script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+            <script src="{% static 'plugins/easing/easing.js' %}"></script>
+            <script src="{% static 'js/custom.js' %}"></script>
+          
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
