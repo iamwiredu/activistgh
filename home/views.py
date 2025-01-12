@@ -87,7 +87,7 @@ def productDetailPage(request,unique_id):
             sizeset_stock,created = Size39to46.objects.get_or_create(product=product)
     else:
         sizeset_stock = product.stock
-        
+
     print(product_sizeset)
     if request.method == 'POST':
         if 'subscribe' in request.POST:
@@ -186,6 +186,7 @@ def shop(request,category_name):
 
     
 def makePayment(request,ref):
+    categories = Category.objects.all()
     if request.method == 'POST':
         if 'subscribe' in request.POST:
             try:
@@ -237,14 +238,16 @@ def makePayment(request,ref):
             print(items,delivery_cost)
         else:
             delivery_price_object = DeliveryPriceByRegion.objects.all()[0]
-            delivery_cost = getattr(delivery_price_object,payment.city.lower())
-            payment.delivery_price =  delivery_cost
+            delivery_cost = getattr(delivery_price_object,payment.state.lower())
+            payment.delivery_price =  delivery_cost/16
+            print(delivery_cost)
             payment.save()
             
         
         context ={
             'payment':payment,
             'ship_to':ship_to,
+            'categories':categories,
         }
         return render(request,'makePayment.html',context)
 
@@ -344,29 +347,49 @@ def orderSuccess(request,ref):
 
 
     payment = Payment.objects.get(ref=ref)
-
+    cart = Cart.objects.get(payment=payment)
+    print(f'This is the payment verified {payment.verified}')
     if not payment.verified:  # Simplified comparison
+       
         for item in payment.cart.cart_objects.all():
-
-            if item.product.size_set == 'Medium Large Xl 2xl 3xl':  
-               
-                mediumLarge,created = MediumLargeStock.objects.get_or_create(product=item.product)
-                stock_field = getattr(mediumLarge, item.size.lower(), None)
-                if stock_field is not None:
-                 
-                    setattr(item.product.mediumLargeStock, item.size.lower(), stock_field - item.quantity)
-            elif item.product.size_set == '39 -46':
-                size39to46,created = Size39to46.objects.get_or_create(product=item.product)
-                stock_field = getattr(size39to46,item.size.lower,None)
-                if stock_field is not None:
-                    setattr(item.product, item.size.lower(), stock_field - item.quantity)
+            if item.product.size_set:
+                print(f'we are here in if product.size_set {payment.verified}')
+                if item.product.size_set == 'Medium Large Xl 2xl 3xl':  
+                
+                    mediumLarge,created = MediumLargeStock.objects.get_or_create(product=item.product)
+                    stock_field = getattr(mediumLarge, item.size.lower(), None)
+                    if stock_field is not None:
+                    
+                        setattr(item.product.mediumLargeStock, item.size.lower(), stock_field - item.quantity)
+                elif item.product.size_set == '39 - 46':
+                    size39to46,created = Size39to46.objects.get_or_create(product=item.product)
+                    stock_field = getattr(size39to46,item.size.lower,None)
+                    if stock_field is not None:
+                        setattr(item.product, item.size.lower(), stock_field - item.quantity)
             else:
                 item.product.stock  -= 1
                 item.product.save()
                 
 
-            payment.verified = True
-            payment.save()
+        payment.verified = True
+        payment.save()
+
+                    # Email content
+        subject = 'Strangers Email Receipt'
+        text_body = f'Your order was successful follow up on your purchases here'
+        html_content = render_to_string('receipt.html', {'first_name': payment.first_name, 'subject': subject, 'body':text_body,})
+        print(html_content)
+
+        try:
+            # Create email object with alternatives
+            msg = EmailMultiAlternatives(subject, text_body, "kwakuwiredu0@gmail.com", [payment.email])
+            msg.attach_alternative(html_content, "text/html")  # Attach the HTML version
+            msg.send()
+            print('sent')
+        except Exception as e:
+            print('error')
+            print(f'Error sending email: {e}')  # Log the error for debugging
+
 
     #code for revenue
     
@@ -389,6 +412,7 @@ def orderSuccess(request,ref):
         'payment':payment,
         'cart':cart,
     }
+    print(payment.verified)
     return render(request,'orderSuccess.html',context)
 
 def contactPage(request):
