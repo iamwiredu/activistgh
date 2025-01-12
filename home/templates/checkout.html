@@ -376,9 +376,10 @@
                 <div class="checkout-form">
                     <h2>Personal Details</h2>
             
-                    <form id="checkout-form-sub" method="POST" novalidate>
+                    <form id="checkout-form-sub" method="POST" >
                         {% csrf_token %}
                         <input type="text" id="cartData" name="cartData" hidden>
+                        <input type="text" id="pickupdata" name="pickupdata" hidden>
                         <div style="display: flex; justify-content: center; gap: 10px;">
                             <div class="form-floating" style="width: 50%;">
                                 <input type="text" class="form-control" id="fname" placeholder="" name="fname" required>
@@ -403,7 +404,7 @@
                                 id="floatingTextarea" name="orderNotes"></textarea>
                             <label for="floatingTextarea">Order Notes (optional)</label>
                         </div>
-                    <div style="display: flex; width: 100%; justify-content: center; gap: 20px;">
+                    <div style="display: flex; width: 100%; justify-content: center; margin: 20px 0px; gap: 20px;">
                         <div class="option" id="pickupOption">
                             <div>Pickup</div>
                             <input type="radio" name="option" id="pickup" />
@@ -445,8 +446,8 @@
                             <div>
                                 <select id="destination-country" name="destination_country"
                                     style="padding: 10px; margin: 0; padding: 0; width: 50%; background-color: white; border: 1px solid #dddddd;margin-bottom: 10px; color:#6e7073; border-radius: 5px;"
-                                    required>
-                                    <option value="" disabled="" selected="" style="color: #dddddd;">Select a country</option>
+                                    >
+                                    <option value="" selected="" style="color: #dddddd;">Select a country</option>
                                     <option value="Afghanistan">Afghanistan</option>
                                     <option value="Åland Islands">Åland Islands</option>
                                     <option value="Albania">Albania</option>
@@ -530,7 +531,7 @@
                                     <option value="Gambia">Gambia</option>
                                     <option value="Georgia">Georgia</option>
                                     <option value="Germany">Germany</option>
-                                    <option id="Ghana" value="Ghana">Ghana</option>
+                                    <option id="Ghana" value="Ghana" selected>Ghana</option>
                                     <option value="Gibraltar">Gibraltar</option>
                                     <option value="Greece">Greece</option>
                                     <option value="Greenland">Greenland</option>
@@ -719,7 +720,7 @@
                         </div>
             
                         <button type="submit" name="pay" id="payButton"
-                            style="width:100%;padding:10px;border:none;background-color:#28a745;color:white;font-size:18px;border-radius:5px;">Proceed
+                            style="width:100%;padding:10px;border:none;background-color:#28a745;color:white;font-size:18px;border-radius:5px;margin: 20px 0px;">Proceed
                             to pay</button>
                     </form>
                 </div>
@@ -861,6 +862,7 @@
         const deliverRadio = document.getElementById('deliver');
         const deliveryBox = document.getElementById('deliveryBox')
         const pickupBox = document.getElementById('pickupBox')
+        const pickupdata = document.getElementById('pickupdata')
 
         // Add click event listeners
         pickupOption.addEventListener('click', () => {
@@ -883,6 +885,9 @@
                 inputs.forEach(input =>{
                     input.removeAttribute('required')
                 });
+                pickupdata.value = 'yes'
+
+
 
                 console.log("Pickup selected. Running pickup logic...");
                 // Add your Pickup-specific code here
@@ -893,6 +898,7 @@
                 console.log("Deliver selected. Running delivery logic...");
                 deliveryBox.style.display = 'block';
                 pickupBox.style.display = 'none'
+                pickupdata.value = 'no'
                 // Add your Deliver-specific code here
                 inputs = deliveryBox.querySelectorAll('input, select')
                 inputs.forEach(input => {
@@ -900,6 +906,7 @@
                 });
             }
         }
+        deliverOption.click()
     </script>
     
 

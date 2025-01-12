@@ -34,7 +34,7 @@ def managementDb(request):
     DeliveryPriceByRegionFormCreator = DeliveryPriceByRegionForm(instance=delivery)
     # get current revenue
     currentYear = datetime.now().year
-    revenue = Revenue.objects.get_or_create(year=currentYear)
+    revenue,created = Revenue.objects.get_or_create(year=currentYear)
 
     revenue_amount = 0 
 

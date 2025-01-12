@@ -344,13 +344,13 @@
                     <label for="size-select">Select Size:</label>
                     <select id="size-select" name="size">
                         {% for size in product.size_set.sizes.all %}
-                        <option id="{{size}}" value="Size: {{size}}">{{size}}</option>
+                        <option id="{{size}}" data-size="{{size.value}}" value="Size: {{size}}">{{size}}</option>
                         {% endfor %}
                         
                     </select>
                     {% else %}
                     <select id="size-select" name="size" style="display: none;">
-                        <option id="None" value="None">None</option>
+                        <option id="None" value="None" data-size="None" selected>None</option>
                     </select>
                     {% endif %}
                     
@@ -893,7 +893,16 @@
 
                 // Select the currently selected size
                 const selectElement = document.getElementById('size-select');
-                var selectedSize = selectElement.value;;
+                var selectedSize = selectElement.value;
+
+                const selectedOption = selectElement.options[selectElement.selectedIndex];
+
+               // Access the data-size attribute of the selected option
+               const selectedSizeData = selectedOption.getAttribute('data-size');
+
+               console.log('Selected size data:', selectedSizeData);
+
+
 
 
                 // If no size is selected, alert the user and exit
@@ -915,7 +924,8 @@
                 quantity,
                 image_url,
                 selectedSize,
-                price
+                price,
+                selectedSizeData
             };
 
             // Get the cart from localStorage or initialize an empty array

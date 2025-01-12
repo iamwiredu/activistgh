@@ -198,6 +198,8 @@ class Payment(models.Model):
     delivery_price = models.IntegerField(default=0)
     delivered = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
+
+    pickupdata = models.BooleanField(default=False)
     
 
     class Meta:
@@ -242,6 +244,7 @@ class CartObject(models.Model):
     cart = models.ForeignKey(Cart,on_delete=models.CASCADE,related_name='cart_objects')
     product = models.ForeignKey(Product,on_delete=models.SET_NULL,null=True)
     size = models.CharField(max_length=255)
+    sizeData = models.CharField(max_length=255,null=True,blank=True)
     quantity = models.IntegerField()
 
     @property

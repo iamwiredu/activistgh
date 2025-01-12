@@ -237,11 +237,15 @@ def makePayment(request,ref):
 
             print(items,delivery_cost)
         else:
-            delivery_price_object = DeliveryPriceByRegion.objects.all()[0]
-            delivery_cost = getattr(delivery_price_object,payment.state.lower())
-            payment.delivery_price =  delivery_cost/16
-            print(delivery_cost)
-            payment.save()
+            if payment.pickupdata == True:
+                payment.delivery_price =  0
+                payment.save()
+            else:
+                delivery_price_object = DeliveryPriceByRegion.objects.all()[0]
+                delivery_cost = getattr(delivery_price_object,payment.state.lower())
+                payment.delivery_price =  delivery_cost/16
+            
+                payment.save()
             
         
         context ={
@@ -277,8 +281,14 @@ def checkout(request):
             deliveryInfo = request.POST.get('deliveryInfo')
             cart_total = request.POST.get('cart-total')
             country_code = request.POST.get('country_code')
+            pickupdata = request.POST.get('pickupdata')
 
-            payment = Payment(first_name=firstName,last_name=lastName,email=email,country_code=country_code,phone=phone,order_notes=orderNotes,street_address_1=street_address_1,street_address_2=street_address_2,city=city,state=state,zip_code=zip_code,destination_country=destination_country,additional_info=deliveryInfo,amount=float(cart_total))
+            if pickupdata == 'yes':
+                pickupdata = True
+            else:
+                pickupdata = False
+
+            payment = Payment(first_name=firstName,last_name=lastName,email=email,country_code=country_code,phone=phone,order_notes=orderNotes,street_address_1=street_address_1,street_address_2=street_address_2,city=city,state=state,zip_code=zip_code,destination_country=destination_country,additional_info=deliveryInfo,amount=float(cart_total),pickupdata=pickupdata)
             payment.save()
             
             # on payment save create cart for payment
@@ -288,7 +298,7 @@ def checkout(request):
             # loop through cart object list to append to cart
             for obj in cartData:
                 product = Product.objects.get(unique_id=obj['product_id'])
-                cartObj = CartObject(cart=cart[0],product=product,size=obj['selectedSize'],quantity=obj['quantity'] )
+                cartObj = CartObject(cart=cart[0],product=product,size=obj['selectedSize'],quantity=obj['quantity'],sizeData=obj['selectedSizeData'] )
                 cartObj.save()
 
 
@@ -357,15 +367,15 @@ def orderSuccess(request,ref):
                 if item.product.size_set == 'Medium Large Xl 2xl 3xl':  
                 
                     mediumLarge,created = MediumLargeStock.objects.get_or_create(product=item.product)
-                    stock_field = getattr(mediumLarge, item.size.lower(), None)
+                    stock_field = getattr(mediumLarge, item.sizeData, None)
                     if stock_field is not None:
                     
                         setattr(item.product.mediumLargeStock, item.size.lower(), stock_field - item.quantity)
                 elif item.product.size_set == '39 - 46':
                     size39to46,created = Size39to46.objects.get_or_create(product=item.product)
-                    stock_field = getattr(size39to46,item.size.lower,None)
+                    stock_field = getattr(size39to46,item.sizeData,None)
                     if stock_field is not None:
-                        setattr(item.product, item.size.lower(), stock_field - item.quantity)
+                        setattr(item.product, item.sizeData, stock_field - item.quantity)
             else:
                 item.product.stock  -= 1
                 item.product.save()
@@ -405,7 +415,7 @@ def orderSuccess(request,ref):
         cart = Cart.objects.get(payment=payment)
 
         # create notification
-        new_Notification = Notification(title='Product Sold',message=f'GHS{payment.total_actual} paid for order #{payment.order_id}.',notification_type='Contact Form')
+        new_Notification = Notification(title='Product Sold',message=f'GHS{payment.total_actual} paid for order #{payment.order_id}.',notification_type='Product Sold')
         new_Notification.save()
 
     context ={
