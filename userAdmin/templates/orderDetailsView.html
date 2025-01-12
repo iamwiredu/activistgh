@@ -466,9 +466,12 @@
         </div>
         <div>
             <div style="padding: 70px;"></div>
+            <h1 style="font-weight: bold; font-size:x-large; text-align: center;">THANK YOU</h1>
+            <h1 style="font-weight: bold; font-size: x-large; text-align: center;">FOR YOUR ORDER!</h1>
 
-            <div style="display: flex; flex-direction: column;align-items: center; justify-content: center; margin-top: 100px; gap: 10px; align-items: center;">
-                <div><b>Order Id: </b>{{payment.order_id}}</div>
+            <div style="display: flex; flex-direction: column;align-items: center; justify-content: center; margin-top: 50px; gap: 10px; align-items: center;">
+                
+                <div><b style="font-size: large;">Order Id: </b><span style="font-size: large;">{{payment.order_id}}</span></div>
                 <div>
                     {% if request.user.is_authenticated %}
                     <form action="" method="POST" style="display: flex; flex-direction: row;align-items: center;">
@@ -526,50 +529,37 @@
 
                     {% csrf_token %}
                     <input type="text" id="cartData" name="cartData" hidden>
-                    <div style="display: flex; justify-content: center; gap: 10px; width: 100%;">
+                    <div style="display: flex; gap: 10px; width: 100%;">
                         <div
-                            style="border: 1px solid #dddddd; padding: 5px; border-radius: 5px; margin-bottom: 10px; width: 50%;">
-                            <label style="color:#6e7073; font-size: 15px;padding-left: 4px;">First Name</label>
+                            style=" padding: 5px; border-radius: 5px; margin-bottom: 10px; width: 50%;">
+                            <label style="color:#6e7073; font-size: 15px;padding-left: 4px;">Name</label>
                             <div>
-                                {{payment.first_name}}
+                                {{payment.first_name}} {{payment.last_name}}
                             </div>
                         </div>
-                        <div
-                            style="border: 1px solid #dddddd; padding: 5px; border-radius: 5px; margin-bottom: 10px; width: 50%;">
-                            <label style="color:#6e7073; font-size: 15px;padding-left: 4px;">First Name</label>
-                            <div>
-                                {{payment.last_name}}
-                            </div>
-                        </div>
+                      
                     </div>
-                    <div style="border: 1px solid #dddddd; padding: 5px; border-radius: 5px; margin-bottom: 10px;">
+                    <div style=" padding: 5px; border-radius: 5px; margin-bottom: 10px;">
                         <label style="color:#6e7073; font-size: 15px;padding-left: 4px;">Email</label>
                         <div>
                             {{payment.email}}
                         </div>
                     </div>
-                    <div style="border: 1px solid #dddddd; padding: 5px; border-radius: 5px; margin-bottom: 10px;">
+                    <div style=" padding: 5px; border-radius: 5px; margin-bottom: 10px;">
                         <label style="color:#6e7073; font-size: 15px;padding-left: 4px;">Phone</label>
                         <div>
                             Country code: +{{payment.country_code}} <br>
                             Phone: {{payment.phone}}
                         </div>
                     </div>
-
-                    <div>
-                        <div style="border: 1px solid #dddddd; padding: 5px; border-radius: 5px; margin-bottom: 10px;">
-                            <label style="color:#6e7073; font-size: 15px;padding-left: 4px;">Order Notes</label>
-                            <div>
-                                {% if payment.order_notes %}
-                                {{payment.order_notes}}
-                                {% else %}
-                                No Order Notes
-                                {% endif %}
-
-                            </div>
+                    <div style=" padding: 5px; border-radius: 5px; margin-bottom: 10px;">
+                        <label style="color:#6e7073; font-size: 15px;padding-left: 4px;">Phone</label>
+                        <div>
+                            Paid status here
                         </div>
-
                     </div>
+
+                
                     {% if payment.pickupdata == True %}
                     <h2>Pickup Point: </h2>
                     <iframe
@@ -578,19 +568,19 @@
                         referrerpolicy="no-referrer-when-downgrade"></iframe>
                     {% else %}
                     <h2>Delivery Details</h2>
-                    <div style="border: 1px solid #dddddd; padding: 5px; border-radius: 5px; margin-bottom: 10px;">
+                    <div style=" padding: 5px; border-radius: 5px; margin-bottom: 10px;">
                         <label style="color:#6e7073; font-size: 15px;padding-left: 4px;">Country:</label>
                         <div>
                             {{payment.destination_country}}
                         </div>
                     </div>
-                    <div style="border: 1px solid #dddddd; padding: 5px; border-radius: 5px; margin-bottom: 10px;">
+                    <div style=" padding: 5px; border-radius: 5px; margin-bottom: 10px;">
                         <label style="color:#6e7073; font-size: 15px;padding-left: 4px;">Street Address 1:</label>
                         <div>
                             {{payment.street_address_1}}
                         </div>
                     </div>
-                    <div style="border: 1px solid #dddddd; padding: 5px; border-radius: 5px; margin-bottom: 10px;">
+                    <div style=" padding: 5px; border-radius: 5px; margin-bottom: 10px;">
                         <label style="color:#6e7073; font-size: 15px;padding-left: 4px;">Street Address 2:</label>
                         <div>
                             {% if payment.street_address_2 %}
@@ -600,25 +590,25 @@
                             {% endif %}
                         </div>
                     </div>
-                    <div style="border: 1px solid #dddddd; padding: 5px; border-radius: 5px; margin-bottom: 10px;">
+                    <div style=" padding: 5px; border-radius: 5px; margin-bottom: 10px;">
                         <label style="color:#6e7073; font-size: 15px;padding-left: 4px;">City:</label>
                         <div>
                             {{payment.city}}
                         </div>
                     </div>
-                    <div style="border: 1px solid #dddddd; padding: 5px; border-radius: 5px; margin-bottom: 10px;">
+                    <div style=" padding: 5px; border-radius: 5px; margin-bottom: 10px;">
                         <label style="color:#6e7073; font-size: 15px;padding-left: 4px;">State:</label>
                         <div>
                             {{payment.state}}
                         </div>
                     </div>
-                    <div style="border: 1px solid #dddddd; padding: 5px; border-radius: 5px; margin-bottom: 10px;">
+                    <div style=" padding: 5px; border-radius: 5px; margin-bottom: 10px;">
                         <label style="color:#6e7073; font-size: 15px;padding-left: 4px;">Zip code:</label>
                         <div>
                             {{payment.zip_code}}
                         </div>
                     </div>
-                    <div style="border: 1px solid #dddddd; padding: 5px; border-radius: 5px; margin-bottom: 10px;">
+                    <div style=" padding: 5px; border-radius: 5px; margin-bottom: 10px;">
                         <label style="color:#6e7073; font-size: 15px;padding-left: 4px;">Additional Delivery
                             Info</label>
                         <div>
