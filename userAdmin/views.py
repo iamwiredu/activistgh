@@ -6,6 +6,7 @@ from .models import Revenue, Notification, DeliveryPriceByRegion
 from home.models import Product, Contact,Newsletter, Payment, NewsletterBatch, RelatedImages,Category
 from datetime import datetime
 from home.models import MediumLargeStock, Size39to46
+from django.contrib import messages
 
 #import for emails
 
@@ -286,10 +287,52 @@ class Notifications_view(View):
         }
         return render(request,'notifications.html',context)
     
-class OrderDetailsView(View):
+def OrderDetailsView(request,unique_id):
+    payment = Payment.objects.get(unique_id=unique_id)
+    categories = Category.objects.all()
+    context = {
+        'payment': payment,
+        'categories': categories,
+    }
+       
+    
+    if request.method == 'POST':
+        if 'subscribe' in request.POST:
+            try:
+                first_name = request.POST.get('fname')
+                last_name = request.POST.get('lname')
+                email = request.POST.get('email')
+                phone = request.POST.get('phone')
+                ref = request.POST.get('ref')
 
-    def get(self,request,unique_id):
-        return render(request,'orderDetailsView.html')
+                # Save subscription
+                subscription = Newsletter(
+                    first_name=first_name,
+                    last_name=last_name,
+                    email=email,
+                    phone=phone
+                )
+                subscription.save()
+
+                messages.success(request, 'Subscribed.')
+
+                # Add notification
+                new_notification = Notification(
+                    title='New Subscriber',
+                    message=f'{email} has subscribed to the newsletter',
+                    notification_type='NewsLetter Addition'
+                )
+                new_notification.save()
+                
+                return redirect(f'/orderDetails/{unique_id}')
+            except Exception as e:
+                print(e)
+                messages.error(request, 'Error. Try again later.')
+                return redirect(f'/orderDetails/{unique_id}')
+
+       
+    return render(request, 'orderDetailsView.html', context)
+
 
 
 class MessagesReceived(View):
