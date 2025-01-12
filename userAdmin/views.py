@@ -268,7 +268,7 @@ def product_order_view(request):
         
 
     # Handle the GET request to display the products
-    products = Product.objects.all().order_by('product_ordering')
+    products = Product.objects.all().order_by('product_category')
     return render(request, 'updateOrdering.html', {'products': products})
 
 # CBV
@@ -294,8 +294,6 @@ def OrderDetailsView(request,unique_id):
         'payment': payment,
         'categories': categories,
     }
-       
-    
     if request.method == 'POST':
         if 'subscribe' in request.POST:
             try:
