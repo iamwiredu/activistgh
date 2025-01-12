@@ -158,7 +158,7 @@
 
         <!-- Header -->
 
-        <header class="header trans_300 scrolled" id="navbar" style="background-color: transparent;">
+        <header class="header trans_300 scrolled" id="navbar" style="background-color: white;">
 
             <!-- Top Navigation -->
 
@@ -266,7 +266,7 @@
                    (+233) 55 488 7597<br>
                     Strangersofficial6@gmail.com
                 </p>
-                <p style="font-size: 18px; color: #555; margin-bottom: 20px;">Follow up on your order here: <a href="#">Follow
+                <p style="font-size: 18px; color: #555; margin-bottom: 20px;">Follow up on your order here: <a href="{% url 'orderDetails' payment.unique_id %}">Follow
                         up</a> </p>
                 <p style="font-size: 18px; color: #555; margin-bottom: 20px;">Order details and followup link sent to:
                     {{payment.email}}</a>
