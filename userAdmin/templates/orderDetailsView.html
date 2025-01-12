@@ -467,7 +467,7 @@
         <div>
             <div style="padding: 70px;"></div>
 
-            <div style="display: flex; justify-content: center; margin-top: 100px; gap: 10px; align-items: center;">
+            <div style="display: flex; flex-direction: column;align-items: center; justify-content: center; margin-top: 100px; gap: 10px; align-items: center;">
                 <div><b>Order Id: </b>{{payment.order_id}}</div>
                 <div>
                     {% if request.user.is_authenticated %}
@@ -477,7 +477,8 @@
                         <input type="submit" name="updateDeliveryStatus" style="margin-left: 5px;" value="Update">
                     </form>
                     {% else %}
-                    <b>Contact us:</b> +233 053766538 || acvststore@gmail.com
+                    <b>Contact us: <a href="{% url 'contact' %}">here</a></b><br>
+                    State your order id {{payment.order_id}} in your message.
                     {% endif %}
                 </div>
             </div>
