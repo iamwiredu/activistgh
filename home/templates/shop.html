@@ -212,7 +212,7 @@
 
 /* Product Card */
 .product-card {
-    width: 100%; 
+    width: 100%;
     max-width: 16rem; /* Optional: Set a consistent max width */
     height: 350px; /* Fixed height for all cards */
     border-radius: 0.75rem;
@@ -251,9 +251,9 @@
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    justify-content: space-between; /* Ensure even spacing between name and price */
     align-items: center;
-    justify-content: space-between; /* Ensure even spacing */
-    height: 150px; /* Adjusted height for consistency */
+    height: 150px; /* Ensure uniform height */
     text-align: center;
 }
 
@@ -261,24 +261,24 @@
     margin: 0;
     text-align: center;
     overflow: hidden; /* Prevent overflow */
-    text-overflow: ellipsis; /* Add ellipsis for overflow text */
-    white-space: nowrap; /* Prevent text wrapping */
+    text-overflow: ellipsis;
 }
 
 .product-details .product-name {
     font-size: 0.875rem;
     font-weight: bold;
     text-transform: capitalize;
-    max-height: 3rem; /* Limit height to 2 lines (if wrapped) */
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* Limit to 2 lines */
-    -webkit-box-orient: vertical;
+    line-height: 1.2; /* Better spacing for wrapped text */
+    max-height: 3.6rem; /* Allow up to 3 lines of text */
     overflow: hidden;
+    word-wrap: break-word; /* Wrap long words */
+    white-space: normal; /* Allow wrapping */
 }
 
 .product-details .product-price {
     font-size: 1rem;
     font-weight: bold;
+    margin-top: auto; /* Push price to the bottom */
 }
 
 /* Hover Effect */
