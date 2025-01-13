@@ -188,8 +188,7 @@
     </style>
   
 <style>
-
-/* Product Container */
+    /* Product Container */
 .product-container {
     margin-top: 50px;
     margin-left: auto;
@@ -215,13 +214,14 @@
 .product-card {
     width: 100%; 
     max-width: 16rem; /* Optional: Set a consistent max width */
+    height: 350px; /* Fixed height for all cards */
     border-radius: 0.75rem;
     transition: transform 0.3s ease;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
     background-color: #fff; /* Optional: Add background for visual clarity */
-   
+    overflow: hidden; /* Ensure content doesn't overflow */
 }
 
 /* Ensure images are uniform */
@@ -253,19 +253,27 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between; /* Ensure even spacing */
-    height: 120px; /* Fixed height for consistency */
+    height: 150px; /* Adjusted height for consistency */
+    text-align: center;
 }
 
 .product-details p {
-    text-align: center;
     margin: 0;
+    text-align: center;
+    overflow: hidden; /* Prevent overflow */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+    white-space: nowrap; /* Prevent text wrapping */
 }
 
 .product-details .product-name {
     font-size: 0.875rem;
     font-weight: bold;
     text-transform: capitalize;
-    min-height: 2rem; /* Ensure uniform name height */
+    max-height: 3rem; /* Limit height to 2 lines (if wrapped) */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .product-details .product-price {
@@ -277,7 +285,6 @@
 .product-card:hover {
     transform: scale(1.05); /* Slight zoom on hover */
 }
-
 
 </style>
 <style>

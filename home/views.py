@@ -387,7 +387,7 @@ def orderSuccess(request,ref):
                     # Email content
         subject = 'Strangers Email Receipt'
         text_body = f'Your order was successful follow up on your purchases here'
-        html_content = render_to_string('receipt.html', {'first_name': payment.first_name, 'subject': subject, 'body':text_body,'unique_id':payment.unique_id})
+        html_content = render_to_string('receipt.html', {'first_name': payment.first_name, 'subject': subject, 'body':text_body,'unique_id':payment.unique_id,'payment':payment})
         print(html_content)
 
         try:
