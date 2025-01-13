@@ -25,8 +25,7 @@ from django.views import View
 def userAdmin(request):
     return render(request,"userAdmin.html")
 
-
-# Management Db
+@login_required(login_url='/')
 def managementDb(request):
     sales = len(Payment.objects.all().filter(verified=True))
     payments = Payment.objects.all().filter(verified=True)
@@ -65,7 +64,7 @@ def managementDb(request):
     }
     return render(request,'managementDb.html',context)
 
-
+@login_required(login_url='/')
 def distribuition(request):
     Notification.objects.filter(viewed=False,notification_type='Newsletter Addition').update(viewed=True)
     subscribers = Newsletter.objects.all()
@@ -78,6 +77,7 @@ def distribuition(request):
     }
     return render(request,'distribuition.html',context)
 
+@login_required(login_url='/')
 def productManagement(request):
     productFormCreator = ProductForm()
     categoryFormCreator = CategoryForm()
@@ -112,6 +112,7 @@ def productManagement(request):
     }
 
     return render(request,'productsManagement.html',context)
+
 
 class productEdit(View):
     def get_product(self):
@@ -191,6 +192,7 @@ class productEdit(View):
             else:
                 print('error')
 
+@login_required(login_url='/')
 def ordersList(request):
     Notification.objects.filter(viewed=False,notification_type='Product Sold').update(viewed=True)
     payments = Payment.objects.all().filter(verified=True)
@@ -212,6 +214,7 @@ def ordersList(request):
 
 BATCH_SIZE = 1  # Adjust batch size based on your SMTP provider limits
 
+@login_required(login_url='/')
 def send_newsletter_batch(request, batch_index):
     newsLetterBatch = NewsletterBatch.objects.all()[0].batch
    
@@ -240,6 +243,8 @@ def send_newsletter_batch(request, batch_index):
             return JsonResponse({'status': 'error', 'batch': batch_index, 'error': str(e)})
 
     return JsonResponse({'status': 'success', 'batch': batch_index, 'emails_sent': len(batch)})
+
+@login_required(login_url='/')
 def send_emails(request):
     batch_size = NewsletterBatch.objects.all()[0].batch_size
     context ={
@@ -247,7 +252,7 @@ def send_emails(request):
     }
     return render(request,'send_email.html')
 
-
+@login_required(login_url='/')
 def product_order_view(request):
     if request.method == "POST":
         # Fetch the updated order from the POST request
@@ -288,6 +293,7 @@ class Notifications_view(View):
         }
         return render(request,'notifications.html',context)
     
+@login_required(login_url='/')   
 def OrderDetailsView(request,unique_id):
     payment = Payment.objects.get(unique_id=unique_id)
     categories = Category.objects.all()
@@ -344,7 +350,8 @@ class MessagesReceived(View):
             'contacts':contacts,
         }
         return render(request,'messagesReceived.html',context)
-    
+
+@login_required(login_url='/')   
 def deleteRelatedImages(request,id,unique_id):
     relatedImage = RelatedImages.objects.get(id=id)
     relatedImage.delete()
