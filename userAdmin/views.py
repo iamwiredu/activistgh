@@ -1,5 +1,6 @@
 import ast
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
 from .forms import ProductForm, RelatedImagesForm, ProductStockForm,CategoryForm, Size39to46Form,MediumLargeStockForm,DeliveryPriceByRegionForm
 from .models import Revenue, Notification, DeliveryPriceByRegion
@@ -20,7 +21,7 @@ from django.views import View
 
 
 
-# @login_required(login_url='/login')
+@login_required(login_url='/')
 def userAdmin(request):
     return render(request,"userAdmin.html")
 
@@ -348,3 +349,23 @@ def deleteRelatedImages(request,id,unique_id):
     relatedImage = RelatedImages.objects.get(id=id)
     relatedImage.delete()
     return redirect(f'/productEdit/{unique_id}')
+
+
+def loginPage(request):
+    if request.method == 'POST':
+        # Get email and password from POST data
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        # Authenticate the user
+        user = authenticate(request, username=email, password=password)
+
+        if user is not None:
+            # Log the user in
+            login(request, user)
+            # Redirect to the desired page (e.g., dashboard)
+            return redirect('/managementDb/')  # Replace 'dashboard' with your URL name
+        else:
+            # Add error message if authentication fails
+            messages.error(request, 'Invalid email or password.')
+    return render(request,'loginPage.html')

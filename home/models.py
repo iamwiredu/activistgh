@@ -64,8 +64,8 @@ class Product(models.Model):
                 return self.size39to46.size39 + self.size39to46.size40 + self.size39to46.size41 + self.size39to46.size42 + self.size39to46.size43 + self.size39to46.size44 + self.size39to46.size45 + self.size39to46.size46
             elif self.size_set.name == 'Medium Large Xl 2xl 3xl':
                 return self.mediumLargeStock.medium + self.mediumLargeStock.large + self.mediumLargeStock.xl + self.mediumLargeStock.xl2 + self.mediumLargeStock.xl3
-            else:
-                return self.stock
+        else:
+            return self.stock
     
     def get_size(self,size):
         get = getattr(self.size_set,size,0)
