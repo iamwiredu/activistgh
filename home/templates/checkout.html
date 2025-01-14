@@ -919,7 +919,10 @@
                 // Add your Deliver-specific code here
                 inputs = deliveryBox.querySelectorAll('input, select')
                 inputs.forEach(input => {
-                    input.setAttribute('required','true')
+                if (input.id != 'street-address-2') {
+                        input.setAttribute('required', 'true');
+                    }
+
                 });
             }
         }

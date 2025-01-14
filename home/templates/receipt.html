@@ -203,7 +203,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td width="75%" align="left" style="padding: 15px 10px 10px;">
-                                                        <p>Purchased Item ({{product.cart.cart_objects|length}})</p>
+                                                        <p>Purchased Item ({{payment.cart.cart_objects|length}})</p>
                                                     </td>
                                                     <td width="25%" align="left" style="padding: 15px 10px 10px;">
                                                         <p>GHS{{payment.total_actual}}</p>
@@ -262,12 +262,14 @@
                                                     <tr>
                                                     <td align="left" valign="top">
                                                         {% if payment.pickupdata %}
-                                                            <p>Pickup Point</p>
+                                                            <p style="font-weight: 800;">Pickup Point</p>
                                                             <p><a href="https://maps.app.goo.gl/C9UfcUEsEL3f2MRu7" style="text-decoration: none; color: black;">View here</a></p>
-                                                        {% endif %}
+                                                        {% else %}
                                                         <p style="font-weight: 800;">Delivery Address</p>
                                                         <p>{{ payment_instance.get_formatted_address|safe }}</p>
+                                                        {% endif %}
                                                     </td>
+
                                                     </tr>
                                                 </table>
                                             </div>

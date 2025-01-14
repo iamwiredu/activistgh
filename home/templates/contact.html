@@ -170,256 +170,82 @@
             color: #000;
         }
     </style>
-    <style>
-        #contact {
-  width: 100%;
-  height: 100%;
+   <style>
+    #contact {
+    padding: 20px;
+    font-family: Arial, sans-serif;
 }
 
 .section-header {
-  text-align: center;
-  margin: 0 auto;
-  padding: 40px 0;
-  font: 300 60px 'Oswald', sans-serif;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 6px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .contact-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 0 auto;
-  padding: 20px;
-  position: relative;
-  max-width: 840px;
-}
-
-/* Left contact page */
-.form-horizontal {
-  /*float: left;*/
-  max-width: 400px;
-  font-family: 'Lato';
-  font-weight: 400;
-}
-
-.form-control, 
-textarea {
-  width: 80%;
-
-  color: #000;
-  letter-spacing: 1px;
-}
-
-.send-button {
-  margin-top: 15px;
-  height: 34px;
-  width: 400px;
-  overflow: hidden;
-  transition: all .2s ease-in-out;
-}
-
-.alt-send-button {
-  width: 400px;
-  height: 34px;
-  transition: all .2s ease-in-out;
-}
-
-.send-text {
-  display: block;
-  margin-top: 10px;
-  font: 700 12px 'Lato', sans-serif;
-  letter-spacing: 2px;
-}
-
-.alt-send-button:hover {
-  transform: translate3d(0px, -29px, 0px);
-}
-
-/* Begin Right Contact Page */
-.direct-contact-container {
-  max-width: 400px;
-}
-
-/* Location, Phone, Email Section */
-.contact-list {
-  list-style-type: none;
-  margin-left: -30px;
-  padding-right: 20px;
-}
-
-.list-item {
-  line-height: 4;
-  color: #aaa;
-}
-
-.contact-text {
-  font: 300 18px 'Lato', sans-serif;
-  letter-spacing: 1.9px;
-  color: #bbb;
-}
-
-.place {
-  margin-left: 62px;
-}
-
-.phone {
-  margin-left: 56px;
-}
-
-.gmail {
-  margin-left: 53px;
-}
-
-.contact-text a {
-  color: #bbb;
-  text-decoration: none;
-  transition-duration: 0.2s;
-}
-
-.contact-text a:hover {
-  color: #fff;
-  text-decoration: none;
-}
-
-
-/* Social Media Icons */
-.social-media-list {
-  position: relative;
-  font-size: 22px;
-  text-align: center;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0;
-}
-
-.social-media-list li a {
-  color: #fff;
-}
-
-.social-media-list li {
-  position: relative; 
-  display: inline-block;
-  height: 60px;
-  width: 60px;
-  margin: 10px 3px;
-  line-height: 60px;
-  border-radius: 50%;
-  color: #fff;
-  background-color: rgb(27,27,27);
-  cursor: pointer; 
-  transition: all .2s ease-in-out;
-}
-
-.social-media-list li:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 60px;
-  height: 60px;
-  line-height: 60px;
-  border-radius: 50%;
-  opacity: 0;
-  box-shadow: 0 0 0 1px #fff;
-  transition: all .2s ease-in-out;
-}
-
-.social-media-list li:hover {
-  background-color: #fff; 
-}
-
-.social-media-list li:hover:after {
-  opacity: 1;  
-  transform: scale(1.12);
-  transition-timing-function: cubic-bezier(0.37,0.74,0.15,1.65);
-}
-
-.social-media-list li:hover a {
-  color: #000;
-}
-
-.copyright {
-  font: 200 14px 'Oswald', sans-serif;
-  color: #555;
-  letter-spacing: 1px;
-  text-align: center;
-}
-
-hr {
-  border-color: rgba(255,255,255,.6);
-}
-
-/* Begin Media Queries*/
-@media screen and (max-width: 850px) {
-  .contact-wrapper {
     display: flex;
-    flex-direction: column;
-  }
-  .direct-contact-container, .form-horizontal {
-    margin: 0 auto;
-  }  
-  
-  .direct-contact-container {
-    margin-top: 60px;
-    max-width: 300px;
-  }    
-  .social-media-list li {
-    height: 60px;
-    width: 60px;
-    line-height: 60px;
-  }
-  .social-media-list li:after {
-    width: 60px;
-    height: 60px;
-    line-height: 60px;
-  }
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
 }
 
-@media screen and (max-width: 569px) {
-
-  .direct-contact-container, .form-wrapper {
-    float: none;
-    margin: 0 auto;
-  }  
-  .form-control, textarea {
-    
-    margin: 0 auto;
-  }
- 
-  
-  .name, .email, textarea {
-    width: 280px;
-  } 
-  
-  .direct-contact-container {
-    margin-top: 60px;
-    max-width: 280px;
-  }  
-  .social-media-list {
-    left: 0;
-  }
-  .social-media-list li {
-    height: 55px;
-    width: 55px;
-    line-height: 55px;
-    font-size: 2rem;
-  }
-  .social-media-list li:after {
-    width: 55px;
-    height: 55px;
-    line-height: 55px;
-  }
-  
+#contact-form,
+.direct-contact-container {
+    flex: 1;
+    max-width: 500px;
+    min-width: 300px;
+    box-sizing: border-box;
 }
 
-@media screen and (max-width: 410px) {
-  .send-button {
-    width: 99%;
-  }
+#contact-form {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
 }
-    </style>
+
+.direct-contact-container {
+    text-align: center;
+}
+
+.contact-list {
+    list-style: none;
+    padding: 0;
+}
+
+.contact-list .list-item {
+    margin: 15px 0;
+}
+
+.contact-list a {
+    text-decoration: none;
+    color: black;
+}
+
+button.send-button {
+    width: 100%;
+    margin-top: 10px;
+    background-color: #fe4c00;
+    border: 1px solid #fe4c00;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .contact-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #contact-form,
+    .direct-contact-container {
+        max-width: 100%;
+    }
+}
+
+   </style>
     <style>
         /* Dropdown Container */
         .dropdown {
@@ -586,69 +412,63 @@ hr {
         </div>
         <div>
             <div style="padding: 70px;"></div>
-
-        <section id="contact">
-        
-            <h1 class="section-header">Contact</h1>
-        
-            <div class="contact-wrapper">
-        
-                <!-- Left contact page -->
-        
-                <form id="contact-form" class="form-horizontal" role="form" method="POST">
-                    {% csrf_token %}
-        
-                    <div class="form-group">
-                        <div class="col-sm-12" style="padding-left: 0;">
-                            <input type="text" class="form-control" id="fname" placeholder="First Name" name="first_name" value="" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12" style="padding-left: 0;">
-                            <input type="text" class="form-control" id="lname" placeholder="Last Name" name="last_name" value="" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12" style="padding-left: 0;">
-                            <input type="email" class="form-control" id="email" placeholder="Email" name="email" value=""
-                                required>
-                        </div>
-                    </div>
-        
-                    <textarea class="form-control" rows="10" placeholder="Message" name="message"  required></textarea>
-        
-                    <button class="btn btn-primary send-button" id="submit" type="submit" value="SEND" name="contactSend" style="background-color: #fe4c00; border: 1px solid #fe4c00;">
-                        <div class="alt-send-button">
-                            <i class="fa fa-paper-plane"></i><span class="send-text">SEND</span>
-                        </div>
-        
-                    </button>
-        
-                </form>
-        
-                <!-- Left contact page -->
-        
-                <div class="direct-contact-container">
-        
-                    <ul class="contact-list">
-                        <li class="list-item"><a href="https://maps.app.goo.gl/VbcnmYVKaThyhYsa6" style="color: black; text-decoration: none;"><i style="color: #000;" class="fa fa-map-marker fa-2x"><span class="contact-text place">Accra, Ghana</span></i></a></li>
-        
-                        <li class="list-item"><i class="fa fa-phone fa-2x" style="color: #000;"><span class="contact-text phone"><a
-                                        href="tel:0554887597" title="Give me a call">(+233) 55 488 7597</a></span></i></li>
-        
-                        <li class="list-item"><i class="fa fa-envelope fa-2x" style="color: #000;"><span class="contact-text gmail" ><a
-                                        href="mailto:strangersofficial6@gmail.com" title="Send me an email">Strangersofficial6@gmail.com</a></span></i></li>
-        
-                    </ul>
-        
-                    <hr>
-            
-        
+<section id="contact">
+    <div class="contact-wrapper">
+        <!-- Left contact page -->
+        <form id="contact-form" class="form-horizontal" role="form" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="col-sm-12" style="padding-left: 0;">
+                    <input type="text" class="form-control" id="fname" placeholder="First Name" name="first_name"
+                        value="" required>
                 </div>
-        
             </div>
-        
-        </section>
+            <div class="form-group">
+                <div class="col-sm-12" style="padding-left: 0;">
+                    <input type="text" class="form-control" id="lname" placeholder="Last Name" name="last_name" value=""
+                        required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12" style="padding-left: 0;">
+                    <input type="email" class="form-control" id="email" placeholder="Email" name="email" value=""
+                        required>
+                </div>
+            </div>
+            <textarea class="form-control" rows="10" placeholder="Message" name="message" required></textarea>
+            <button class="btn btn-primary send-button" id="submit" type="submit" value="SEND" name="contactSend">
+                <div class="alt-send-button">
+                    <i class="fa fa-paper-plane"></i><span class="send-text">SEND</span>
+                </div>
+            </button>
+        </form>
+        <!-- Right contact page -->
+        <div class="direct-contact-container">
+            <ul class="contact-list">
+                <li class="list-item">
+                    <a href="https://maps.app.goo.gl/VbcnmYVKaThyhYsa6" style="color: black; text-decoration: none;">
+                        <i class="fa fa-map-marker fa-2x"></i>
+                        <span class="contact-text place">Accra, Ghana</span>
+                    </a>
+                </li>
+                <li class="list-item">
+                    <i class="fa fa-phone fa-2x"></i>
+                    <span class="contact-text phone">
+                        <a href="tel:0554887597" title="Give me a call">(+233) 55 488 7597</a>
+                    </span>
+                </li>
+                <li class="list-item">
+                    <i class="fa fa-envelope fa-2x"></i>
+                    <span class="contact-text gmail">
+                        <a href="mailto:strangersofficial6@gmail.com"
+                            title="Send me an email">Strangersofficial6@gmail.com</a>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
 
 
         </div>
