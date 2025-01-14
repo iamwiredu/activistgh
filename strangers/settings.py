@@ -184,9 +184,9 @@ EMAIL_HOST = 'smtp.gmail.com'  # Replace with your SMTP server
 EMAIL_PORT = 465  # Use 465 for SSL or 587 for TLS
 EMAIL_USE_SSL = True
 EMAIL_USE_TSL = False
-EMAIL_HOST_USER = 'strangersofficial6@gmail.com'  # Replace with your email
-EMAIL_HOST_PASSWORD = 'Icrr abyg kzsi mcfe'  # Replace with your email password
-DEFAULT_FROM_EMAIL = 'Strangers <StrangersOfficial6@gmail.com>'
+EMAIL_HOST_USER = 'Strangersofficial6@gmail.com'  # Replace with your email
+EMAIL_HOST_PASSWORD = 'lcrr abyg kzsi mcfe'  # Replace with your email password
+DEFAULT_FROM_EMAIL = 'Strangers <strangersofficial6@gmail.com>'
 ACCOUNT_RATE_LIMITS = False
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

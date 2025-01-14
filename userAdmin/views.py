@@ -1,6 +1,7 @@
 import ast
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate,login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from .forms import ProductForm, RelatedImagesForm, ProductStockForm,CategoryForm, Size39to46Form,MediumLargeStockForm,DeliveryPriceByRegionForm
 from .models import Revenue, Notification, DeliveryPriceByRegion
@@ -114,7 +115,8 @@ def productManagement(request):
     return render(request,'productsManagement.html',context)
 
 
-class productEdit(View):
+class productEdit(LoginRequiredMixin,View):
+    login_url = '/'
     def get_product(self):
         # Access unique_id from URL kwargs
         unique_id = self.kwargs['unique_id']
@@ -235,7 +237,7 @@ def send_newsletter_batch(request, batch_index):
 
         # Use EmailMultiAlternatives for HTML emails
         try:
-            msg = EmailMultiAlternatives(subject, text_body, "kwakuwiredu0@gmail.com", [email])
+            msg = EmailMultiAlternatives(subject, text_body, "Strangersofficial6@gmail.com", [email])
             msg.attach_alternative(html_content, "text/html")  # Attach the HTML version
             msg.send()  # Send the email
         except Exception as e:
@@ -279,8 +281,8 @@ def product_order_view(request):
 
 # CBV
 
-class Notifications_view(View):
-
+class Notifications_view(LoginRequiredMixin,View):
+    login_url = '/'
     def get(self, request):
         Notification.objects.filter(viewed=False).update(viewed=True)
         
@@ -293,7 +295,7 @@ class Notifications_view(View):
         }
         return render(request,'notifications.html',context)
     
-@login_required(login_url='/')   
+  
 def OrderDetailsView(request,unique_id):
     payment = Payment.objects.get(unique_id=unique_id)
     categories = Category.objects.all()
@@ -340,7 +342,8 @@ def OrderDetailsView(request,unique_id):
 
 
 
-class MessagesReceived(View):
+class MessagesReceived(LoginRequiredMixin,View):
+    login_url = '/'
     def get(self,request):
         Notification.objects.filter(viewed=False,notification_type='Contact Form').update(viewed=True)
         notifications = Notification.objects.all().filter(viewed=False)
@@ -361,11 +364,11 @@ def deleteRelatedImages(request,id,unique_id):
 def loginPage(request):
     if request.method == 'POST':
         # Get email and password from POST data
-        email = request.POST.get('email')
+        username = request.POST.get('username')
         password = request.POST.get('password')
 
         # Authenticate the user
-        user = authenticate(request, username=email, password=password)
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
             # Log the user in

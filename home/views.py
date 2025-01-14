@@ -21,55 +21,6 @@ from django.http import JsonResponse
 
 def home(request):
     categories = Category.objects.all()
-    if request.method == 'POST':
-        if 'giveUserPassword' in request.POST:
-            email = request.POST.get('email')
-            fname = request.POST.get('fname')
-            lname = request.POST.get('lname')
-            
-            # Generate password logic (ensure this function is defined)
-            password = generate_password() 
-            
-            # Save user information (ensure you have a model to save to)
-            userLogin = UserLogin(email=email, first_name=fname, last_name=lname, password=password)
-            userLogin.save()
-
-            # Email content
-            subject = 'Strangers Password'
-            text_body = f'Your password is {password}.'
-            html_content = render_to_string('password.html', {'first_name': fname, 'subject': subject, 'body': f'Your password is {password}.'})
-            print(html_content)
-
-            try:
-                # Create email object with alternatives
-                msg = EmailMultiAlternatives(subject, text_body, "kwakuwiredu0@gmail.com", [email])
-                msg.attach_alternative(html_content, "text/html")  # Attach the HTML version
-                msg.send()
-                messages.success(request, 'Password sent to email.')
-            except Exception as e:
-                messages.error(request, 'Try again later.')
-                print(f'Error sending email: {e}')  # Log the error for debugging
-
-            return redirect(home)
-        
-        if 'passwordLoginSubmit' in request.POST:
-            password = request.POST.get('passwordLogin')
-
-            try:
-                user = UserLogin.objects.get(password=password)
-                if user:
-                    request.session["authenticated"] = True
-                    return redirect("shop/")  
-                else:
-                    messages.error(request, 'Invalid password.')
-                    print('invalid')
-                    return redirect('/')
-                    
-            except:
-                messages.error(request, 'Invalid password.')
-                print('invalid')
-                return redirect('/')
-
     context = {
      'categories':categories,
     }
@@ -392,7 +343,7 @@ def orderSuccess(request,ref):
 
         try:
             # Create email object with alternatives
-            msg = EmailMultiAlternatives(subject, text_body, "kwakuwiredu0@gmail.com", [payment.email])
+            msg = EmailMultiAlternatives(subject, text_body, "Strangersofficial6@gmail.com", [payment.email])
             msg.attach_alternative(html_content, "text/html")  # Attach the HTML version
             msg.send()
             print('sent')
