@@ -208,6 +208,20 @@ class Payment(models.Model):
     def __str__(self) -> str:
         return f'Payment: {self.amount}'
 
+    @property
+    def get_formatted_address(self):
+        """
+        Returns a nicely formatted delivery address for display purposes.
+        """
+        address_lines = [
+            self.street_address_1,
+            self.street_address_2,
+            f"{self.city}, {self.state} {self.zip_code}" if self.state else f"{self.city} {self.zip_code}",
+            self.destination_country,
+        ]
+        # Filter out empty or None lines
+        return "<br>".join(filter(None, address_lines))
+
     
     @property
     def amount_value(self) -> int:

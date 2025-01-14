@@ -261,6 +261,10 @@
                                                     width="100%" role="presentation" style="max-width:300px;">
                                                     <tr>
                                                     <td align="left" valign="top">
+                                                        {% if payment.pickupdata %}
+                                                            <p>Pickup Point</p>
+                                                            <p><a href="https://maps.app.goo.gl/C9UfcUEsEL3f2MRu7" style="text-decoration: none; color: black;">View here</a></p>
+                                                        {% endif %}
                                                         <p style="font-weight: 800;">Delivery Address</p>
                                                         <p>{{ payment_instance.get_formatted_address|safe }}</p>
                                                     </td>
@@ -276,7 +280,6 @@
 
                                                 <a href="https://strangers-tdku.com/orderDetails/{{unique_id}}"
                                                     style="background-color:#a12c0f; text-decoration: none; padding: 1em 2em; color: #FCFDFF; display:inline-block; border-radius:.4em; mso-padding-alt:0;text-underline-color:#044767; font-size: 1.1em;">View
-                                                    Order
                                                 </a>
                                             </div>
                                         </td>
