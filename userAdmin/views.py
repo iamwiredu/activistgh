@@ -115,53 +115,26 @@ def productManagement(request):
     return render(request,'productsManagement.html',context)
 
 
-class productEdit(LoginRequiredMixin,View):
-    login_url = '/'
-    def get_product(self):
-        # Access unique_id from URL kwargs
-        unique_id = self.kwargs['unique_id']
-        return get_object_or_404(Product, unique_id=unique_id)
+def productEdit(request,unique_id):
+    product = Product.objects.get(unique_id=unique_id)
+    productFormCreator = ProductForm(instance=product)
+    notifications = Notification.objects.all().filter(viewed=False)
+    relatedImage = product.relatedImages.all()
+    if product.size_set:
+        if product.size_set.name == 'Medium Large Xl 2xl 3xl':
+            stock,created = MediumLargeStock.objects.get_or_create(product=product,size_set=product.size_set)
+            stockform = MediumLargeStockForm(instance=stock)
 
-    def get(self,request,unique_id):
-        product = Product.objects.get(unique_id=unique_id)
-        productFormCreator = ProductForm(instance=product)
-        notifications = Notification.objects.all().filter(viewed=False)
-        relatedImage = product.relatedImages.all()
-        if product.size_set:
-            if product.size_set.name == 'Medium Large Xl 2xl 3xl':
-                stock,created = MediumLargeStock.objects.get_or_create(product=product,size_set=product.size_set)
-                stockform = MediumLargeStockForm(instance=stock)
+        elif product.size_set.name == '39 - 46':
+            stock,created = Size39to46.objects.get_or_create(product=product,size_set=product.size_set)
+            stockform = Size39to46Form(instance=stock)
+      
+    else:
+        stock = None
+        stockform = ProductStockForm(instance=product)
 
-            elif product.size_set.name == '39 - 46':
-                stock,created = Size39to46.objects.get_or_create(product=product,size_set=product.size_set)
-                stockform = Size39to46Form(instance=stock)
-        else:
-            stock = None
-            stockform = ProductStockForm(instance=product)
-        context ={
-            'product':product,
-            'productFormCreator':productFormCreator,
-            'notifications':notifications,
-            'stock':stock,
-            'stockform':stockform,
-        }
-        return render(request,'productEdit.html',context)
-    
-    def post(self,request,unique_id):
-        product = self.get_product()
-        if product.size_set:
-            if product.size_set.name == 'Medium Large Xl 2xl 3xl':
-                stock,created = MediumLargeStock.objects.get_or_create(product=product,size_set=product.size_set)
-                stockform = MediumLargeStockForm(instance=stock)
-
-            elif product.size_set.name == '39 - 46':
-                stock,created = Size39to46.objects.get_or_create(product=product,size_set=product.size_set)
-                stockform = Size39to46Form(instance=stock)
-        else:
-            stock = None
-            stockform = ProductStockForm(instance=product)
+    if request.method == 'POST':
         
-        product = self.get_product()
         if 'editProduct' in request.POST:
             productFormCreator = ProductForm(request.POST, request.FILES,instance=product)    
             if productFormCreator.is_valid(): 
@@ -194,6 +167,16 @@ class productEdit(LoginRequiredMixin,View):
             else:
                 print('error')
 
+    context ={
+            'product':product,
+            'productFormCreator':productFormCreator,
+            'notifications':notifications,
+            'stock':stock,
+            'stockform':stockform,
+        }
+    return render(request,'productEdit.html',context)
+    
+    
 @login_required(login_url='/')
 def ordersList(request):
     Notification.objects.filter(viewed=False,notification_type='Product Sold').update(viewed=True)

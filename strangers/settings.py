@@ -186,7 +186,7 @@ EMAIL_USE_SSL = True
 EMAIL_USE_TSL = False
 EMAIL_HOST_USER = 'Strangersofficial6@gmail.com'  # Replace with your email
 EMAIL_HOST_PASSWORD = 'lcrr abyg kzsi mcfe'  # Replace with your email password
-DEFAULT_FROM_EMAIL = 'Strangers <strangersofficial6@gmail.com>'
+DEFAULT_FROM_EMAIL = 'Strangers'
 ACCOUNT_RATE_LIMITS = False
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
