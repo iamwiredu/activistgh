@@ -315,18 +315,22 @@ def orderSuccess(request,ref):
         for item in payment.cart.cart_objects.all():
             if item.product.size_set:
                 print(f'we are here in if product.size_set {payment.verified}')
-                if item.product.size_set == 'Medium Large Xl 2xl 3xl':  
+                if item.product.size_set.name == 'Medium Large Xl 2xl 3xl':  
                 
                     mediumLarge,created = MediumLargeStock.objects.get_or_create(product=item.product)
                     stock_field = getattr(mediumLarge, item.sizeData, None)
                     if stock_field is not None:
                     
-                        setattr(item.product.mediumLargeStock, item.size.lower(), stock_field - item.quantity)
-                elif item.product.size_set == '39 - 46':
+                        setattr(mediumLarge, item.sizeData, stock_field - item.quantity)
+                        mediumLarge.save()
+                elif item.product.size_set.name == '39 - 46':
+                    print('size here')
                     size39to46,created = Size39to46.objects.get_or_create(product=item.product)
                     stock_field = getattr(size39to46,item.sizeData,None)
+                    print(stock_field,item.quantity)
                     if stock_field is not None:
-                        setattr(item.product, item.sizeData, stock_field - item.quantity)
+                        setattr(size39to46, item.sizeData, stock_field - item.quantity)
+                        size39to46.save()
             else:
                 item.product.stock  -= 1
                 item.product.save()
