@@ -174,26 +174,22 @@ class Newsletter(models.Model):
         super().save(*args, **kwargs)
 
         # API endpoint and payload
-        endPoint = "https://your-api-endpoint.com/group"
+        endPoint = "https://api.mnotify.com/api/contact"
         apiKey = 'g8s7yo7Mxf88LFw1SCHKBoQZf'
-        groupId = '54135'
+        groupId = 54135
         data = {
-            'firstname': self.first_name,
-            'lastname': self.last_name,
-            'email': self.email,
-            'phone': self.phone,
+            'phone': str(self.phone),
             'title':'None',
-            'dob': '1979-01-01',
+            'firstname': str(self.first_name),
+            'lastname': str(self.last_name),
+            'email': self.email,
+            'dob': '2003-05-05',
         }
+        print(self.phone,self.email)
         url = endPoint + '/' + str(groupId) + '?key=' + apiKey
         # Make the API request
-        try:
-            response = requests.post(url, data)
-            # Raise an error for bad HTTP responses
-            print(f"Contact added successfully: {response.json()}")
-        except requests.exceptions.RequestException as e:
-            print(f"Error adding contact to the API: {e}")
-
+        response = requests.post(url, data)
+        print(response.json())
 
 class Payment(models.Model):
     # personal details 

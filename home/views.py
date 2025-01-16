@@ -1,4 +1,4 @@
-import ast, json
+import ast, json, requests
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
@@ -445,3 +445,28 @@ def contactPage(request):
     }
     return render(request,'contact.html',context)
 
+def bulksms(request):
+    if request.method == 'POST':
+        endPoint = 'https://api.mnotify.com/api/sms/group'
+        apiKey = 'g8s7yo7Mxf88LFw1SCHKBoQZf'
+        data = {
+            'group_id[]': ['54135'],
+            'sender': 'mNotify',
+            'message': 'this is the message we are sending',
+            'is_schedule': False,
+            'schedule_date': ''
+        }
+
+        url = endPoint + '?key=' + apiKey
+
+        try:
+            response = requests.post(url, data)
+            response.raise_for_status()  # Raises HTTPError if the HTTP request returned an unsuccessful status code
+            response_data = response.json()
+            print("Response Data:", response_data)
+        except requests.exceptions.RequestException as e:
+            print("An error occurred:", e)
+        except ValueError as e:
+            print("Error decoding JSON response:", e)
+
+    return render(request,'bulkSms.html')
