@@ -119,7 +119,7 @@ def shop(request,category_name):
 
                 new_Notification.save()
                 
-                return redirect(shop)
+                return redirect(f'/shop/{category_name}/')
             except Exception as e:
                 print(e)
                 messages.error(request,'Error. Try again later.')

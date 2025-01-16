@@ -1,4 +1,5 @@
 import uuid
+import requests
 from django.db import models
 from django.db.models import Case, When, IntegerField  
 from userAdmin.models import Notification
@@ -162,12 +163,37 @@ class TicketType(models.Model):
         verbose_name = "Ticket Type"
         verbose_name_plural = "Ticket Types"
     
-
 class Newsletter(models.Model):
-    first_name = models.CharField(max_length=255,null=True,blank=True)
-    last_name = models.CharField(max_length=255,null=True,blank=True)
-    email = models.CharField(max_length=255,null=True,blank=True)
-    phone = models.CharField(max_length=255,null=True,blank=True)
+    first_name = models.CharField(max_length=255, null=True, blank=True)
+    last_name = models.CharField(max_length=255, null=True, blank=True)
+    email = models.CharField(max_length=255, null=True, blank=True)
+    phone = models.CharField(max_length=255, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        # Call the parent save method to save the instance
+        super().save(*args, **kwargs)
+
+        # API endpoint and payload
+        endPoint = "https://your-api-endpoint.com/group"
+        apiKey = 'g8s7yo7Mxf88LFw1SCHKBoQZf'
+        groupId = '54135'
+        data = {
+            'firstname': self.first_name,
+            'lastname': self.last_name,
+            'email': self.email,
+            'phone': self.phone,
+            'title':'None',
+            'dob': '1979-01-01',
+        }
+        url = endPoint + '/' + str(groupId) + '?key=' + apiKey
+        # Make the API request
+        try:
+            response = requests.post(url, data)
+            # Raise an error for bad HTTP responses
+            print(f"Contact added successfully: {response.json()}")
+        except requests.exceptions.RequestException as e:
+            print(f"Error adding contact to the API: {e}")
+
 
 class Payment(models.Model):
     # personal details 
