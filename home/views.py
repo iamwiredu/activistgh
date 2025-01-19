@@ -451,7 +451,7 @@ def bulksms(request):
         apiKey = 'g8s7yo7Mxf88LFw1SCHKBoQZf'
         data = {
             'group_id[]': ['54135'],
-            'sender': 'mNotify',
+            'sender': 'BuzelStores',
             'message': 'this is the message we are sending',
             'is_schedule': False,
             'schedule_date': ''

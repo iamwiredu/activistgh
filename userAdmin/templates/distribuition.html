@@ -238,9 +238,16 @@
                                     
                                 <h5 class="card-title">NewsLetter <span>| Today</span></h5>
 
-                                  <a href="{% url 'sendEmails' %}" style="background-color:#4154f1; padding: 5px; border: 1px solid #4154f1; border-radius: 5px; color: white; cursor: pointer;">
-                                    Send Newsletter
-                                  </a>
+      <div style="display: flex; justify-content: center; flex-direction: column;gap: 5px;margin: 5px;">
+                                    <a href="{% url 'sendEmails' %}"
+                                        style="background-color:#4154f1; padding: 5px; border: 1px solid #4154f1; border-radius: 5px; color: white; cursor: pointer;">
+                                        Send Newsletter
+                                    </a>
+                                    <a href="{% url 'bulksms' %}"
+                                        style="background-color:#4154f1; padding: 5px; border: 1px solid #4154f1; border-radius: 5px; color: white; cursor: pointer;">
+                                        Send Bulk Sms
+                                    </a>
+      </div>
                                </div>                    
                                 <table class="table table-borderless datatable">
                                     <thead>
