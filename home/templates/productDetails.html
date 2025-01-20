@@ -867,28 +867,46 @@
 
     </script>
 
-        <script>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
             // Function to handle size-specific stock checks
             function handleSizeStock(sizeId, stock, sizeName) {
                 const addOrSold = document.getElementById('addOrSold');
-                document.getElementById(sizeId).addEventListener('click', () => {
-                    if (Number('{{product.stock_actual}}') === 0) {
+                const sizeElement = document.getElementById(sizeId);
+
+                if (!sizeElement || !addOrSold) {
+                    console.error(`Element with id "${sizeId}" or "addOrSold" not found`);
+                    return;
+                }
+
+                // Helper function to handle stock logic
+                function handleStockLogic() {
+                    const actualStock = Number('{{product.stock_actual}}');
+                    if (isNaN(actualStock)) {
+                        console.error('Invalid stock_actual value');
+                        return;
+                    }
+
+                    if (actualStock === 0) {
+                        console.log(`Stock for ${sizeName} is 0`);
                         return;
                     } else {
                         if (stock === 0) {
                             addOrSold.querySelector('#addOrSoldSvg').style.display = 'block';
-                            addOrSold.querySelector('#addOrSoldCart').style.display = 'none'
+                            addOrSold.querySelector('#addOrSoldCart').style.display = 'none';
                         } else {
                             addOrSold.querySelector('#addOrSoldSvg').style.display = 'none';
-                            addOrSold.querySelector('#addOrSoldCart').style.display = 'block'
+                            addOrSold.querySelector('#addOrSoldCart').style.display = 'block';
                         }
                     }
-                });
+                }
+
+                // Attach both click and touchstart events
+                sizeElement.addEventListener('click', handleStockLogic);
+                sizeElement.addEventListener('touchstart', handleStockLogic);
             }
 
-
-
+            // Check size sets
             if ('{{product.size_set.name}}' === 'Medium Large Xl 2xl 3xl') {
                 const Medium = Number('{{sizeset_stock.medium}}');
                 const Large = Number('{{sizeset_stock.large}}');
@@ -896,22 +914,15 @@
                 const xl2 = Number('{{sizeset_stock.xl2}}');
                 const xl3 = Number('{{sizeset_stock.xl3}}');
 
-                // Handling sizes
-                handleSizeStock('Medium', Medium, 'Medium');
-                handleSizeStock('Large', Large, 'Large');
-                handleSizeStock('Xl', xl, 'XL');
-                handleSizeStock('2xl', xl2, '2XL');
-                handleSizeStock('3xl', xl3, '3XL');
-
-                var variables = {
-                    Medium: Medium,
-                    Large: Large,
-                    xl: xl,
-                    xl2: xl2,
-                    xl3: xl3
+                if (isNaN(Medium) || isNaN(Large) || isNaN(xl) || isNaN(xl2) || isNaN(xl3)) {
+                    console.error('Invalid stock values for Medium-Large sizes');
+                } else {
+                    handleSizeStock('Medium', Medium, 'Medium');
+                    handleSizeStock('Large', Large, 'Large');
+                    handleSizeStock('Xl', xl, 'XL');
+                    handleSizeStock('2xl', xl2, '2XL');
+                    handleSizeStock('3xl', xl3, '3XL');
                 }
-
-
             }
 
             if ('{{product.size_set.name}}' === '39 - 46') {
@@ -924,34 +935,32 @@
                 const size45 = Number('{{sizeset_stock.size45}}');
                 const size46 = Number('{{sizeset_stock.size46}}');
 
-              var variables = {
-                    size39: size39,
-                    size40: size40,
-                    size41: size41,
-                    size42: size42,
-                    size43: size43,
-                    size44: size44,
-                    size45: size45,
-                    size46: size46
-                };
-
-                // Handling sizes 39-46
-                handleSizeStock('39', size39, '39');
-                handleSizeStock('40', size40, '40');
-                handleSizeStock('41', size41, '41');
-                handleSizeStock('42', size42, '42');
-                handleSizeStock('43', size43, '43');
-                handleSizeStock('44', size44, '44');
-                handleSizeStock('45', size45, '45');
-                handleSizeStock('46', size46, '46');
+                if (isNaN(size39) || isNaN(size40) || isNaN(size41) || isNaN(size42) ||
+                    isNaN(size43) || isNaN(size44) || isNaN(size45) || isNaN(size46)) {
+                    console.error('Invalid stock values for sizes 39-46');
+                } else {
+                    handleSizeStock('39', size39, '39');
+                    handleSizeStock('40', size40, '40');
+                    handleSizeStock('41', size41, '41');
+                    handleSizeStock('42', size42, '42');
+                    handleSizeStock('43', size43, '43');
+                    handleSizeStock('44', size44, '44');
+                    handleSizeStock('45', size45, '45');
+                    handleSizeStock('46', size46, '46');
+                }
             }
 
-            selected = document.getElementById('size-select')
-            const firstOption = selected.options[0];
-            firstOption.click()
+            // Select the first size option
+            const sizeSelect = document.getElementById('size-select');
+            if (sizeSelect && sizeSelect.options.length > 0) {
+                const firstOption = sizeSelect.options[0];
+                firstOption.click();
+            } else {
+                console.error('Size select element or options not found');
+            }
+        });
+    </script>
 
-
-        </script>
     <script>
         // Getting the addToCartDiv element
             var addToCartDiv = document.getElementById('addToCartDiv');
