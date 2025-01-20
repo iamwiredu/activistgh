@@ -88,6 +88,70 @@
         }
         
     </style>
+    <style>
+        input#value{
+  clear:both;
+  display:block;
+  width:150px;
+  border:2px solid;
+  font:bold 14px arial;
+  padding: 5px;
+  border-radius:5px;
+  cursor:pointer;
+  z-index:5;
+  overflow:hidden;
+}
+
+input#value::before{
+  content:'';
+  display:block;
+  width: 0;
+  height: 0;
+  background: transparent;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 12px solid red;
+  position:absolute;
+  margin-top:-20px;
+  margin-left:145px;
+  z-index:11;
+}
+
+.size-select{
+
+  display:none;
+  position:absolute;
+  list-style-type:none;
+  width:100px;
+  margin-left:-40px;
+  margin-top:-3px;
+  z-index:1;
+}
+
+.list-item{
+  display:block;
+  border:1px solid;
+  border-top:0;
+  cursor:pointer;
+  text-indent:5px;
+  font:normal 14px/30px arial;
+  
+}
+.size-select:first-child{
+    border-top: 1px solid;
+}
+.list-item:first-of-type{
+    border-top: 1px solid;
+}
+.list-item:hover{
+  background:#ffe6e6;
+  z-index:1;
+}
+.list-item.active{
+    background-color: #fe4c50;
+    color: white;
+}
+    </style>
         <style>
             .notification {
                 position: fixed;
@@ -342,9 +406,10 @@
                 <div style="margin-top: 30px;">
                     {% if product.size_set %}
                     <label for="size-select">Select Size:</label>
-                    <div class="dropdown-content" id="size-select" name="size">
+                    <div id="arrow"></div>
+                    <div id="size-select" name="size">
                         {% for size in product.size_set.sizes.all %}
-                        <span id="{{size}}" data-size="{{size.value}}" class="dropdown-item" value="Size: {{size}}">{{size}}</span>
+                        <span id="{{size}}" data-size="{{size.value}}" class="list-item " value="Size: {{size}}">{{size}}</span>
                         {% endfor %}
                         
                     </div>
@@ -970,9 +1035,7 @@
                 handleSizeStock('46', size46, '46');
             }
 
-            selected = document.getElementById('size-select')
-            const firstOption = selected.options[0];
-            firstOption.click()
+       
 
 
         </script>
@@ -998,9 +1061,9 @@
 
                 // Select the currently selected size
                 const selectElement = document.getElementById('size-select');
-                var selectedSize = selectElement.value;
+                var selectedSize = selectElement.querySelector('.list-item.active').textContent
 
-                const selectedOption = selectElement.options[selectElement.selectedIndex];
+                const selectedOption = selectElement.querySelector('.list-item.active')
 
                // Access the data-size attribute of the selected option
                const selectedSizeData = selectedOption.getAttribute('data-size');
@@ -1072,7 +1135,22 @@ addToCartDiv = document.getElementById('addToCartDiv')
     addToCartDiv.onclick = addToCartDivFunction
        
     </script>
+<script>
+    listItem = document.querySelectorAll('.list-item')
 
+    listItem.forEach(item => {
+        item.addEventListener('click', () => {
+            listItem.forEach(obj => {
+                obj.classList.remove('active')
+            })
+            item.classList.add('active')
+
+        })
+    });
+    if (listItem[0]) {
+        listItem[0].click()
+    }
+</script>
     <script>
         // Function to show the notification
         function showNotification(type, message) {
