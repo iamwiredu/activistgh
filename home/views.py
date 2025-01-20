@@ -447,18 +447,18 @@ def contactPage(request):
 
 def bulksms(request):
     if request.method == 'POST':
+        message = request.POST.get('Message')
         endPoint = 'https://api.mnotify.com/api/sms/group'
         apiKey = 'g8s7yo7Mxf88LFw1SCHKBoQZf'
         data = {
             'group_id[]': ['54135'],
             'sender': 'BuzelStores',
-            'message': 'this is the message we are sending',
-            'is_schedule': False,
+            'message': str(message),
+            'message_id':10,
+            'is_schedule': "false",
             'schedule_date': ''
         }
-
         url = endPoint + '?key=' + apiKey
-
         try:
             response = requests.post(url, data)
             response.raise_for_status()  # Raises HTTPError if the HTTP request returned an unsuccessful status code
