@@ -342,12 +342,12 @@
                 <div style="margin-top: 30px;">
                     {% if product.size_set %}
                     <label for="size-select">Select Size:</label>
-                    <select id="size-select" name="size">
+                    <div class="dropdown-content" id="size-select" name="size">
                         {% for size in product.size_set.sizes.all %}
-                        <option id="{{size}}" data-size="{{size.value}}" value="Size: {{size}}">{{size}}</option>
+                        <span id="{{size}}" data-size="{{size.value}}" class="dropdown-item" value="Size: {{size}}">{{size}}</span>
                         {% endfor %}
                         
-                    </select>
+                    </div>
                     {% else %}
                     <select id="size-select" name="size" style="display: none;">
                         <option id="None" value="None" data-size="None" selected>None</option>
