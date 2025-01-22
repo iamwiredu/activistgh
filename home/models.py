@@ -175,8 +175,10 @@ class Newsletter(models.Model):
 
         # API endpoint and payload
         endPoint = "https://api.mnotify.com/api/contact"
-        apiKey = 'g8s7yo7Mxf88LFw1SCHKBoQZf'
-        groupId = 54135
+        # apiKey = 'g8s7yo7Mxf88LFw1SCHKBoQZf'
+        # groupId = 54135
+        apiKey = '4Vrc1NP8PUeS4nB51QgHvkD4W'
+        groupId = 54118
         data = {
             'phone': str(self.phone),
             'title':'None',
@@ -208,6 +210,7 @@ class Payment(models.Model):
     state = models.CharField(max_length=100, blank=True, null=True)
     zip_code = models.CharField(max_length=20, null=True)
     destination_country = models.CharField(max_length=100, null=True)
+    accralocation = models.CharField(max_length=255,null=True,blank=True)
     
 
     additional_info = models.TextField(blank=True)

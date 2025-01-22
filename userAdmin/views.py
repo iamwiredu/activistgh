@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from .forms import ProductForm, RelatedImagesForm, ProductStockForm,CategoryForm, Size39to46Form,MediumLargeStockForm,DeliveryPriceByRegionForm
-from .models import Revenue, Notification, DeliveryPriceByRegion
+from .forms import ProductForm, RelatedImagesForm, ProductStockForm,CategoryForm, DeliveryPriceByAccraForm,Size39to46Form,MediumLargeStockForm,DeliveryPriceByRegionForm
+from .models import Revenue, Notification, DeliveryPriceByRegion, DeliveryPriceByAccra
 from home.models import Product, Contact,Newsletter, Payment, NewsletterBatch, RelatedImages,Category
 from datetime import datetime
 from home.models import MediumLargeStock, Size39to46
@@ -34,6 +34,9 @@ def managementDb(request):
   
     delivery = DeliveryPriceByRegion.objects.get(name='standard')
     DeliveryPriceByRegionFormCreator = DeliveryPriceByRegionForm(instance=delivery)
+
+    deliveryAccra = DeliveryPriceByAccra.objects.get(name='main')
+    DeliveryPriceByAccraFormCreator = DeliveryPriceByAccraForm(instance=deliveryAccra)
     # get current revenue
     currentYear = datetime.now().year
     revenue,created = Revenue.objects.get_or_create(year=currentYear)
@@ -41,13 +44,23 @@ def managementDb(request):
     revenue_amount = 0 
 
     if request.method == 'POST':
-        form = DeliveryPriceByRegionForm(request.POST,instance=delivery)
-        if form.is_valid():
-            form.save()
-            return redirect(managementDb)  # Redirect to a success page
-        else:
-            form = DeliveryPriceByRegionForm()
-            return redirect(managementDb)
+        if 'updateDeliveryPrice' in request.POST:
+            form = DeliveryPriceByRegionForm(request.POST,instance=delivery)
+            if form.is_valid():
+                form.save()
+                return redirect(managementDb)  # Redirect to a success page
+            else:
+                form = DeliveryPriceByRegionForm()
+                return redirect(managementDb)
+            
+        if 'updateDeliveryPriceAccra' in request.POST:
+            form = DeliveryPriceByAccraForm(request.POST,instance=deliveryAccra)
+            if form.is_valid():
+                form.save()
+                return redirect(managementDb)  # Redirect to a success page
+            else:
+                form = DeliveryPriceByAccraForm()
+                return redirect(managementDb)
 
     for sale in Payment.objects.all():
         revenue_amount += sale.amount
@@ -62,6 +75,7 @@ def managementDb(request):
         'payments':payments,
         'notifications': notifications,
         'DeliveryPriceByRegionFormCreator':DeliveryPriceByRegionFormCreator,
+        'DeliveryPriceByAccraFormCreator':DeliveryPriceByAccraFormCreator,
     }
     return render(request,'managementDb.html',context)
 

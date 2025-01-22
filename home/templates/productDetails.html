@@ -119,30 +119,28 @@ input#value::before{
 
 .size-select{
 
-  display:none;
+  display:flex;
   position:absolute;
   list-style-type:none;
   width:100px;
   margin-left:-40px;
   margin-top:-3px;
   z-index:1;
+  gap: 10px;
 }
 
 .list-item{
-  display:block;
-  border:1px solid;
-  border-top:0;
+ 
+  border:1px solid #eee;
+  padding: 5px;
+  border-radius: 50px;
   cursor:pointer;
   text-indent:5px;
   font:normal 14px/30px arial;
   
 }
-.size-select:first-child{
-    border-top: 1px solid;
-}
-.list-item:first-of-type{
-    border-top: 1px solid;
-}
+
+
 .list-item:hover{
   background:#ffe6e6;
   z-index:1;
@@ -1060,13 +1058,18 @@ input#value::before{
                 const quantity = Number(document.getElementById('quantity_value').innerText);
 
                 // Select the currently selected size
-                const selectElement = document.getElementById('size-select');
-                var selectedSize = selectElement.querySelector('.list-item.active').textContent
+                 const selectElement = document.getElementById('size-select');
+                if (selectElement.querySelector('.list-item.active')){
+                   
+                    var selectedSize = selectElement.querySelector('.list-item.active').textContent
+                }
+                else{
+                    selectedSize = 'None'
+                    selectedOption = 'None'
+                    selectedSizeData = 'None';
+                }
 
-                const selectedOption = selectElement.querySelector('.list-item.active')
 
-               // Access the data-size attribute of the selected option
-               const selectedSizeData = selectedOption.getAttribute('data-size');
             if (variables){
             if (quantity > variables[selectedSizeData]) {
                 return alert(`Exceeded Available Quantity: Max order for ${selectedSize} is ${variables[selectedSizeData]}`);

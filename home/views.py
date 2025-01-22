@@ -7,7 +7,7 @@ from .models import Product, Outing, Payment, MediumLargeStock,Size39to46,Cart, 
 from .deliveryRatesGen import generate_shipping_cost
 from .password import generate_password
 from django.contrib import messages
-from userAdmin.models import Revenue, Notification, DeliveryPriceByRegion
+from userAdmin.models import Revenue, Notification, DeliveryPriceByRegion, DeliveryPriceByAccra
 
 # Create your views here.
 from django.core.mail import EmailMultiAlternatives
@@ -192,9 +192,15 @@ def makePayment(request,ref):
                 payment.delivery_price =  0
                 payment.save()
             else:
-                delivery_price_object = DeliveryPriceByRegion.objects.all()[0]
-                delivery_cost = getattr(delivery_price_object,payment.state.lower())
-                payment.delivery_price =  delivery_cost/16
+                if payment.state != 'greater_accra':
+                    delivery_price_object = DeliveryPriceByRegion.objects.all()[0]
+                    delivery_cost = getattr(delivery_price_object,payment.state.lower())
+                    payment.delivery_price =  delivery_cost/16
+                else:
+                    delivery_price_object = DeliveryPriceByAccra.objects.all()[0]
+                    delivery_cost = getattr(delivery_price_object,payment.accralocation.lower())
+                    payment.delivery_price =  delivery_cost/16
+
             
                 payment.save()
             
@@ -233,13 +239,15 @@ def checkout(request):
             cart_total = request.POST.get('cart-total')
             country_code = request.POST.get('country_code')
             pickupdata = request.POST.get('pickupdata')
+            accralocation = request.POST.get('location')
 
             if pickupdata == 'yes':
                 pickupdata = True
             else:
                 pickupdata = False
 
-            payment = Payment(first_name=firstName,last_name=lastName,email=email,country_code=country_code,phone=phone,order_notes=orderNotes,street_address_1=street_address_1,street_address_2=street_address_2,city=city,state=state,zip_code=zip_code,destination_country=destination_country,additional_info=deliveryInfo,amount=float(cart_total),pickupdata=pickupdata)
+            payment = Payment(first_name=firstName,last_name=lastName,email=email,country_code=country_code,phone=phone,order_notes=orderNotes,street_address_1=street_address_1,street_address_2=street_address_2,city=city,state=state,zip_code=zip_code,destination_country=destination_country,additional_info=deliveryInfo,amount=float(cart_total),pickupdata=pickupdata,accralocation=accralocation)
+            print(accralocation)
             payment.save()
             
             # on payment save create cart for payment
@@ -449,10 +457,11 @@ def bulksms(request):
     if request.method == 'POST':
         message = request.POST.get('Message')
         endPoint = 'https://api.mnotify.com/api/sms/group'
-        apiKey = 'g8s7yo7Mxf88LFw1SCHKBoQZf'
+        apiKey = '4Vrc1NP8PUeS4nB51QgHvkD4W'
+        
         data = {
-            'group_id[]': ['54135'],
-            'sender': 'BuzelStores',
+            'group_id[]': ['54118'],
+            'sender': 'Strangers',
             'message': str(message),
             'message_id':10,
             'is_schedule': "false",

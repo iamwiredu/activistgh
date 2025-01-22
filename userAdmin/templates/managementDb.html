@@ -244,6 +244,7 @@
 
                                   <div class="col-xxl-4 col-xl-12">
 
+                        
                             <div class="card info-card customers-card">
 
                           
@@ -258,7 +259,26 @@
                                             <input type="submit" name="updateDeliveryPrice" value="Update">
                                         </form>
                                     </div>
+                                    
 
+                                </div>
+                            </div>
+                            <div class="card info-card customers-card">
+                            
+                            
+                            
+                                <div class="card-body">
+                                    <h5 class="card-title">Delivery Price Form: Accra</h5>
+                            
+                                    <div class="d-flex align-items-center">
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            {{DeliveryPriceByAccraFormCreator|crispy}}
+                                            <input type="submit" name="updateDeliveryPriceAccra" value="Update">
+                                        </form>
+                                    </div>
+                            
+                            
                                 </div>
                             </div>
 

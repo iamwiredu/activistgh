@@ -721,8 +721,10 @@
                                         <option value="oti">Oti Region</option>
                                         <option value="central">Central Region</option>
                                     </select>
+                                    <div id="greaterAccraDiv" style="margin-top: 10px;"></div>
                                 </div>
                             </div>
+                        
                             
                             <div class="form-floating" style="color: #6e7073;">
                                 <textarea class="form-control" style="height: 140px;" placeholder="" id="deliveryInfo"
@@ -929,46 +931,159 @@
         deliverOption.click()
     </script>
     
+<script>
+    // Get the select element for the destination country
+        const countrySelect = document.getElementById('destination-country');
 
-    <script>
-            // Get the select element
-                const countrySelect = document.getElementById('destination-country');
+        // Add an event listener for the 'change' event on the country select element
+        countrySelect.addEventListener('change', function () {
+            const selectedCountry = countrySelect.value; // Get the selected value
+            const regionDiv = document.getElementById('regionDiv'); // Region container
 
-                // Add an event listener for the 'change' event
-                countrySelect.addEventListener('change', function () {
-                    const selectedCountry = countrySelect.value; // Get the selected value
-                    console.log(`Selected country: ${selectedCountry}`); // Example action
-                     regionDiv = document.getElementById('regionDiv')
-                    // Run specific code based on the selected option
-                    if (selectedCountry === 'Ghana') {
-                        
+            // If the selected country is Ghana, show the regions dropdown
+            if (selectedCountry === 'Ghana') {
                 regionDiv.innerHTML = `
-                <select name="state" id="region" 
-        style="padding: 10px; margin: 0; padding: 0; width: 50%; background-color: white; border: 1px solid #dddddd;margin-bottom: 10px; color:#6e7073; border-radius: 5px;" required>
-        <option value="ashanti">Ashanti Region</option>
-        <option value="greater_accra">Greater Accra Region</option>
-        <option value="volta">Volta Region</option>
-        <option value="western">Western Region</option>
-        <option value="eastern">Eastern Region</option>
-        <option value="northern">Northern Region</option>
-        <option value="upper_east">Upper East Region</option>
-        <option value="upper_west">Upper West Region</option>
-        <option value="bono">Bono Region</option>
-        <option value="bono_east">Bono East Region</option>
-        <option value="ahafo">Ahafo Region</option>
-        <option value="savannah">Savannah Region</option>
-        <option value="western_north">Western North Region</option>
-        <option value="oti">Oti Region</option>
-        <option value="central">Central Region</option>
-    </select>` // Call your specific function
+            <select name="state" id="region" 
+                style="padding: 10px; margin: 0; padding: 0; width: 50%; background-color: white; border: 1px solid #dddddd;margin-bottom: 10px; color:#6e7073; border-radius: 5px;" required>
+                <option value="">Select a Region</option>
+                <option value="ashanti">Ashanti Region</option>
+                <option value="greater_accra" id="GAR" >Greater Accra Region</option>
+                <option value="volta">Volta Region</option>
+                <option value="western">Western Region</option>
+                <option value="eastern">Eastern Region</option>
+                <option value="northern">Northern Region</option>
+                <option value="upper_east">Upper East Region</option>
+                <option value="upper_west">Upper West Region</option>
+                <option value="bono">Bono Region</option>
+                <option value="bono_east">Bono East Region</option>
+                <option value="ahafo">Ahafo Region</option>
+                <option value="savannah">Savannah Region</option>
+                <option value="western_north">Western North Region</option>
+                <option value="oti">Oti Region</option>
+                <option value="central">Central Region</option>
+            </select>
+            <div id="greaterAccraDiv" style="margin-top: 10px;"></div>
+        `;
+
+                // Add an event listener for the 'change' event on the regions dropdown
+                const regionSelect = document.getElementById('region');
+                const greaterAccraDiv = document.getElementById('greaterAccraDiv');
+
+                regionSelect.addEventListener('change', function () {
+                    const selectedRegion = regionSelect.value;
+
+                    // If "Greater Accra" is selected, show the delivery places dropdown
+                    if (selectedRegion === 'greater_accra') {
+                        greaterAccraDiv.innerHTML = `
+                    <div>If you are in Accra choose your location::</div>
+                    <select name="location" id="AccraRegion"
+                        style="padding: 10px; margin: 0; padding: 0; width: 50%; background-color: white; border: 1px solid #dddddd; margin-bottom: 10px; color: #6e7073; border-radius: 5px;"
+                        required>
+                        <option value="not_listed">Not Listed</option>
+                        <option value="adenta">Adenta</option>
+                        <option value="achimota">Achimota</option>
+                        <option value="circle">Circle</option>
+                        <option value="lapaz">Lapaz</option>
+                        <option value="west_hills">West Hills</option>
+                        <option value="dome">Dome</option>
+                        <option value="ashaley_botwe">Ashaley Botwe</option>
+                        <option value="madina">Madina</option>
+                        <option value="east_legon">East Legon</option>
+                        <option value="west_land">West Land</option>
+                        <option value="north_legon">North Legon</option>
+                        <option value="legon_campus">Legon Campus</option>
+                        <option value="dansoman">Dansoman</option>
+                        <option value="mataheko">Mataheko</option>
+                        <option value="cantonments">Cantonments</option>
+                        <option value="labone">Labone</option>
+                        <option value="osu">Osu</option>
+                        <option value="spintex">Spintex</option>
+                        <option value="tema">Tema</option>
+                        <option value="kwabenya">Kwabenya</option>
+                        <option value="lakeside">Lakeside</option>
+                        <option value="ashongman">Ashongman</option>
+                        <option value="adjiringanor">Adjiringanor</option>
+                        <option value="east_legon_hills">East Legon Hills</option>
+                        <option value="airport_area">Airport Area</option>
+                        <option value="teshie">Teshie</option>
+                    </select>
+                `;
                     } else {
-                        regionDiv.innerHTML =` <input class="form-control" type="text"  name="state">
-                                <label for="state">State/Province/Region:</label>`
+                        // If another region is selected, clear the Accra-specific dropdown
+                        greaterAccraDiv.innerHTML = '';
                     }
                 });
+            } else {
+                // If a different country is selected, reset the region div
+                regionDiv.innerHTML = `
+            <input class="form-control" type="text" name="state">
+            <label for="state">State/Province/Region:</label>
+        `;
+            }
+        });
 
-    </script>
-   
+</script>
+<script>
+    // Define the function to handle Greater Accra logic
+        function handleRegionChange() {
+            const regionSelect = document.getElementById('region');
+            const greaterAccraDiv = document.getElementById('greaterAccraDiv');
+            const selectedRegion = regionSelect.value;
+
+            // If "Greater Accra" is selected, show the delivery places dropdown
+            if (selectedRegion === 'greater_accra') {
+                greaterAccraDiv.innerHTML = `
+            <div>If you are in Accra choose your location::</div>
+            <select name="location" id="AccraRegion"
+                style="padding: 10px; margin: 0; padding: 0; width: 50%; background-color: white; border: 1px solid #dddddd; margin-bottom: 10px; color: #6e7073; border-radius: 5px;"
+                required>
+                <option value="">Not Listed</option>
+                <option value="adenta">Adenta</option>
+                <option value="achimota">Achimota</option>
+                <option value="circle">Circle</option>
+                <option value="lapaz">Lapaz</option>
+                <option value="west_hills">West Hills</option>
+                <option value="dome">Dome</option>
+                <option value="ashaley_botwe">Ashaley Botwe</option>
+                <option value="madina">Madina</option>
+                <option value="east_legon">East Legon</option>
+                <option value="west_land">West Land</option>
+                <option value="north_legon">North Legon</option>
+                <option value="legon_campus">Legon Campus</option>
+                <option value="dansoman">Dansoman</option>
+                <option value="mataheko">Mataheko</option>
+                <option value="cantonments">Cantonments</option>
+                <option value="labone">Labone</option>
+                <option value="osu">Osu</option>
+                <option value="spintex">Spintex</option>
+                <option value="tema">Tema</option>
+                <option value="kwabenya">Kwabenya</option>
+                <option value="lakeside">Lakeside</option>
+                <option value="ashongman">Ashongman</option>
+                <option value="adjiringanor">Adjiringanor</option>
+                <option value="east_legon_hills">East Legon Hills</option>
+                <option value="airport_area">Airport Area</option>
+                <option value="teshie">Teshie</option>
+            </select>
+        `;
+            } else {
+                // If another region is selected, clear the Accra-specific dropdown
+                greaterAccraDiv.innerHTML = '';
+            }
+        }
+
+        // Add event listener for the 'change' event on the regions dropdown
+        document.addEventListener('DOMContentLoaded', () => {
+            const regionSelect = document.getElementById('region');
+
+            // Run the check on page load
+            handleRegionChange();
+
+            // Run the check on region change
+            regionSelect.addEventListener('change', handleRegionChange);
+        });
+
+</script>
     <script>
         //code for phone
         const phoneInputField = document.getElementById("phone1");

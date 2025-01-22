@@ -1,7 +1,6 @@
 from django import forms
 from home.models import Product, RelatedImages, Category, Size39to46, MediumLargeStock
-from .models import DeliveryPriceByRegion
-
+from .models import DeliveryPriceByRegion, DeliveryPriceByAccra
 
 class Size39to46Form(forms.ModelForm):  
     class Meta:
@@ -69,3 +68,68 @@ class DeliveryPriceByRegionForm(forms.ModelForm):
             'oti',
             'central',
         ]
+
+from django import forms
+from .models import DeliveryPriceByAccra
+
+class DeliveryPriceByAccraForm(forms.ModelForm):
+    class Meta:
+        model = DeliveryPriceByAccra
+        fields = [
+            'adenta',
+            'achimota',
+            'circle',
+            'lapaz',
+            'west_hills',
+            'dome',
+            'ashaley_botwe',
+            'madina',
+            'east_legon',
+            'west_land',
+            'north_legon',
+            'legon_campus',
+            'dansoman',
+            'mataheko',
+            'cantonments',
+            'labone',
+            'osu',
+            'spintex',
+            'tema',
+            'kwabenya',
+            'lakeside',
+            'ashongman',
+            'adjiringanor',
+            'east_legon_hills',
+            'airport_area',
+            'teshie',
+            'not_listed',
+        ]
+        labels = {
+            'adenta': 'Adenta',
+            'achimota': 'Achimota',
+            'circle': 'Circle',
+            'lapaz': 'Lapaz',
+            'west_hills': 'West Hills',
+            'dome': 'Dome',
+            'ashaley_botwe': 'Ashaley Botwe',
+            'madina': 'Madina',
+            'east_legon': 'East Legon',
+            'west_land': 'West Land',
+            'north_legon': 'North Legon',
+            'legon_campus': 'Legon Campus',
+            'dansoman': 'Dansoman',
+            'mataheko': 'Mataheko',
+            'cantonments': 'Cantonments',
+            'labone': 'Labone',
+            'osu': 'Osu',
+            'spintex': 'Spintex',
+            'tema': 'Tema',
+            'kwabenya': 'Kwabenya',
+            'lakeside': 'Lakeside',
+            'ashongman': 'Ashongman',
+            'adjiringanor': 'Adjiringanor',
+            'east_legon_hills': 'East Legon Hills',
+            'airport_area': 'Airport Area',
+            'teshie': 'Teshie',
+            'not_listed':'Not listed',
+        }

@@ -76,3 +76,38 @@ class DeliveryPriceByRegion(models.Model):
 
     def __str__(self):
         return f"Delivery Method: {self.delivery_method}"
+
+
+class DeliveryPriceByAccra(models.Model):
+    name = models.CharField(max_length=255, null=True, blank=True)
+    adenta = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    achimota = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    circle = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    lapaz = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    west_hills = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    dome = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    ashaley_botwe = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    madina = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    east_legon = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    west_land = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    north_legon = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    legon_campus = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    dansoman = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    mataheko = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    cantonments = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    labone = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    osu = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    spintex = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    tema = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    kwabenya = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    lakeside = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    ashongman = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    adjiringanor = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    east_legon_hills = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    airport_area = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    teshie = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    not_listed = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
