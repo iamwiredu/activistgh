@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import userAdmin, MessagesReceived, loginPage,deleteRelatedImages,managementDb, Notifications_view,send_emails,productManagement,product_order_view ,OrderDetailsView,send_newsletter_batch,ordersList,distribuition, productEdit
+from .views import userAdmin, MessagesReceived, loginPage,deleteRelatedImages,managementDb, Notifications_view,deleteProduct,send_emails,productManagement,product_order_view ,OrderDetailsView,send_newsletter_batch,ordersList,distribuition, productEdit
 
 urlpatterns = [
     path('userAdmin/',userAdmin,name='userAdmin'),
@@ -16,5 +16,7 @@ urlpatterns = [
     path('messagesReceived/',MessagesReceived.as_view(),name='messagesReceived'),
     path('product_order/',product_order_view,name='product_order'),
     path('relatedImages/<int:id>/<str:unique_id>/',deleteRelatedImages,name='deleteRelatedImages'),
-    path('login/admin',loginPage,name='loginPage')
+    path('login/admin',loginPage,name='loginPage'),
+    path('deleteProduct/<str:unique_id>/',deleteProduct,name='deleteProduct'),
+
     ]

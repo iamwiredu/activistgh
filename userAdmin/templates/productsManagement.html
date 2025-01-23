@@ -265,6 +265,7 @@
                                                 <th scope="col">Category</th>
                                                 <th scope="col">Stock</th>
                                                 <th scope="col">Edit</th>
+                                                <th scope="col">Delete</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -283,6 +284,7 @@
                                                     <td><a href="{% url 'productEdit' product.unique_id %}">
                                                         <span class="badge bg-success" style="cursor: pointer;">Edit</span>
                                                     </a></td>
+                                                    <td><a href="{% url 'deleteProduct' product.unqiue_id %}">Delete</a></td>
                                                 </tr>
                                             {% endfor %}
                                         </tbody>

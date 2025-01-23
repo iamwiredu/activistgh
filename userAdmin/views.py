@@ -62,7 +62,7 @@ def managementDb(request):
                 form = DeliveryPriceByAccraForm()
                 return redirect(managementDb)
 
-    for sale in Payment.objects.all():
+    for sale in Payment.objects.all().filter(verified=True):
         revenue_amount += sale.amount
     
     subscribers = len(Newsletter.objects.all())
@@ -376,3 +376,16 @@ def loginPage(request):
             # Add error message if authentication fails
             messages.error(request, 'Invalid email or password.')
     return render(request,'loginPage.html')
+
+
+def deleteProduct(request, unique_id):
+    product = Product.objects.get(unique_id=unique_id)
+
+    if request.method == 'POST':
+        if 'deleteProduct' in request.POST:
+            product.delete()
+            return redirect('/productManagement/')
+        
+    return render(request,'deleteProduct.html')
+
+
