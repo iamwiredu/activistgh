@@ -1,5 +1,5 @@
 from django import forms
-from home.models import Product, RelatedImages, Category, Size39to46, MediumLargeStock
+from home.models import Product, RelatedImages, Category, Payment,Size39to46, MediumLargeStock
 from .models import DeliveryPriceByRegion, DeliveryPriceByAccra
 
 class Size39to46Form(forms.ModelForm):  
@@ -31,7 +31,11 @@ class MediumLargeStockForm(forms.ModelForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name','image','product_category','description','size_set','price']
+        fields = ['name','image','product_category','description','size_set','price','discount_price']
+
+        labels ={
+            'discount_price':'Discount Price',
+        }
 class ProductStockForm(forms.ModelForm):
     class Meta:
         model = Product
@@ -69,8 +73,7 @@ class DeliveryPriceByRegionForm(forms.ModelForm):
             'central',
         ]
 
-from django import forms
-from .models import DeliveryPriceByAccra
+
 
 class DeliveryPriceByAccraForm(forms.ModelForm):
     class Meta:
@@ -133,3 +136,8 @@ class DeliveryPriceByAccraForm(forms.ModelForm):
             'teshie': 'Teshie',
             'not_listed':'Not listed',
         }
+
+class DeliveryStatusUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Payment
+        fields = ['delivered']

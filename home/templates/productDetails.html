@@ -377,7 +377,15 @@ input#value::before{
                             <span class="ti-truck"></span><span>Delivery Fee At Checkout</span>
                         </div>
                         <div class="original_price"></div>
-                        <div class="product_price" >GHS {{product.price}}</div>
+                       <div>
+                       {% if product.discount_price and product.discount_price != 0 %}
+                        <div class="product_price" style="text-decoration: line-through; color: gray;">{{product.discount_price}}</div>
+
+                        {% endif %}
+                        <div class="product_price">GHS {{product.price}}</div>
+                    
+                       </div>
+
                         <!-- <ul class="star_rating">
                             <li><i class="fa fa-star" aria-hidden="true"></i></li>
                             <li><i class="fa fa-star" aria-hidden="true"></i></li>

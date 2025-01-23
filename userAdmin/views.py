@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from .forms import ProductForm, RelatedImagesForm, ProductStockForm,CategoryForm, DeliveryPriceByAccraForm,Size39to46Form,MediumLargeStockForm,DeliveryPriceByRegionForm
+from .forms import ProductForm, DeliveryStatusUpdateForm,RelatedImagesForm, ProductStockForm,CategoryForm, DeliveryPriceByAccraForm,Size39to46Form,MediumLargeStockForm,DeliveryPriceByRegionForm
 from .models import Revenue, Notification, DeliveryPriceByRegion, DeliveryPriceByAccra
 from home.models import Product, Contact,Newsletter, Payment, NewsletterBatch, RelatedImages,Category
 from datetime import datetime
@@ -295,10 +295,12 @@ class Notifications_view(LoginRequiredMixin,View):
   
 def OrderDetailsView(request,unique_id):
     payment = Payment.objects.get(unique_id=unique_id)
+    DeliveryStatusUpdateFormCreator = DeliveryStatusUpdateForm(instance=payment)
     categories = Category.objects.all()
     context = {
         'payment': payment,
         'categories': categories,
+        'DeliveryStatusUpdateFormCreator':DeliveryStatusUpdateFormCreator,
     }
     if request.method == 'POST':
         if 'subscribe' in request.POST:
@@ -334,6 +336,11 @@ def OrderDetailsView(request,unique_id):
                 messages.error(request, 'Error. Try again later.')
                 return redirect(f'/orderDetails/{unique_id}')
 
+        if 'updateDeliveryStatus':
+            DeliveryStatusUpdateFormCreator = DeliveryStatusUpdateFormCreator(request.POST,instance=payment)
+            if DeliveryStatusUpdateFormCreator.is_valid():
+                DeliveryStatusUpdateFormCreator.save()
+                return redirect(f'/orderDetails/{payment.unique_id}')
        
     return render(request, 'orderDetailsView.html', context)
 
@@ -386,6 +393,6 @@ def deleteProduct(request, unique_id):
             product.delete()
             return redirect('/productManagement/')
         
-    return render(request,'deleteProduct.html')
+    return render(request,'deleteProduct.html',{'product':product})
 
 

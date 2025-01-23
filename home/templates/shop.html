@@ -474,6 +474,7 @@
             <div class="product-details">
                 <p class="product-name">{{ product.name }}</p>
                 <p class="product-price">GHS {{ product.price }}</p>
+                <p class="product-price"  style="text-decoration: line-through; color: gray;">{% if product.discount_price and product.discount_price != 0 %} GHS {{product.discount_price}} {% endif %} </p>
             </div>
         </a>
     </div>
