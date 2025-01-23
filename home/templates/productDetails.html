@@ -1060,8 +1060,14 @@ input#value::before{
                 // Select the currently selected size
                  const selectElement = document.getElementById('size-select');
                 if (selectElement.querySelector('.list-item.active')){
+                    const activeElement = selectElement.querySelector('.list-item.active');
                    
-                    var selectedSize = selectElement.querySelector('.list-item.active').textContent
+                    var selectedSize = activeElement.textContent;
+                     
+
+                    // Access the data-size attribute of the selected option
+                    selectedSizeData = activeElement.getAttribute('data-size');
+                    
                 }
                 else{
                     selectedSize = 'None'
