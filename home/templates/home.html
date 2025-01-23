@@ -708,6 +708,12 @@
                                     style="background-color:#fe4c00; display: none; width: 100%; padding: 10px; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
                                     Subscribe
                                 </button>
+                                {% if request.user.is_authenticated %}
+                                <a href='https://www.free-counters.org/'>Free-Counters</a>
+                                <script type='text/javascript'
+                                    src='https://www.freevisitorcounters.com/auth.php?id=228e41ef27cc07bc35d2db3263362ab833c266a7'></script>
+                                <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1292470/t/0"></script>
+                                {% endif %}
                             </div>
         
                         </form>
