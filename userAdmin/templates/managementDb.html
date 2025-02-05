@@ -1,0 +1,453 @@
+{% load static%}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Strangers</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+<link rel="icon" href="{% static 'img/logohead.png' %}" sizes="100x100" type="image/png">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/quill/quill.snow.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/quill/quill.bubble.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/simple-datatables/style.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+    <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Updated: Apr 20 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="index.html" class="logo d-flex align-items-center">
+                <img src="assets/img/logo.png" alt="">
+                <span class="d-none d-lg-block"><img src="{% static 'wordlogo.png' %}"  alt=""></span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div><!-- End Logo -->
+
+  
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell"></i>
+                        <span class="badge bg-primary badge-number">{{notifications|length}}</span>
+                    </a><!-- End Notification Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications" style="overflow-y: scroll; height: 90vh;">
+                        {% if notifications %}
+                        <li class="dropdown-header">
+                            You have new notifications
+                            <a href="{% url 'notifications' %}"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        {% for notification in notifications %}
+                            <li class="notification-item">
+                                <i class="bi bi-info-circle text-primary"></i>
+                                <div>
+                                    <h4>{{notification.title}}</h4>
+                                    <p>{{notification.message}}</p>
+                                    <p>{{notification.date_created}}</p>
+                                </div>
+                            </li>
+                            
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                        {% endfor %}
+                        <li class="dropdown-footer">
+                            <a href="{% url 'notifications' %}">Show all notifications</a>
+                        </li>
+                        {% else %}
+                        <li class="dropdown-footer">
+                           <p>No notifications</p>
+                        </li>
+                        {% endif %}
+
+                    </ul><!-- End Notification Dropdown Items -->
+
+                </li><!-- End Notification Nav -->
+
+            
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                     
+                        <span class="d-none d-md-block ">Admin Account</span>
+                    </a><!-- End Profile Iamge Icon -->
+
+                
+                </li><!-- End Profile Nav -->
+
+            </ul>
+        </nav><!-- End Icons Navigation -->
+
+    </header><!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link " href="{% url 'managementDb' %}">
+                    <i class="bi bi-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+
+     
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{% url 'ordersList' %}">
+                <i class="bi bi-layout-text-window-reverse"></i>
+                    <span>Orders List</span>
+                </a>
+            </li>
+           
+              <li class="nav-item">
+                <a class="nav-link collapsed" href="{% url 'productManagement' %}">
+                <i class="bi bi-menu-button-wide"></i>
+                    <span>Products Management</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{% url 'messagesReceived' %}">
+                    <i class="bi bi-envelope"></i>
+                    <span>Messages</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{% url 'notifications' %}">
+                    <i class="bi bi-bell"></i>
+                    <span>Notifications</span><span class="badge bg-primary badge-number" style="margin-left: 10px;">{{notifications|length}}</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{% url 'distribuition' %}">
+                    <i class="bi bi-envelope"></i>
+                    <span>Bulk Messaging</span>
+                </a>
+            </li>
+
+            
+           
+            
+  
+
+
+ 
+   
+        </ul>
+
+    </aside><!-- End Sidebar-->
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>Dashboard</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
+        <section class="section dashboard">
+            <div class="row">
+
+                <!-- Left side columns -->
+                <div class="col-lg-8">
+                    <div class="row">
+                        <a href='http://www.freevisitorcounters.com'>here</a>
+                        <script type='text/javascript'
+                            src='https://www.freevisitorcounters.com/auth.php?id=935483d74e5311c8e78c4588f477d70d000cfea8'></script>
+                        <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1292204/t/0"></script>
+
+                        <!-- Sales Card -->
+                        <div class="col-xxl-4 col-md-6">
+                            <div class="card info-card sales-card">
+
+                        
+
+                                <div class="card-body">
+                                    <h5 class="card-title">Sales <span>| to date</span></h5>
+
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-cart"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>{{sales}}</h6>
+                 
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div><!-- End Sales Card -->
+
+                        <!-- Revenue Card -->
+                        <div class="col-xxl-4 col-md-6">
+                            <div class="card info-card revenue-card">
+
+                        
+                                <div class="card-body">
+                                    <h5 class="card-title">Revenue <span>| to date</span></h5>
+
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        ¢
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>GHS {{revenue_amount}}</h6>
+                                         
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div><!-- End Revenue Card -->
+
+                                  <div class="col-xxl-4 col-xl-12">
+
+                        
+                            <div class="card info-card customers-card">
+
+                          
+
+                                <div class="card-body">
+                                    <h5 class="card-title">Delivery Price Form</h5>
+
+                                    <div class="d-flex align-items-center">
+                                        <form method="POST" >
+                                            {% csrf_token %}
+                                            {{DeliveryPriceByRegionFormCreator|crispy}}
+                                            <input type="submit" name="updateDeliveryPrice" value="Update">
+                                        </form>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+                            <div class="card info-card customers-card">
+                            
+                            
+                            
+                                <div class="card-body">
+                                    <h5 class="card-title">Delivery Price Form: Accra</h5>
+                            
+                                    <div class="d-flex align-items-center">
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            {{DeliveryPriceByAccraFormCreator|crispy}}
+                                            <input type="submit" name="updateDeliveryPriceAccra" value="Update">
+                                        </form>
+                                    </div>
+                            
+                            
+                                </div>
+                            </div>
+
+                        </div><!-- End Customers Card -->
+
+                        <!-- Customers Card -->
+                        <div class="col-xxl-4 col-xl-12">
+
+                            <div class="card info-card customers-card">
+
+                          
+
+                                <div class="card-body">
+                                    <h5 class="card-title">Newsletter subscribers</h5>
+
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-people"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>{{subscribers}}</h6>
+              
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div><!-- End Customers Card -->
+
+                        <!-- Reports -->
+                        <div class="col-12">
+                            <div class="card">
+
+                         
+                        
+                            </div>
+                        </div><!-- End Reports -->
+                        <div class="col-12">
+                                <!-- Budget Report -->
+                                <div class="card">
+                                
+                                
+                                    <div class="card-body pb-0">
+                                        <canvas id="barChart" style="height: auto; width: 100%;"></canvas>
+                                        <script>
+                                            document.addEventListener("DOMContentLoaded", () => {
+                                                new Chart(document.querySelector('#barChart'), {
+                                                    type: 'bar',
+                                                    data: {
+                                                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                                                        datasets: [{
+                                                            label: 'Revenue GHS',
+                                                            data: [Number('{{ revenue.january }}'),
+                                                                Number('{{ revenue.february }}'),
+                                                                Number('{{ revenue.march }}'),
+                                                                Number('{{ revenue.april }}'),
+                                                                Number('{{ revenue.may }}'),
+                                                                Number('{{ revenue.june }}'),
+                                                                Number('{{ revenue.july }}'),
+                                                                Number('{{ revenue.august }}'),
+                                                                Number('{{ revenue.september }}'),
+                                                                Number('{{ revenue.october }}'),
+                                                                Number('{{ revenue.november }}'),
+                                                                Number('{{ revenue.december }}')],
+                                                            backgroundColor: [
+                                                                'rgba(255, 99, 132, 0.2)',
+                                                                'rgba(255, 159, 64, 0.2)',
+                                                                'rgba(255, 205, 86, 0.2)',
+                                                                'rgba(75, 192, 192, 0.2)',
+                                                                'rgba(54, 162, 235, 0.2)',
+                                                                'rgba(153, 102, 255, 0.2)',
+                                                                'rgba(201, 203, 207, 0.2)'
+                                                            ],
+                                                            borderColor: [
+                                                                'rgb(255, 99, 132)',
+                                                                'rgb(255, 159, 64)',
+                                                                'rgb(255, 205, 86)',
+                                                                'rgb(75, 192, 192)',
+                                                                'rgb(54, 162, 235)',
+                                                                'rgb(153, 102, 255)',
+                                                                'rgb(201, 203, 207)'
+                                                            ],
+                                                            borderWidth: 1
+                                                        }]
+                                                    },
+                                                    options: {
+                                                        scales: {
+                                                            y: {
+                                                                beginAtZero: true
+                                                            }
+                                                        }
+                                                    }
+                                                });
+                                            });
+                                           
+                                        </script>
+                                    </div>
+                                </div><!-- End Budget Report -->
+                        </div>
+                        <!-- Recent Sales -->
+                        <div class="col-12">
+                            <div class="card recent-sales overflow-auto">
+
+                                <div class="card-body">
+                                    <h5 class="card-title">Recent Sales <span>| Today</span></h5>
+
+                                    <table class="table table-borderless datatable">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"># Order Id</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Payment Status</th>
+                                                <th scope="col">Delivery Status</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for payment in payments %}
+                                            <tr>
+                                                <th scope="row"><a href="#">#{{payment.order_id}}</a></th>
+                                                <td>{{payment.first_name}} {{payment.last_name}}</td>
+                                                <td><a href="#" class="text-primary">Paid - GHS{{payment.amount}}</a></td>
+                                                <td>{% if payment.delivered == True %} Delivered {% else %} Not Delivered {% endif %}</td>
+                                                <td><span class="badge bg-success">Manage</span></td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+                        </div><!-- End Recent Sales -->
+
+                    </div>
+                </div><!-- End Left side columns -->
+
+          
+
+            </div>
+        </section>
+        
+
+    </main><!-- End #main -->
+
+ 
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <script src="{% static 'assets/vendor/apexcharts/apexcharts.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'assets/vendor/chart.js/chart.umd.js' %}"></script>
+    <script src="{% static 'assets/vendor/echarts/echarts.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/echarts/echarts.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/quill/quill.js' %}"></script>
+    <script src="{% static 'assets/vendor/simple-datatables/simple-datatables.js' %}"></script>
+    <script src="{% static 'assets/vendor/tinymce/tinymce.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+
+</html>

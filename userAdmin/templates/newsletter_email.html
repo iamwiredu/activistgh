@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333333;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #f4f4f4;
+        }
+        .logo img {
+            max-width: 150px;
+        }
+        .header {
+            background-color:#f14f0b;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+        }
+        .content h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .content p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color:#f14f0b;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .button:hover {
+            background-color:#ac461aa2;
+        }
+        .footer {
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            color: #666666;
+        }
+        .footer a {
+            color: #0056b3;
+            text-decoration: none;
+        }
+    </style>
+    <link rel="icon" href="{% static 'img/logohead.png' %}" sizes="100x100" type="image/png">
+</head>
+<body>
+    <div class="email-container">
+        <!-- Logo Section -->
+        <div class="logo">
+          <img src="https://i.ibb.co/jGqNh9R/logo.png" alt="logo">
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>STRANGERS NEWSLETTER</h1>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h1>{{subject}}</h1>
+            <p>Hello {{first_name}},</p>
+            <p>{{body}}</p>
+          
+            <a href="https://strangersofficial.vercel.app/shop/" class="button" style="color: white;">Shop Strangers</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>You’re receiving this email because you subscribed to our newsletter. If you’d like to stop hearing from us, you can <a href="https://example.com/unsubscribe">unsubscribe here</a>.</p>
+            <p>© 2022 Strangers, All Rights Reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Newsletter Batches</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+
+        .log {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            height: 300px;
+            overflow-y: auto;
+            background: #f9f9f9;
+        }
+
+        .log p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+    <link rel="icon" href="{% static 'img/logohead.png' %}" sizes="100x100" type="image/png">
+</head>
+
+<body>
+
+    <h1>Send Newsletter in Batches</h1>
+    <p>Click the button below to start sending newsletter emails in batches.</p>
+
+    <button id="start-button">Start Sending</button>
+
+    <div class="log" id="log">
+        <p>Logs will appear here...</p>
+    </div>
+
+    <script>
+        document.getElementById('start-button').addEventListener('click', async function () {
+            const totalBatches = Number('{{batch_size}}')
+            const logContainer = document.getElementById('log');
+            const startButton = document.getElementById('start-button');
+            alert(totalBatches)
+          
+            // Disable the button to prevent duplicate clicks
+            startButton.disabled = true;
+            startButton.innerText = 'Sending...';
+
+            logContainer.innerHTML = `<p>Starting to send ${totalBatches} batches...</p>`;
+
+            for (let i = 0; i < totalBatches+1; i++) {
+                try {
+                    const response = await fetch(`/send-newsletter-batch/${i}/`);
+                    const data = await response.json();
+
+                    const message = `Batch ${i + 1} - Status: ${data.status}, Emails Sent: ${data.emails_sent || 0}`;
+                    logContainer.innerHTML += `<p>${message}</p>`;
+                } catch (error) {
+                    logContainer.innerHTML += `<p style="color: red;">Batch ${i + 1} - Failed: ${error.message}</p>`;
+                }
+
+                // Pause briefly between requests to avoid overwhelming the server
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }
+
+            logContainer.innerHTML += `<p><strong>All batches processed.</strong></p>`;
+            startButton.disabled = false;
+            startButton.innerText = 'Start Sending';
+        });
+    </script>
+
+</body>
+
+</html>

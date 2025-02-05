@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Ordering</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        ul {
+            list-style-type: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        li {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f9f9f9;
+            cursor: grab;
+        }
+
+        li.dragging {
+            opacity: 0.5;
+        }
+    </style>
+    <link rel="icon" href="{% static 'img/logohead.png' %}" sizes="100x100" type="image/png">
+</head>
+
+<body>
+    <form id="order-form" method="POST">
+        {% csrf_token %}
+        <ul id="product-list">
+            {% for product in products %}
+            <li data-id="{{ product.id }}" draggable="true">
+                <div>
+                    {% if product.image.url %}
+                    <span><img src="{{ product.image.url }}" style="width: 40px; height: 40px;" alt=""></span>
+                    {% endif %}
+                    <span>{{ product.name }}</span>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <input type="hidden" name="order" id="order-input">
+        <button type="submit" id="saveOrder">Save Order</button>
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const productList = document.getElementById("product-list");
+            let draggedItem = null;
+            let touchStartY = 0;
+
+            // Handle drag start for desktop
+            productList.addEventListener("dragstart", function (e) {
+                draggedItem = e.target;
+                e.target.classList.add("dragging");
+            });
+
+            // Handle drag end for desktop
+            productList.addEventListener("dragend", function (e) {
+                e.target.classList.remove("dragging");
+                draggedItem = null;
+            });
+
+            // Handle drag over for desktop
+            productList.addEventListener("dragover", function (e) {
+                e.preventDefault();
+                const afterElement = getAfterElement(productList, e.clientY);
+                if (afterElement == null) {
+                    productList.appendChild(draggedItem);
+                } else {
+                    productList.insertBefore(draggedItem, afterElement);
+                }
+            });
+
+            // Handle touch start for mobile
+            productList.addEventListener("touchstart", function (e) {
+                const touch = e.touches[0];
+                touchStartY = touch.clientY;
+                draggedItem = e.target.closest("li");
+                if (draggedItem) draggedItem.classList.add("dragging");
+            });
+
+            // Handle touch move for mobile
+            productList.addEventListener("touchmove", function (e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const afterElement = getAfterElement(productList, touch.clientY);
+                if (draggedItem) {
+                    if (afterElement == null) {
+                        productList.appendChild(draggedItem);
+                    } else {
+                        productList.insertBefore(draggedItem, afterElement);
+                    }
+                }
+            });
+
+            // Handle touch end for mobile
+            productList.addEventListener("touchend", function (e) {
+                if (draggedItem) draggedItem.classList.remove("dragging");
+                draggedItem = null;
+            });
+
+            // Helper function to determine the element after the drag/touch position
+            function getAfterElement(container, y) {
+                const draggableElements = [...container.querySelectorAll("li:not(.dragging)")];
+
+                return draggableElements.reduce(
+                    (closest, child) => {
+                        const box = child.getBoundingClientRect();
+                        const offset = y - box.top - box.height / 2;
+                        if (offset < 0 && offset > closest.offset) {
+                            return { offset: offset, element: child };
+                        } else {
+                            return closest;
+                        }
+                    },
+                    { offset: Number.NEGATIVE_INFINITY }
+                ).element;
+            }
+
+            // Submit the form with the updated order
+            document.getElementById("order-form").addEventListener("submit", function (e) {
+                e.preventDefault();
+                const order = [];
+                document.querySelectorAll("#product-list li").forEach(function (listItem) {
+                    order.push(listItem.dataset.id);
+                });
+
+                const orderInput = document.getElementById("order-input");
+                orderInput.value = order.join(",");
+
+                // Perform the AJAX request
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        alert(response.message);
+                    }
+                };
+
+                const formData = new FormData(document.getElementById("order-form"));
+                xhr.send(new URLSearchParams(formData).toString());
+            });
+        });
+    </script>
+</body>
+
+</html>
