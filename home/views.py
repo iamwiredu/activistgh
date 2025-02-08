@@ -96,10 +96,6 @@ def get_stock(request):
 
 
 def shop(request,category_name):
-    if '%2520' in category_name:
-        split = category_name.split('%2520')
-        joined = ' '.join(split)
-        category_name = joined
     category = Category.objects.get(name=category_name)
     products = Product.objects.all().filter(product_category=category)
     events = Outing.objects.all()
