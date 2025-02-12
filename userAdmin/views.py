@@ -337,7 +337,7 @@ def OrderDetailsView(request,unique_id):
                 return redirect(f'/orderDetails/{unique_id}')
 
         if 'updateDeliveryStatus':
-            DeliveryStatusUpdateFormCreator = DeliveryStatusUpdateFormCreator(request.POST,instance=payment)
+            DeliveryStatusUpdateFormCreator = DeliveryStatusUpdateForm(request.POST,instance=payment)
             if DeliveryStatusUpdateFormCreator.is_valid():
                 DeliveryStatusUpdateFormCreator.save()
                 return redirect(f'/orderDetails/{payment.unique_id}')

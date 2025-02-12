@@ -351,9 +351,16 @@ def orderSuccess(request,ref):
         subject = 'Strangers Email Receipt'
         text_body = f'Your order was successful follow up on your purchases here'
         html_content = render_to_string('receipt.html', {'first_name': payment.first_name, 'subject': subject, 'body':text_body,'unique_id':payment.unique_id,'payment':payment})
-        print(html_content)
+        
+        subject2 = 'Strangers Order Notification'
+        text_body2 = f'New order has been placed with ref {payment.ref}'
+        html_content2 = render_to_string('orderPlaced.html', {'first_name': payment.first_name, 'subject': subject2, 'body':text_body2,'unique_id':payment.unique_id,'payment':payment})
+     
 
         try:
+            msg2 = EmailMultiAlternatives(subject2, text_body2, 'Strangersofficial6@gmail.com', ['Strangersofficial6@gmail.com'])
+            msg2.attach_alternative(html_content2,'text/html')
+            msg2.send()
             # Create email object with alternatives
             msg = EmailMultiAlternatives(subject, text_body, "Strangersofficial6@gmail.com", [payment.email])
             msg.attach_alternative(html_content, "text/html")  # Attach the HTML version
@@ -361,11 +368,7 @@ def orderSuccess(request,ref):
             print('sent')
         except Exception as e:
             print('error')
-            print(f'Error sending email: {e}')  # Log the error for debugging
-
-
-    #code for revenue
-    
+            print(f'Error sending email: {e}')  
 
         year = payment.date_created.year
         month = payment.date_created.month
