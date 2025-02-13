@@ -1,0 +1,141 @@
+{% load static %}
+{% load math_extras %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Order Details - Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+
+        .card {
+            margin: 20px auto;
+            max-width: 900px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Notification (if any messages are to be shown) -->
+    <div id="notification" class="notification position-fixed top-0 start-50 translate-middle-x mt-3 p-3 rounded"
+        style="display:none; z-index:1050;"></div>
+
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Order Details</h2>
+        <div class="card shadow">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Order ID: {{ payment.order_id }}</h5>
+                <div>
+                    {% if request.user.is_authenticated %}
+                    <form action="" method="POST" class="d-inline-block">
+                        {% csrf_token %}
+                        {{ DeliveryStatusUpdateFormCreator }}
+                        <input type="submit" name="updateDeliveryStatus" class="btn btn-primary btn-sm ms-2"
+                            value="Update Delivery Status">
+                    </form>
+                    {% else %}
+                    <span class="text-muted">Contact admin with Order ID</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <!-- Customer Details -->
+                    <div class="col-md-6">
+                        <h6>Customer Details</h6>
+                        <p class="mb-1"><strong>Name:</strong> {{ payment.first_name }} {{ payment.last_name }}</p>
+                        <p class="mb-1"><strong>Email:</strong> {{ payment.email }}</p>
+                        <p class="mb-1"><strong>Phone:</strong> +{{ payment.country_code }} {{ payment.phone }}</p>
+                    </div>
+                    <!-- Delivery / Pickup Details -->
+                    <div class="col-md-6">
+                        {% if payment.pickupdata == True %}
+                        <h6>Pickup Point</h6>
+                        <div class="ratio ratio-16x9">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.6250430396844!2d-0.2347021261979517!3d5.622246632982431!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf990033264eeb%3A0xd3c7bc45d3cf3fa0!2sStrangers.tdku!5e0!3m2!1sen!2sgh!4v1736639480809!5m2!1sen!2sgh"
+                                style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        {% else %}
+                        <h6>Delivery Details</h6>
+                        <p class="mb-1"><strong>Country:</strong> {{ payment.destination_country }}</p>
+                        <p class="mb-1"><strong>Address 1:</strong> {{ payment.street_address_1 }}</p>
+                        <p class="mb-1"><strong>Address 2:</strong>
+                            {% if payment.street_address_2 %}
+                            {{payment.street_address_2}}
+                            {% else %}
+                            No Street Address 2
+                            {% endif %}
+                        </p>
+                        <p class="mb-1"><strong>City:</strong> {{ payment.city }}</p>
+                        <p class="mb-1"><strong>State:</strong> {{ payment.state }}</p>
+                        <p class="mb-1"><strong>Zip Code:</strong> {{ payment.zip_code }}</p>
+                        <p class="mb-1"><strong>Additional Info:</strong> {% if payment.additional_info %}{{
+                            payment.additional_info }}{% else %}None{% endif %}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <hr>
+                <!-- Cart Items -->
+                <h6>Cart Items</h6>
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Size</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in payment.cart.cart_objects.all %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"
+                                            style="width:50px; height:50px; object-fit:cover;" class="me-2">
+                                        <span>{{ item.product.name }}</span>
+                                    </div>
+                                </td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.size }}</td>
+                                <td class="price"
+                                    data-price="{% with total=item.quantity|multiply:item.product.price %}{{ total }}0{% endwith %}">
+                                    GHS {% with total=item.quantity|multiply:item.product.price %}{{ total }}0{% endwith%}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-end">
+                    <h6>Total: GHS <span id="total-price">0.00</span></h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Calculate total price from the data-price attributes
+        let total = 0;
+        document.querySelectorAll('.price').forEach(function (td) {
+            total += parseFloat(td.getAttribute('data-price'));
+        });
+        document.getElementById('total-price').textContent = total.toFixed(2);
+    </script>
+</body>
+
+</html>

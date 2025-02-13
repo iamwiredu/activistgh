@@ -292,7 +292,26 @@ class Notifications_view(LoginRequiredMixin,View):
         }
         return render(request,'notifications.html',context)
     
-  
+def OrderDetailsAdmin(request,unique_id):
+    payment = Payment.objects.get(unique_id=unique_id)
+    DeliveryStatusUpdateFormCreator = DeliveryStatusUpdateForm(instance=payment)
+    categories = Category.objects.all()
+    context = {
+        'payment': payment,
+        'categories': categories,
+        'DeliveryStatusUpdateFormCreator':DeliveryStatusUpdateFormCreator,
+    }
+    if request.method == 'POST':
+        if 'updateDeliveryStatus':
+            DeliveryStatusUpdateFormCreator = DeliveryStatusUpdateForm(request.POST,instance=payment)
+            if DeliveryStatusUpdateFormCreator.is_valid():
+                DeliveryStatusUpdateFormCreator.save()
+                return redirect(f'/orderDetails/{payment.unique_id}')
+       
+    return render(request, 'orderDetailsAdmin.html', context)
+
+ 
+
 def OrderDetailsView(request,unique_id):
     payment = Payment.objects.get(unique_id=unique_id)
     DeliveryStatusUpdateFormCreator = DeliveryStatusUpdateForm(instance=payment)
