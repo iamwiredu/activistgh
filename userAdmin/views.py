@@ -311,6 +311,27 @@ def OrderDetailsAdmin(request,unique_id):
     return render(request, 'orderDetailsAdmin.html', context)
 
  
+def categoriesEdit(request,unique_id):
+    category = Category.objects.get(id=unique_id)
+    categoryFormCreator = CategoryForm(instance=category)
+
+    if request.method == 'POST':
+        if 'editCategory' in request.POST:
+            categoryFormCreator = CategoryForm(request.POST,instance=category)    
+            if categoryFormCreator.is_valid(): 
+                categoryFormCreator.save() 
+                return redirect(f'/categoryEdit/{category.id}') # Redirect to the same page or a success page
+            else:
+                print('error')
+        if 'delete' in request.POST:
+            category.delete()
+            return redirect(f'/productManagement/')
+    context ={
+        'category':category,
+        'categoryFormCreator':categoryFormCreator,
+      
+    }
+    return render(request,'categoriesEdit.html',context)
 
 def OrderDetailsView(request,unique_id):
     payment = Payment.objects.get(unique_id=unique_id)
@@ -413,5 +434,4 @@ def deleteProduct(request, unique_id):
             return redirect('/productManagement/')
         
     return render(request,'deleteProduct.html',{'product':product})
-
 
