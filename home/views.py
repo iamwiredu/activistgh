@@ -21,8 +21,10 @@ from django.http import JsonResponse
 
 def home(request):
     categories = Category.objects.all()
+    activeCategory = Category.objects.get(active=True)
     context = {
      'categories':categories,
+     'activeCategory':activeCategory
     }
     return render(request, 'home.html', context)
 
