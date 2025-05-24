@@ -22,9 +22,11 @@ from django.http import JsonResponse
 def home(request):
     categories = Category.objects.all()
     activeCategory = Category.objects.get(active=True)
+    images = range(1,22)
     context = {
      'categories':categories,
-     'activeCategory':activeCategory
+     'activeCategory':activeCategory,
+     'images':images,
     }
     return render(request, 'home.html', context)
 

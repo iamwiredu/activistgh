@@ -124,6 +124,76 @@
         @media screen  and (max-width:px){
             
         }
+        .carousel-container {
+  max-width: 800px;      /* limit how wide it can grow */
+  margin: 40px auto;     /* center horizontally, add some vertical breathing room */
+  padding: 0 10px;       /* small side-padding so it never touches the viewport edge */
+}
+/* wrap/or target your owl container */
+.video-grid-container {
+  max-width: 600px;      /* a bit smaller on PC */
+  margin: 40px auto;     /* center it */
+  padding: 0 10px;
+}
+
+/* slide styling */
+.video-grid-container .item {
+  overflow: hidden;
+  border-radius: 12px;            /* rounded corners */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* ensure image fits inside that rounded box */
+.video-grid-container .item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.owl-theme .owl-nav{
+    background-color: #fff !important;
+}
+/* nav arrows: white circle with orange arrow inside */
+.video-grid-container .owl-nav button {
+  background: #fff;
+  border-radius: 50%;
+  width: 36px; height: 36px;
+  line-height: 36px;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+
+}
+.video-grid-container .owl-nav .owl-prev { left: -18px; background-color: #FF6347 !important;}
+.video-grid-container .owl-nav .owl-next { right: -18px; background-color: #FF6347 !important; }
+
+/* dot pagination: small orange filled circles */
+.video-grid-container .owl-dots {
+  margin-top: 12px;
+  text-align: center;
+}
+.video-grid-container .owl-dot {
+  display: inline-block;
+  width: 10px; height: 10px;
+  margin: 0 4px;
+  background: #ddd;
+  border-radius: 50%;
+  transition: background .3s;
+}
+.video-grid-container .owl-dot.active {
+  background: #FF5722;
+}
+
+/* mobile: let it go full-width again */
+@media (max-width: 600px) {
+  .video-grid-container {
+    max-width: 100%;
+    padding: 0 5px;
+  }
+}
+
     </style>
     <style>
                 .slide-cart {
@@ -293,51 +363,6 @@
 
     
     </style>
-    <style>
-
-.video-card {
-  
-    padding: 0;
-    font-family: Arial, sans-serif;
-    min-width: 300px;
-    height: 300px;
-}
-
-.video-grid-container {
-    display: flex;
-    justify-content: space-around;
-    gap: 30px;
-    overflow-x: auto; /* Allows horizontal scrolling on smaller screens */
-    scroll-behavior: smooth;
-    width: 100%;
-    margin: 50px 0px;
-    
-}
-
-.video-card {
-    background: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.video-card video {
-    width: 33%;
-    height: auto;
-    display: block;
-}
-
-
-.video-card video {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-  </style>
   <style>
       .menu-content {
         display: flex;
@@ -606,27 +631,18 @@
             behind closed doors.
         </div>
     </div>
-    <div class="video-grid-container">
-        <div class="video-card" >
-            <video id="streaming-video" class="video-js vjs-default-skin" controls preload="auto" data-setup='{}'>
-    
-                <source src="{% static 'video/video3.mp4' %}" type="video/mp4">
-            </video>
+    <div class="carousel-container">
+        <div class="video-grid-container owl-carousel owl-theme">
+            {% for i in images %}
+            <div class="item">
+                <img src="https://storage.googleapis.com/buzelstores-images/IMG_{{ i }}.jpg" alt="Slide {{ i }}"
+                    loading="lazy" />
+            </div>
+            {% endfor %}
         </div>
-        <div class="video-card">
-            <video id="streaming-video" class="video-js vjs-default-skin" controls preload="auto" data-setup='{}'>
-    
-                <source src="{% static 'video/video1.mp4' %}" type="video/mp4">
-            </video>
-        </div>
-        <div class="video-card">
-            <video id="streaming-video" class="video-js vjs-default-skin" controls preload="auto" data-setup='{}'>
-    
-                <source src="{% static 'video/video2.mp4' %}" type="video/mp4">
-            </video>
-        </div>
-
     </div>
+      
+      
         <div class="newsletter" style="background-color: #f2f2f2;">
             <div class="container">
                 <div style="display: flex; flex-direction: column;">
@@ -765,6 +781,17 @@
         
 
     </script>
+     <script>
+            $(document).ready(function(){
+                $('.video-grid-container').owlCarousel({
+                    items: 1, loop: true, nav: true, dots: true,
+                    autoplay: true, autoplayTimeout: 3000, 
+                });
+  });
+    </script>
+
+
+ 
     <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
     <script>
         //code for phone
