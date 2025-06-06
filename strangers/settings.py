@@ -180,13 +180,13 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Replace with your SMTP server
+EMAIL_HOST = 'smtp.zoho.com'  # Replace with your SMTP server
 EMAIL_PORT = 465  # Use 465 for SSL or 587 for TLS
 EMAIL_USE_SSL = True
 EMAIL_USE_TSL = False
-EMAIL_HOST_USER = 'Strangersofficial6@gmail.com'  # Replace with your email
-EMAIL_HOST_PASSWORD = 'lcrr abyg kzsi mcfe'  # Replace with your email password
-DEFAULT_FROM_EMAIL = 'Strangers'
+EMAIL_HOST_USER = 'orders@strangers-tdku.com'  # Replace with your email
+EMAIL_HOST_PASSWORD = '1iDSHtcm9TYS'  # Replace with your email password
+DEFAULT_FROM_EMAIL = 'orders@strangers-tdku.com'
 ACCOUNT_RATE_LIMITS = False
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

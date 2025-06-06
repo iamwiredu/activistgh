@@ -234,7 +234,7 @@ def send_newsletter_batch(request, batch_index):
 
         # Use EmailMultiAlternatives for HTML emails
         try:
-            msg = EmailMultiAlternatives(subject, text_body, "Strangersofficial6@gmail.com", [email])
+            msg = EmailMultiAlternatives(subject, text_body, "orders@strangers-tdku.com", [email])
             msg.attach_alternative(html_content, "text/html")  # Attach the HTML version
             msg.send()  # Send the email
         except Exception as e:

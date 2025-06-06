@@ -362,11 +362,11 @@ def orderSuccess(request,ref):
      
 
         try:
-            msg2 = EmailMultiAlternatives(subject2, text_body2, 'Strangersofficial6@gmail.com', ['Strangersofficial6@gmail.com'])
+            msg2 = EmailMultiAlternatives(subject2, text_body2, 'orders@strangers-tdku.com', ['orders@strangers-tdku.com'])
             msg2.attach_alternative(html_content2,'text/html')
             msg2.send()
             # Create email object with alternatives
-            msg = EmailMultiAlternatives(subject, text_body, "Strangersofficial6@gmail.com", [payment.email])
+            msg = EmailMultiAlternatives(subject, text_body, "orders@strangers-tdku.com", [payment.email])
             msg.attach_alternative(html_content, "text/html")  # Attach the HTML version
             msg.send()
             print('sent')
