@@ -5,8 +5,9 @@ from .models import DeliveryPriceByRegion, DeliveryPriceByAccra
 class Size39to46Form(forms.ModelForm):  
     class Meta:
         model = Size39to46
-        fields = ['size39','size40','size41','size42','size43','size44','size45','size46']
+        fields = ['size38','size39','size40','size41','size42','size43','size44','size45','size46']
         labels = {
+            'size38':'38',
             'size39': '39',
             'size40': '40',
             'size41': '41',

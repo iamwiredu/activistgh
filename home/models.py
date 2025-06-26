@@ -69,7 +69,7 @@ class Product(models.Model):
     def stock_actual(self):
         if self.size_set:
             if self.size_set.name == '39 - 46':
-                return self.size39to46.size39 + self.size39to46.size40 + self.size39to46.size41 + self.size39to46.size42 + self.size39to46.size43 + self.size39to46.size44 + self.size39to46.size45 + self.size39to46.size46
+                return self.size39to46.size38 + self.size39to46.size39 + self.size39to46.size40 + self.size39to46.size41 + self.size39to46.size42 + self.size39to46.size43 + self.size39to46.size44 + self.size39to46.size45 + self.size39to46.size46
             elif self.size_set.name == 'Medium Large Xl 2xl 3xl':
                 return self.mediumLargeStock.medium + self.mediumLargeStock.large + self.mediumLargeStock.xl + self.mediumLargeStock.xl2 + self.mediumLargeStock.xl3
         else:
@@ -95,6 +95,7 @@ class MediumLargeStock(models.Model):
 class Size39to46(models.Model):
     product = models.OneToOneField(Product,on_delete=models.CASCADE,related_name='size39to46')
     size_set = models.ForeignKey(SizeSet,on_delete=models.CASCADE,null=True,blank=True)
+    size38 = models.PositiveIntegerField(default=0)
     size39 = models.PositiveIntegerField(default=0)
     size40 = models.PositiveIntegerField(default=0)
     size41 = models.PositiveIntegerField(default=0)
