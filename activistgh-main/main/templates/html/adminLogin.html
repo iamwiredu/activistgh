@@ -1,0 +1,338 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACTIVIST</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/img/logo.jpg' %}" />
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        /* Header styles */
+
+        .header-logo h1 {
+            margin: 0;
+        }
+
+        .menu-button,
+        .cart-button {
+            cursor: pointer;
+        }
+
+
+        /* Hamburger menu for mobile */
+        .menu-button {
+            cursor: pointer;
+        }
+
+        #main-menu {
+            display: block;
+        }
+
+        .menu-button div {
+            width: 30px;
+            height: 1px;
+            background-color: black;
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+
+
+        header {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            padding: 0 20px;
+            background-color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+            border-bottom: 1px solid #cccccc;
+
+        }
+
+        .header-logo h1 {
+            margin: 0;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0 4px;
+        }
+
+        /* Create four equal columns that sits next to each other */
+        .column {
+            flex: 25%;
+            max-width: 25%;
+            padding: 0 4px;
+        }
+
+        .column img {
+            margin-top: 8px;
+            vertical-align: middle;
+            width: 100%;
+        }
+
+        .column video {
+            margin-top: 8px;
+            vertical-align: middle;
+            width: 100%;
+        }
+
+        /* Sliding menu/cart styles (for desktop view) */
+        .slide-menu,
+        .slide-cart {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            max-width: 400px;
+            background-color: #fff;
+
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+        }
+
+        .slide-menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .slide-menu ul li {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .slide-menu ul li a {
+            color: black;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.2s ease;
+        }
+
+
+
+
+
+
+        .slide-cart {
+            right: 0;
+            transform: translateX(100%);
+        }
+
+        .slide-menu.active {
+            transform: translateX(0);
+        }
+
+        .slide-cart.active {
+            transform: translateX(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        body {
+            margin-bottom: 0px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 11;
+        }
+
+
+
+        /* Responsive layout - makes a two column-layout instead of four columns */
+        @media screen and (max-width: 800px) {
+            .column {
+                flex: 50%;
+                max-width: 50%;
+
+            }
+        }
+
+        /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+            .column {
+                flex: 100%;
+                max-width: 100%;
+            }
+        }
+
+        /*Responsive layout for sliding cart and menu*/
+        @media screen and (max-width: 480px) {
+
+            .slide-menu,
+            .slide-cart {
+                width: 100%;
+            }
+
+        }
+
+        @media screen and (max-width: 768px) {
+
+            .slide-cart,
+            .slide-menu {
+                width: 100%;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay" id="overlay"></div>
+    <div></div>
+    <!-- Header -->
+    <header style="margin-top: 0;">
+        <div class="menu-button" id="menu-btn">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <a href="{% url 'homePage' %}">
+            <div class="header-logo">
+                <img src="{% static 'logo.svg' %}" alt="Footer Logo">
+            </div>
+        </a>
+        <div class="cart-button" id="cart-btn" style="margin-right: 30px; visibility: hidden;">
+            <svg width="30px" height="30px" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path
+                        d="M3.864 16.4552C4.40967 18.6379 4.68251 19.7292 5.49629 20.3646C6.31008 21 7.435 21 9.68486 21H14.3155C16.5654 21 17.6903 21 18.5041 20.3646C19.3179 19.7292 19.5907 18.6379 20.1364 16.4552C20.9943 13.0234 21.4233 11.3075 20.5225 10.1538C19.6217 9 17.853 9 14.3155 9H9.68486C6.14745 9 4.37875 9 3.47791 10.1538C2.94912 10.831 2.87855 11.702 3.08398 13"
+                        stroke="#000000" stroke-width="0.672" stroke-linecap="round"></path>
+                    <path
+                        d="M19.5 9.5L18.7896 6.89465C18.5157 5.89005 18.3787 5.38775 18.0978 5.00946C17.818 4.63273 17.4378 4.34234 17.0008 4.17152C16.5619 4 16.0413 4 15 4M4.5 9.5L5.2104 6.89465C5.48432 5.89005 5.62128 5.38775 5.90221 5.00946C6.18199 4.63273 6.56216 4.34234 6.99922 4.17152C7.43808 4 7.95872 4 9 4"
+                        stroke="#000000" stroke-width="0.672"></path>
+                    <path
+                        d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4C15 4.55228 14.5523 5 14 5H10C9.44772 5 9 4.55228 9 4Z"
+                        stroke="#000000" stroke-width="0.672"></path>
+                </g>
+            </svg>
+
+        </div>
+    </header>
+
+
+    <!-- Sliding Menu -->
+    <div class="slide-menu" id="menu" style="margin-left: -14px;">
+        <div style="display: flex; justify-content: space-between;" style="padding: 0 10px;">
+            <span class="close-btn" id="close-menu">&times;</span>
+            <div style="padding-left: 6.5px; font-size: 20px; padding-top: 12.5px; padding-bottom: 22.8px;">Menu</div>
+        </div>
+        <div style="height: 1px; border-bottom: 1px solid #cccccc;"></div>
+        <ul>
+            <li><a href="{% url 'homePage' %}">Home</a></li>
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'gallery' %}">Gallery</a></li>
+        </ul>
+    </div>
+
+    <!-- Sliding Cart -->
+    <div class="slide-cart" id="cart">
+        <span class="close-btn" id="close-cart">&times;</span>
+        <div id="bag-header" style="padding-left: 6.5px; font-size: 20px; padding-top: 12.5px; padding-bottom: 22.8px;">
+            CART</div>
+        <div style="height: 1px; border-bottom: 1px solid #cccccc;"></div>
+        <div id="cartBox">
+
+        </div>
+    </div>
+    <div style="width: 100%; height: 100vh;display: flex; justify-content: center; align-items: center;">
+            <form action="" method="POST" style="display: flex; flex-direction: column; gap: 10px;">
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="username" style="padding: 10px;">
+                <input type="password" name="password" placeholder="password" style="padding: 10px;">
+                <input type="submit" name="login" value="login" style="background-color: black; border: 1px solid black; border-radius: 15px; padding: 10px; color: white;">
+            </form>
+            <div>
+                {% if messages %}
+                {% for message in messages %}
+                <div>
+                    {{message}}
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            
+    </div>
+</body>
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const cartBtn = document.getElementById('cart-btn');
+    const closeMenuBtn = document.getElementById('close-menu');
+    const closeCartBtn = document.getElementById('close-cart');
+    const menu = document.getElementById('menu');
+    const cart = document.getElementById('cart');
+    const overlay = document.getElementById('overlay');
+
+    // Footer buttons
+
+
+    // Show overlay
+    function showOverlay() {
+        overlay.style.display = 'block';
+    }
+
+    // Hide overlay
+    function hideOverlay() {
+        overlay.style.display = 'none';
+    }
+
+    // Open and close menu
+    menuBtn.addEventListener('click', () => {
+        menu.classList.add('active');
+        showOverlay();
+    });
+
+    closeMenuBtn.addEventListener('click', () => {
+        menu.classList.remove('active');
+        hideOverlay();
+    });
+
+    // Open and close cart
+    cartBtn.addEventListener('click', () => {
+        cart.classList.add('active');
+        showOverlay();
+    });
+
+    closeCartBtn.addEventListener('click', () => {
+        cart.classList.remove('active');
+        hideOverlay();
+    });
+
+
+
+    // Close the sliding menus when the overlay is clicked
+    overlay.addEventListener('click', () => {
+        menu.classList.remove('active');
+        cart.classList.remove('active');
+        hideOverlay();
+    });
+</script>
+
+</html>

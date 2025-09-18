@@ -1,0 +1,1091 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Shop</title>
+    
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/img/logo.jpg' %}" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'css/productDetail.css' %}" rel="stylesheet" />
+    <style>
+  
+    
+        /* set content box display to none */
+        .contentBox{
+            padding: 5px;
+            cursor: pointer;
+        }
+        .content {
+            display: none;
+        }
+        .activeContentBox {
+            display: block;
+        }
+
+             /*empty cart*/ 
+            .empty-cart {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 300px;
+           
+            margin: 50px auto;
+            
+            border: 1px solid #ccc;
+            border-radius: 15px;
+           
+           
+            font-family: Arial, sans-serif;
+           
+            color: #333;
+            text-align: center;
+        }
+        .dots-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+   
+
+        .dot {
+            height: 30px;
+            width: 30px;
+            /* Inactive dot color */
+           
+            display: inline-block;
+            cursor: pointer;
+           margin: 10px;
+           
+           
+            
+        }
+        .dot img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border:1px solid #cccccc;
+           
+            border-radius: 10px;
+        
+           
+        }
+
+        .dot.active {
+            background-color: #717171; /* Active dot color */
+        }
+          /* Sliding menu/cart styles (for desktop view) */
+        .slide-menu,
+        .slide-cart {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            max-width: 400px;
+            background-color: #000;
+            color: #fff;
+           
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+        }
+        
+        .slide-menu ul {
+        list-style-type: none;
+        padding: 0;
+        }
+
+        .slide-menu ul li {
+        margin: 20px 0;
+        text-align: center;
+        }
+
+        .slide-menu ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 18px;
+        transition: color 0.2s ease;
+        }
+
+
+
+
+
+
+        .slide-cart {
+            right: 0;
+            transform: translateX(100%);
+            color: #fff !important;
+        }
+
+        .slide-menu.active {
+            transform: translateX(0);
+        }
+
+        .slide-cart.active {
+            transform: translateX(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+      
+        body {
+            margin-bottom: 0px;
+            background-color: #000;
+            
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 11;
+        }
+
+
+        /* Header styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            padding: 0 20px;
+            background-color: #000;
+           
+            padding-top: 11px;
+            padding-bottom: 11px;
+            border-bottom: 1px solid #cccccc;
+            position: fixed;
+            width: 100%;
+            z-index: 10;
+           
+        }
+
+        .header-logo {
+            text-align: center;
+        }
+
+        .header-logo h1 {
+            margin: 0;
+        }
+
+            .menu-button,
+        .cart-button {
+            cursor: pointer;
+        }
+        
+
+        /* Hamburger menu for mobile */
+        .menu-button {
+            cursor: pointer;
+        }
+
+        #main-menu {
+            display: block;
+        }
+
+        .menu-button div {
+            width: 30px;
+            height: 1px;
+            background-color:#ed344d;
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+
+        /* Product grid styles */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 0 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            
+            margin-bottom: 140px;
+        }
+        #drop-down-select{
+            margin:15px;
+        }
+
+        /* Footer styles */
+        /* footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            padding: 0;
+            color: #fff;
+            background-color: white;
+          
+        }
+
+        .footer-logo img {
+            height: 50px;
+        } */
+    #logo-footer{
+            max-width: 20%;
+            width: 33%;
+        }
+        .product-item {
+            padding: 10px;
+            text-align: center;
+           
+            color: #fff;
+        }
+
+        a {
+            text-decoration: none;
+            color: #000;
+            font-size: bolder;
+        }
+
+        .product-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .product-price {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        /* Adjust main image styling */
+        .main-image {
+            width: 100%;
+            max-width: 500px;
+            /* Set a max-width for better responsiveness */
+            height: 500px;
+            /* Set a fixed height to maintain space */
+            object-fit: cover;
+            /* Ensures the image scales nicely */
+            border-radius: 8px;
+        }
+/* Dropdown container */
+.dropdown {
+    position: relative;
+    width: 200px;
+    margin: 0 auto;
+    cursor: pointer;
+    text-align: center;
+}
+
+/* The selected item */
+.dropdown-selected {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    color: #000 !important;
+}
+
+/* Dropdown options (initially hidden) */
+.dropdown-options {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 100%;
+    border: 1px solid #ccc;
+    
+}
+
+.size-box {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background-color: #000;
+    z-index: 1;
+}
+
+.size-box:hover {
+    background-color: #ed344d;
+}
+
+/* Add a selected style */
+.size-box.selected {
+    background-color: #dcdcdc;
+    color: #000;
+   
+}
+    #optionBox{
+        width: 70%;
+
+        z-index: 1;
+        
+    }
+    #drop-down-select{
+        border-radius: 15px;
+        z-index: 1;
+    }
+
+
+
+        @media (min-width:751px){
+/* Styling for side images */
+            .dot{
+                display: none;
+            }
+        .sideImage {
+            width: 80px;
+            height: 80px;
+            border: 1px solid #f0f0f0;
+            cursor: pointer;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            /* Adds spacing between side images */
+        }
+
+        .sideImage img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            
+        }
+        #sideImageBox{
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px;
+            margin-right: 30px;
+            margin-top: 50px;
+            align-self: center;
+        }
+        }
+        /* Mobile-specific styles */
+        @media (max-width:750px){
+            #infoBox{
+                width:100%;
+            }
+            #sideImageBox{
+                display:none;
+            }
+        }
+        @media (min-width:751px){
+            #infoBox{
+                width:70%;
+            }
+        }
+        @media (max-width: 768px) {
+            .slide-cart,.slide-menu{
+                width: 100%;
+            }
+            .menu-button {
+                display: block;
+            }
+            #sideImageBox{
+                margin-right: 0px;
+            }.sideImage{
+                width: 50px;
+                height: 50px;
+            }
+            .header-logo {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .main-image {
+                height: 300px;
+                /* Adjust the height for smaller screens */
+            }
+        }
+        #infoBox{
+            color: #fff;
+        }
+        .productCover{
+            color: #fff;
+        }
+        
+.region-selector {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 20px 0;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
+
+.region-selector label {
+  font-size: 0.875rem;
+  color: #ffffff;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.region-selector select {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background-color: #1e1e1e;
+  color: #ffffff;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  min-width: 140px;
+}
+
+.region-selector select:hover,
+.region-selector select:focus {
+  border-color: #ed344d;
+  box-shadow: 0 0 0 2px rgba(237, 52, 77, 0.3);
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="overlay" id="overlay"></div>
+    <div></div>
+    <!-- Header -->
+    <header style="margin-top: 0;">
+        <div class="menu-button" id="menu-btn" >
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <a href="{% url 'homePage' %}">
+            <div class="header-logo">
+                <img src="{% static 'ab.svg' %}" alt="Footer Logo">
+            </div>
+        </a>
+        <div class="cart-button" id="cart-btn">
+        <svg width="30px" height="30px" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+                <path
+                    d="M3.864 16.4552C4.40967 18.6379 4.68251 19.7292 5.49629 20.3646C6.31008 21 7.435 21 9.68486 21H14.3155C16.5654 21 17.6903 21 18.5041 20.3646C19.3179 19.7292 19.5907 18.6379 20.1364 16.4552C20.9943 13.0234 21.4233 11.3075 20.5225 10.1538C19.6217 9 17.853 9 14.3155 9H9.68486C6.14745 9 4.37875 9 3.47791 10.1538C2.94912 10.831 2.87855 11.702 3.08398 13"
+                    stroke="#ed344d" stroke-width="0.672" stroke-linecap="round"></path>
+                <path
+                    d="M19.5 9.5L18.7896 6.89465C18.5157 5.89005 18.3787 5.38775 18.0978 5.00946C17.818 4.63273 17.4378 4.34234 17.0008 4.17152C16.5619 4 16.0413 4 15 4M4.5 9.5L5.2104 6.89465C5.48432 5.89005 5.62128 5.38775 5.90221 5.00946C6.18199 4.63273 6.56216 4.34234 6.99922 4.17152C7.43808 4 7.95872 4 9 4"
+                    stroke="#ed344d" stroke-width="0.672"></path>
+                <path
+                    d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4C15 4.55228 14.5523 5 14 5H10C9.44772 5 9 4.55228 9 4Z"
+                    stroke="#ed344d" stroke-width="0.672"></path>
+            </g>
+        </svg>
+        <span id="cart-total" style="color: #fff;"></span>
+
+        </div>
+    </header>
+
+ <div style="position: relative; top: 70px; left: 0;">
+    <a href="{% url 'shop' %}" >
+        <div style="padding-left: 17px; margin-bottom: 10px;">
+            <svg width="35px" height="35px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                stroke="#ed344d" stroke-width="0.00024000000000000003">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path
+                        d="M4 10L3.64645 10.3536L3.29289 10L3.64645 9.64645L4 10ZM20.5 18C20.5 18.2761 20.2761 18.5 20 18.5C19.7239 18.5 19.5 18.2761 19.5 18L20.5 18ZM8.64645 15.3536L3.64645 10.3536L4.35355 9.64645L9.35355 14.6464L8.64645 15.3536ZM3.64645 9.64645L8.64645 4.64645L9.35355 5.35355L4.35355 10.3536L3.64645 9.64645ZM4 9.5L14 9.5L14 10.5L4 10.5L4 9.5ZM20.5 16L20.5 18L19.5 18L19.5 16L20.5 16ZM14 9.5C17.5898 9.5 20.5 12.4101 20.5 16L19.5 16C19.5 12.9624 17.0376 10.5 14 10.5L14 9.5Z"
+                        fill="#ed344d"></path>
+                </g>
+            </svg>
+        </div>
+    </a>
+ </div>
+    <!-- Sliding Menu -->
+    <div class="slide-menu" id="menu">
+        <div style="display: flex; justify-content: space-between;">
+            <span class="close-btn" id="close-menu" style="color:white !important;">&times;</span>
+            <div style="padding-left: 6.5px; font-size: 20px; padding-top: 12.5px;color:white !important;">Menu</div>
+        </div>
+        <hr>
+        <ul>
+            <li><a href="{% url 'homePage' %}">Home</a></li>
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'gallery' %}">Gallery</a></li>
+        </ul>
+    </div>
+    
+    <!-- Sliding Cart -->
+    <div class="slide-cart" id="cart">
+        <span class="close-btn" id="close-cart">&times;</span>
+        <div id="bag-header" style="padding: 6.5px; font-size: 20px;">CART</div>
+        <hr>
+        <div id="cartBox" style="overflow-y: auto; max-height: 90vh; ">
+            
+        </div>
+    </div>
+
+    <!-- Product section -->
+    <section class="py-5 productCover"  style="margin-top: 10px;">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-6" style="display: flex;">
+                    <div id="sideImageBox">
+                        <div class="sideImage"><img src="{{product.image.url}}" alt=""></div>
+                        <!-- initial is always the image -->
+                        {% for image in relatedImages %}
+                        <div class="sideImage"><img src="{{image.image.url}}" alt=""></div>
+                        {% endfor %}
+                    </div>
+                    <img class="main-image" id="mainImage" src="{{product.image.url}}" alt="..." />
+                </div>
+                <div class="col-md-6" style="display: flex; flex-direction: column; align-items: center;">
+                    <div class="dots-container"> 
+                        <span class="dot sideImage" ><img src="{{product.image.url}}" alt=""></span>
+                        {% for image in relatedImages %}
+                        <span class="dot sideImage"  ><img src="{{image.image.url}}"  alt=""></span>
+                       
+                        {% endfor %}
+                    </div>
+                   
+                    <h1 class="display-5 fw-bolder">{{product.name}}</h1>
+                    <div class="fs-5 mb-5">
+                        <span class="product-price" data-base-price="{{product.price}}">GH₵{{product.price}}0</span>
+                    </div>
+                    <div id="optionBox" class="dropdown" >
+                        {% if product.hasSize %}
+                        {% if 'Denim' in product.name %}
+                        <div class="dropdown-selected" id="drop-down-select" onclick="toggleDropdown()">Select size</div>
+                        <div class="dropdown-options" id="dropdownOptions">
+                        
+                            <div class="size-box" id="size-30" onclick="selectSize('30')">30</div>
+                            <div class="size-box" id="size-32" onclick="selectSize('32')">32</div>
+                            <div class="size-box" id="size-34" onclick="selectSize('34')">34</div>
+                            <div class="size-box" id="size-36" onclick="selectSize('36')">36</div>
+                            <div class="size-box" id="size-38" onclick="selectSize('38')">38</div>
+                            <div class="size-box" id="size-40" onclick="selectSize('40')">40</div>
+                        </div>
+                        {% else %}
+                        <div class="dropdown-selected" id="drop-down-select" onclick="toggleDropdown()">Select size</div>
+                        <div class="dropdown-options" id="dropdownOptions">
+                        
+                            <div class="size-box" id="size-M" onclick="selectSize('M')">M</div>
+                            <div class="size-box" id="size-L" onclick="selectSize('L')">L</div>
+                            <div class="size-box" id="size-XL" onclick="selectSize('XL')">XL</div>
+                            <div class="size-box" id="size-2XL" onclick="selectSize('2XL')">2XL</div>
+                          {% if 'War' in product.name %}
+                          {% else %}
+                          <div class="size-box" id="size-3XL" onclick="selectSize('3XL')">3XL</div>
+                          {% endif %}
+                        </div>
+                        {% endif %}
+                        {% else %}
+                        <div class="dropdown-selected" id="drop-down-select"  style="display: none; !important">Select size</div>
+                        <div class="dropdown-options" id="dropdownOptions" style="display: none !important;">
+                        <div style="display: none;" class="size-box" id="size-No-Size" onclick="selectSize('No-Size')">No Size</div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                        <div class="d-flex" id="addToCartm" style="margin: 15px; gap: 5px; z-index: 0;">
+                        <div class="input-group" style="max-width: 8rem;">
+                            <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()" style="border-color: #fff; color:#fff;">-</button>
+                            <input class="form-control text-center" id="inputQuantity" type="text" value="1" min="1" readonly
+                                style="max-width: 3rem;" />
+                            <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity()" style="border-color: #fff; color:#fff">+</button>
+                        </div>
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button" id="addToCartDiv" style="border-color: #fff; color: #fff;">
+                                <i class="bi-cart-fill me-1" style="color: #fff;"></i>
+                                Add to cart
+                            </button>
+                        </div>
+
+                   <div id="infoBox" style="padding-top: 15px;">
+                    <div style="border-top: 0.2px solid #cccccc; display:flex; flex-direction: column; " class="contentBox">
+                        <div style="width: 100%; display: flex; justify-content: space-between;"><span>Description</span><span class="symbol">+</span></div>
+                        <div class="content" style="width: 100%; text-align: center;">{{product.name}}</div>
+                    </div>
+                    <div style="border-top: 0.2px solid #cccccc; display:flex; flex-direction: column; " class="contentBox">
+                        <div style="width: 100%; display: flex; justify-content: space-between;"><span>Details</span><span
+                                class="symbol">+</span></div>
+                        <div class="content" style="width: 100%; text-align: center;">{{product.name}}</div>
+                    </div>
+                    <div style="border-top: 0.2px solid #cccccc; display:flex; flex-direction: column; border-bottom: 0.2px solid #cccccc;" class="contentBox">
+                        <div style="width: 100%; display: flex; justify-content: space-between;"><span>Size Guide</span><span
+                                class="symbol">+</span></div>
+                        <div class="content" style="width: 100%; text-align: center;">
+                            {% if 'Denim' in product.name %}
+                            <p><strong>28</strong>: Waist 28", Hips 34-36"</p>
+                            <p><strong>30</strong>: Waist 30", Hips 36-38"</p>
+                            <p><strong>32</strong>: Waist 32", Hips 38-40"</p>
+                            <p><strong>34</strong>: Waist 34", Hips 40-42"</p>
+                            <p><strong>36</strong>: Waist 36", Hips 42-44"</p>
+                            <p><strong>38</strong>: Waist 38", Hips 44-46"</p>
+                            <p><strong>40</strong>: Waist 40", Hips 46-48"</p>
+                            <p><strong>How to Measure:</strong> Measure around the waist and hips at their fullest points.</p>
+
+                            {% else %}
+                            <p><strong>3XL</strong>: Chest 52-54", Waist 46-48", Hips 54-56"</p>
+                            <p><strong>M</strong>: Chest 38-40", Waist 32-34", Hips 39-41"</p>
+                            <p><strong>L</strong>: Chest 42-44", Waist 36-38", Hips 43-45"</p>
+                            <p><strong>XL</strong>: Chest 46-48", Waist 40-42", Hips 47-49"</p>
+                            <p><strong>2XL</strong>: Chest 50-52", Waist 44-46", Hips 51-53"</p>
+                            
+                            <p><strong>How to Measure:</strong> Measure around the chest, waist, and hips at their fullest points.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+
+                   </div>
+
+                
+                </div>
+ 
+            </div>
+        </div>
+    </section>
+
+    <!-- Related items section -->
+<div style="display: flex; justify-content: center;">
+        <div style="max-width: 1200px; display: flex; justify-content: center;">
+            <h2 style="align-self: center; color: #fff !important;">Similar products</h2>
+        </div>
+</div>
+    <div class="product-grid">
+        {% for item in related %}
+        <a href="{% url 'productDetail' item.unique_id %}">
+            <div class="product-item">
+                <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                <div class="product-name">{{ item.name }}</div>
+                <div class="product-price"  data-base-price="{{item.price}}">GH₵{{ item.price }}0</div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+<footer style="text-align: center; padding: 20px; background-color:#ed344d;">
+    <!-- Centering the logo -->
+    <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+        <img src="{% static 'logo-white.svg' %}" id="logo-footer" alt="Footer Logo" style="max-width: 150px;">
+    </div>
+
+    <!-- Social media icons -->
+    <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+        <!-- Instagram Icon -->
+        <a href="https://www.instagram.com/acvstinsta/">
+            <span style="margin-right: 25px;">
+                <svg width="50px" height="50px" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M15.5 5H9.5C7.29086 5 5.5 6.79086 5.5 9V15C5.5 17.2091 7.29086 19 9.5 19H15.5C17.7091 19 19.5 17.2091 19.5 15V9C19.5 6.79086 17.7091 5 15.5 5Z"
+                        stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M12.5 15C10.8431 15 9.5 13.6569 9.5 12C9.5 10.3431 10.8431 9 12.5 9C14.1569 9 15.5 10.3431 15.5 12C15.5 12.7956 15.1839 13.5587 14.6213 14.1213C14.0587 14.6839 13.2956 15 12.5 15Z"
+                        stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <rect x="15.5" y="9" width="2" height="2" rx="1" transform="rotate(-90 15.5 9)" fill="#ffffff">
+                    </rect>
+                    <rect x="16" y="8.5" width="1" height="1" rx="0.5" transform="rotate(-90 16 8.5)" stroke="#ffffff"
+                        stroke-linecap="round"></rect>
+                </svg>
+            </span>
+        </a>
+
+        <a href="https://x.com/acvstx/">
+            <!-- X (Twitter) Icon -->
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" width="30px" height="30px"
+                    style="margin-top: 9px;" viewBox="0 0 150 150" version="1.1">
+                    <path style=" stroke:none;fill-rule:nonzero;fill:#ffffff;fill-opacity:1;"
+                        d="M 89.285156 63.574219 L 145.136719 0 L 131.90625 0 L 83.390625 55.191406 L 44.671875 0 L 0 0 L 58.566406 83.464844 L 0 150.125 L 13.230469 150.125 L 64.429688 91.828125 L 105.328125 150.125 L 150 150.125 M 18.003906 9.769531 L 38.328125 9.769531 L 131.894531 140.835938 L 111.566406 140.835938 ">
+                    </path>
+                </svg>
+            </span>
+    </div>
+    </a>
+
+    <!-- Footer Links -->
+    <div style="margin-bottom: 20px;">
+        <div style="color: #fff !important;">Cause A Change</div>
+        <div class="region-selector"
+            style="display: inline-flex; flex-direction: column; align-items: center; justify-content: center;">
+            <label for="regionSelect">Country/Region</label>
+            <select id="regionSelect"></select>
+        </div>
+    </div>
+
+    <!-- Footer Copyright -->
+    <div>
+        <p class="copyright" style="color: #fff !important;">&copy; 2024 ACTIVIST</p>
+    </div>
+</footer>
+<script>
+    // increase and decrease buttons
+    function increaseQuantity() {
+            var input = document.getElementById('inputQuantity');
+            input.value = parseInt(input.value) + 1; // Increase value by 1
+        }
+
+        function decreaseQuantity() {
+            var input = document.getElementById('inputQuantity');
+            if (input.value > 1) { // Prevent negative values
+                input.value = parseInt(input.value) - 1; // Decrease value by 1
+            }
+        }
+</script>
+<script>
+    function toggleDropdown() {
+            const options = document.getElementById("dropdownOptions");
+            options.style.display = options.style.display === "block" ? "none" : "block";
+        }
+
+        function selectSize(size) {
+            document.querySelector(".dropdown-selected").innerText = size;
+            toggleDropdown();
+
+            // Mark the selected size
+            document.querySelectorAll('.size-box').forEach(box => box.classList.remove('selected'));
+            document.getElementById(`size-${size}`).classList.add('selected');
+            document.getElementById("dropdownOptions").style.display = "none";
+        }
+{% if product.hasSize %}
+            {% if 'Denim' in product.name %}
+            selectSize('30')
+            {% else %}
+            selectSize('M')
+            {% endif %}
+{% else %}
+        selectSize('No-Size')
+{% endif %}
+        // Close the dropdown if clicked outside
+        document.addEventListener('click', function (event) {
+            const dropdown = document.getElementById("optionBox");
+            if (!dropdown.contains(event.target)) {
+                document.getElementById("dropdownOptions").style.display = "none";
+            }
+        });
+    contentBoxes = document.querySelectorAll('.contentBox')
+    contentBoxes.forEach((box)=>{
+        box.onclick = () =>{
+            box.querySelector('.content').classList.toggle('activeContentBox')
+        
+            if( box.querySelector('.symbol').innerText.trim() == '+' ){
+                box.querySelector('.symbol').innerText = '-'
+            } 
+            else{
+                box.querySelector('.symbol').innerText = '+'
+            }
+        }
+    })
+</script>
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const cartBtn = document.getElementById('cart-btn');
+    const closeMenuBtn = document.getElementById('close-menu');
+    const closeCartBtn = document.getElementById('close-cart');
+    const menu = document.getElementById('menu');
+    const cart = document.getElementById('cart');
+    const overlay = document.getElementById('overlay');
+
+    // Footer buttons
+ 
+
+    // Show overlay
+    function showOverlay() {
+        overlay.style.display = 'block';
+    }
+
+    // Hide overlay
+    function hideOverlay() {
+        overlay.style.display = 'none';
+    }
+
+    // Open and close menu
+    menuBtn.addEventListener('click', () => {
+        menu.classList.add('active');
+        showOverlay();
+    });
+
+    closeMenuBtn.addEventListener('click', () => {
+        menu.classList.remove('active');
+        hideOverlay();
+    });
+
+    // Open and close cart
+    cartBtn.addEventListener('click', () => {
+        cart.classList.add('active');
+        showOverlay();
+        document.body.style.overflow = 'hidden'
+    });
+
+    closeCartBtn.addEventListener('click', () => {
+        cart.classList.remove('active');
+        hideOverlay();
+        document.body.style.overflow = 'scroll'
+    });
+
+
+
+    // Close the sliding menus when the overlay is clicked
+    overlay.addEventListener('click', () => {
+        menu.classList.remove('active');
+        cart.classList.remove('active');
+        hideOverlay();
+        document.body.style.overflow = 'scroll'
+    });
+</script>
+<script>
+    (function () {
+        const regions = [
+            { name: 'Ghana', code: 'GHS', symbol: '₵' },
+            { name: 'Nigeria', code: 'NGN', symbol: '₦' },
+            { name: 'United States', code: 'USD', symbol: '$' },
+            { name: 'European Union', code: 'EUR', symbol: '€' },
+            { name: 'United Kingdom', code: 'GBP', symbol: '£' },
+            // …add more as needed
+        ];
+
+        const SELECT_KEY = 'selectedRegion';
+        const BASE = 'GHS';
+        const API_URL = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json';
+        const select = document.getElementById('regionSelect');
+
+        // build dropdown
+        regions.forEach(r => {
+            let opt = document.createElement('option');
+            opt.value = r.code;
+            opt.textContent = `${r.name} (${r.code})`;
+            select.append(opt);
+        });
+
+        // load saved region or default
+        select.value = localStorage.getItem(SELECT_KEY) || BASE;
+        select.addEventListener('change', () => {
+            localStorage.setItem(SELECT_KEY, select.value);
+            fetchAndApply(select.value);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchAndApply(select.value);
+        });
+
+        function fetchAndApply(target) {
+            // if GHS selected, just use 1:1
+            if (target === BASE) {
+                applyPrices(1, regions.find(r => r.code === BASE).symbol);
+                return;
+            }
+
+            fetch(API_URL)
+                .then(r => r.json())
+                .then(data => {
+                    // data.eur is an object: { "ghs": rate, "usd": rate, … }
+                    const eurRates = data.eur || data.EUR || data;
+                    const rateToTarget = eurRates[target.toLowerCase()];
+                    const rateToBase = eurRates[BASE.toLowerCase()];
+                    // GHS → TARGET = (EUR→TARGET) ÷ (EUR→GHS)
+                    const multiplier = rateToTarget / rateToBase;
+                    const symbol = regions.find(r => r.code === target).symbol;
+                    applyPrices(multiplier, symbol);
+                })
+                .catch(err => {
+                    console.error('Currency API failed', err);
+                    // fallback to GHS
+                    applyPrices(1, regions.find(r => r.code === BASE).symbol);
+                });
+        }
+
+        function applyPrices(rate, symbol) {
+            document.querySelectorAll('.product-price').forEach(el => {
+                let base = parseFloat(el.dataset.basePrice) || 0;
+                let conv = (base * rate).toFixed(2);
+                el.textContent = `${symbol}${conv}`;
+            });
+        }
+    })();
+</script>
+
+<script>
+        // Function to format the price
+        function formatPrice(price) {
+            return 'GH₵' + price.toFixed(2);
+        }
+
+    function displayCartItems() {
+        let cartBox = document.getElementById('cartBox');  // Div to display cart items
+        cartBox.innerHTML = '';  // Clear existing content
+        checkoutBox = document.getElementById('checkoutBox')
+        let totalPrice = 0;
+
+        
+       
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+         document.getElementById('cart-total').innerText = cart.length
+        if (cart.length > 0) {
+            cart.forEach(item => {
+                // Create HTML for each cart item
+                let cartItemDiv = `
+                    <div class="cart-item" style="padding: 10px; margin: 10px; display: flex; align-items: center;  position: relative;">
+                        <img src="${item.image_url}" alt="Product Image" width="100" style="border-radius: 8px; margin-right: 15px;">
+                        <div style="flex: 1; ">
+                        <div style="display:flex; gap:5px;">
+                            <p style="margin: 0; font-weight: bold; font-size: 14px;">${item.product_name}</p>
+                            <p style="margin: 0; font-size: 14px; "> x${item.quantity}</p>
+                        </div>
+                        <div style='display:flex; justify-content:space-between;'>
+                        <p style="margin: 0; font-size: 14px;">${item.selectedSize}</p>
+                            <p style="margin: 0; font-size: 14px;" class="product-price" data-base-price="${item.price}" > GH₵ ${item.price}</p>
+                        </div>
+                        </div>
+                        <button class="close-button" onclick="removeFromCart('${item.product_id_date}')" style="position: absolute; top: 10px; right: 10px; background: transparent; border: none; cursor: pointer; font-size: 16px; color: #FF5722;">&times;</button>
+                    </div>
+                    `;
+
+                cartBox.innerHTML += cartItemDiv;  // Add the cart item to the cart box
+                totalPrice += item.price
+            });
+            cartBox.innerHTML += `
+        <div style="display: flex; justify-content: space-between; align-items: center;margin-left: 20px;" id="total-price-div" >
+            <div>Total:</div>
+            <div class="total-price product-price" id="total-price" style="color: #28a745; font-weight: bold; margin-right: 20px;" data-base-price="${totalPrice}" >${formatPrice(totalPrice) }</div>
+        </div>
+        <div style="text-align: center; margin: 20px;">
+                <a href="{% url 'checkout' %}">       <button style="padding: 10px 20px; width:100%; background-color: #228B22; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                Checkout
+            </button></a>
+        </div>
+        
+        <div style="width:100%; height:150px"></div>
+        `;
+            
+        }
+        else {
+            cartBox.innerHTML = '<div class="empty-cart">Nothing in Cart</div>'
+          
+
+        }
+    }
+
+    // Add the checkout button below the last cart item
+
+    // Placeholder function for checkout action
+
+    function removeFromCart(productId) {
+        // Retrieve the current cart from localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Filter out the item to be removed
+        cart = cart.filter(item => item.product_id_date !== productId);
+
+        // Save the updated cart back to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Update the display
+        displayCartItems();
+    }
+
+    // Load and display cart items when the page loads
+    window.onload = displayCartItems;
+    
+   // Getting the addToCartDiv element
+    const addToCartDiv = document.getElementById('addToCartDiv');
+
+    // Product details using template literals
+    const product_id = '{{product.unique_id}}';
+    const image_url = '{{product.image.url}}';
+    const product_name = '{{product.name}}';
+
+    // Event listener for the addToCartDiv click event
+    addToCartDiv.onclick = () => {
+        // Create a unique product ID with timestamp and random number
+        const product_id_date = `${product_id}_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+
+        // Get quantity from the input field
+        const quantity = document.getElementById('inputQuantity').value;
+
+        // Select the currently selected size
+        const selectedBox = document.querySelector('.size-box.selected');
+        const selectedSize = selectedBox ? selectedBox.innerText : null;
+
+        // If no size is selected, alert the user and exit
+        if (!selectedSize) {
+            return alert('No size selected');
+        }
+
+        // Calculate the total price
+        const price = Number(quantity) * {{ product.price }};
+
+    // Create the new item object to add or update in the cart
+    const newItem = {
+        product_id_date,
+        product_id,  // Include original product_id to identify the product in the cart
+        product_name,
+        quantity,
+        image_url,
+        selectedSize,
+        price
+    };
+
+    // Get the cart from localStorage or initialize an empty array
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Find index of the existing product in the cart by both product_id and selectedSize
+    const existingIndex = cart.findIndex(item => item.product_id === product_id && item.selectedSize === selectedSize);
+
+    if (existingIndex !== -1) {
+        // If the same product with the same size exists, replace it with the new item
+        cart[existingIndex] = newItem;
+        alert('Updated product in cart');
+    } else {
+        // If the product or size is new, add it to the cart
+        cart.push(newItem);
+        alert('Item added to cart');
+    }
+
+    // Save the updated cart back to localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Call a function to display the updated cart items
+    displayCartItems();
+};
+
+
+
+</script>
+    <script>
+        const mainImage = document.getElementById('mainImage');
+        const sideImages = document.querySelectorAll('.sideImage');
+
+        sideImages.forEach(function (side) {
+            side.onclick = function () {
+                mainImage.src = side.querySelector('img').src;
+            };
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS -->
+    <script src="js/productDetail.js"></script>
+    <script>
+        function selectSize(size) {
+            // Remove 'selected' class from all size boxes
+            const sizeBoxes = document.querySelectorAll('.size-box');
+            sizeBoxes.forEach(function (box) {
+                box.classList.remove('selected');
+            });
+
+            // Add 'selected' class to the clicked size box
+            const selectedBox = document.getElementById('size-' + size);
+            selectedBox.classList.add('selected');
+            document.getElementById('drop-down-select').innerText = selectedBox.innerText
+            document.getElementById('dropdownOptions').style.display='none'
+        }
+    </script>
+
+</body>
+
+</html>

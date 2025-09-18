@@ -1,0 +1,401 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Checkout Page" />
+    <meta name="author" content="" />
+    <title>Checkout - Responsive Design</title>
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'css/productDetail.css' %}" rel="stylesheet" />
+    <style>
+        /* Basic layout styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+           
+        }
+
+        /* Container for checkout */
+        .checkout-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 auto;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        /* Left column for form */
+        .checkout-form {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            background-color: #fff;
+            
+            margin-right: 20px;
+        }
+
+        /* Right column for cart items */
+        .cart-items {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            background-color: #fff;
+           
+        }
+
+        /* Form styling */
+        .checkout-form h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .checkout-form .form-floating {
+            margin-bottom: 15px;
+        }
+
+       
+
+        .checkout-form .form-floating input,
+        .checkout-form .form-floating select,
+        .checkout-form .form-floating textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        /* Cart items styling */
+        .cart-items h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+            margin-left: 15px;
+        }
+
+        .cart-item-name {
+            font-size: 16px;
+          
+        }
+
+        .cart-item-price {
+            font-size: 14px;
+            color: #555;
+        }
+
+      
+
+        /* Media query for responsive design */
+        @media (max-width: 768px) {
+            .checkout-container {
+                flex-direction: column;
+            }
+
+            .checkout-form,
+            .cart-items {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+        }
+           .slide-menu,
+        .slide-cart {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            max-width: 400px;
+            background-color: #fff;
+           
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+        }
+
+        .slide-cart {
+            right: 0;
+            transform: translateX(100%);
+        }
+
+        .slide-menu.active {
+            transform: translateX(0);
+        }
+
+        .slide-cart.active {
+            transform: translateX(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+      
+        body {
+            margin-bottom: 0px;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 1;
+        }
+
+
+        /* Header styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            padding: 0 20px;
+            background-color: #fff;
+           
+            position: relative;
+            padding-top: 11px;
+            padding-bottom: 11px;
+            border-bottom: 1px solid #cccccc;
+        }
+
+        .header-logo {
+            text-align: center;
+        }
+
+        .header-logo h1 {
+            margin: 0;
+        }
+
+      /* Hamburger menu for mobile */
+        .menu-button {
+            cursor: pointer;
+        }
+
+        #main-menu {
+            display: block;
+        }
+
+        .menu-button div {
+            width: 35px;
+            height: 2px;
+            background-color: black;
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+        
+     
+    </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+<link rel="icon" type="image/x-icon" href="{% static 'assets/img/logo.jpg' %}" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+</head>
+</head>
+
+<body>
+    <div class="overlay" id="overlay"></div>
+    <div></div>
+    <!-- Header -->
+    <header>
+        <div class="menu-button" id="menu-btn">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    
+        <div class="header-logo" style="margin: 0 auto;">
+            <img src="{% static 'logo.svg' %}" alt="Footer Logo">
+        </div>
+        <div class="cart-button">
+        <svg width="50px" height="50px" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+                <path
+                    d="M3.864 16.4552C4.40967 18.6379 4.68251 19.7292 5.49629 20.3646C6.31008 21 7.435 21 9.68486 21H14.3155C16.5654 21 17.6903 21 18.5041 20.3646C19.3179 19.7292 19.5907 18.6379 20.1364 16.4552C20.9943 13.0234 21.4233 11.3075 20.5225 10.1538C19.6217 9 17.853 9 14.3155 9H9.68486C6.14745 9 4.37875 9 3.47791 10.1538C2.94912 10.831 2.87855 11.702 3.08398 13"
+                    stroke="#000000" stroke-width="0.672" stroke-linecap="round"></path>
+                <path
+                    d="M19.5 9.5L18.7896 6.89465C18.5157 5.89005 18.3787 5.38775 18.0978 5.00946C17.818 4.63273 17.4378 4.34234 17.0008 4.17152C16.5619 4 16.0413 4 15 4M4.5 9.5L5.2104 6.89465C5.48432 5.89005 5.62128 5.38775 5.90221 5.00946C6.18199 4.63273 6.56216 4.34234 6.99922 4.17152C7.43808 4 7.95872 4 9 4"
+                    stroke="#000000" stroke-width="0.672"></path>
+                <path
+                    d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4C15 4.55228 14.5523 5 14 5H10C9.44772 5 9 4.55228 9 4Z"
+                    stroke="#000000" stroke-width="0.672"></path>
+            </g>
+        </svg>
+    
+        </div>
+    </header>
+    
+    <a href="{% url 'shop' %}">
+        <div style="padding-left: 17px; margin-bottom: 10px;">
+            <svg width="45px" height="45px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                stroke="#000000" stroke-width="0.00024000000000000003">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path
+                        d="M4 10L3.64645 10.3536L3.29289 10L3.64645 9.64645L4 10ZM20.5 18C20.5 18.2761 20.2761 18.5 20 18.5C19.7239 18.5 19.5 18.2761 19.5 18L20.5 18ZM8.64645 15.3536L3.64645 10.3536L4.35355 9.64645L9.35355 14.6464L8.64645 15.3536ZM3.64645 9.64645L8.64645 4.64645L9.35355 5.35355L4.35355 10.3536L3.64645 9.64645ZM4 9.5L14 9.5L14 10.5L4 10.5L4 9.5ZM20.5 16L20.5 18L19.5 18L19.5 16L20.5 16ZM14 9.5C17.5898 9.5 20.5 12.4101 20.5 16L19.5 16C19.5 12.9624 17.0376 10.5 14 10.5L14 9.5Z"
+                        fill="#222222"></path>
+                </g>
+            </svg>
+        </div>
+    </a>
+    <!-- Sliding Menu -->
+    <div class="slide-menu" id="menu">
+        <span class="close-btn" id="close-menu">&times;</span>
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Shop</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+    
+    <!-- Sliding Cart -->
+    <div class="slide-cart" id="cart">
+        <span class="close-btn" id="close-cart">&times;</span>
+        <div id="bag-header" style="padding: 6.5px; font-size: 20px;">CART</div>
+        <hr>
+        <div id="cartBox">
+    
+        </div>
+    </div>
+
+    <div class="checkout-container">
+        <!-- Left Side: Form for customer details -->
+        <div class="checkout-form">
+            <h2>Personal Details</h2>
+
+            <form id="checkout-form">
+       <div style="display: flex; justify-content: center; gap: 10px;">
+            <div class="form-floating" style="width: 50%;">
+                <input type="text" class="form-control" id="fname" placeholder="fist name">
+                <label for="fname">First name</label>
+            </div>
+                <div class="form-floating" style="width: 50%;">
+                    <input type="text" class="form-control" id="name" placeholder="last name">
+                    <label for="name">Last name</label>
+                </div>
+       </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput">Email address</label>
+            </div>
+        <div class="form-floating mb-3">
+        <input id="phone" type="tel" name="phone" style="min-width: 100%;" />
+        </div>
+
+            <div class="form-floating">
+            <textarea class="form-control" placeholder="Any Specific delivery instructions." id="floatingTextarea"></textarea>
+                <label for="floatingTextarea">Order Notes (optional)</label>
+            </div>
+        <h2>Delivery Details</h2>
+        <div class="form-floating mb-3">
+            <input type="Address" class="form-control" id="deliveryAddress" placeholder="Delivery Address">
+            <label for="deliveryAddress">Delivery address</label>
+        </div>
+    <div class="form-floating">
+        <textarea class="form-control" style="height: 140px;" placeholder="Any Specific delivery instructions." id="deliveryInfo"></textarea>
+        <label>Additional Delivery Information</label>
+    </div>
+
+                <button type="submit"
+                    style="width:100%;padding:10px;border:none;background-color:#28a745;color:white;font-size:18px;border-radius:5px;">Proceed to pay</button>
+            </form>
+        </div>
+
+        <!-- Right Side: Cart items -->
+        <div class="cart-items">
+            <h2>Your Cart</h2>
+            <div id="cart-items-container">
+                <!-- Cart items will be injected here by JavaScript -->
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;margin-left: 20px;">
+            <div>Total:</div>
+            <div class="total-price" id="total-price"> 0.00</div>
+            </div>
+        </div>
+    </div>
+<div class="alert alert-info" style="display: none;"></div>
+</body>
+<!-- Script to handle local storage and cart display -->
+<script>
+    // Function to format the price
+    function formatPrice(price) {
+        return 'GHS' + price.toFixed(2);
+    }
+
+    // Function to render cart items from localStorage
+    function renderCartItems() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartContainer = document.getElementById('cart-items-container');
+        const totalPriceElement = document.getElementById('total-price');
+        let totalPrice = 0;
+
+        // Clear existing items
+        cartContainer.innerHTML = '';
+
+        // Render each cart item
+        cart.forEach(item => {
+            const cartItem = document.createElement('div');
+            cartItem.classList.add('cart-item');
+            cartItem.innerHTML = `
+                    <img src="${item.image_url}" alt="${item.product_name}" />
+                    <div class="cart-item-details">
+                        <div class="cart-item-name">${item.product_name} x${item.quantity}</div>
+                        <div class="cart-item-price">${item.selectedSize}</div>
+                    </div>
+                    <div class="cart-item-price">${formatPrice(item.price)}</div>
+                `;
+            cartContainer.appendChild(cartItem);
+            totalPrice += item.price;
+        });
+
+        // Update total price
+        totalPriceElement.textContent = formatPrice(totalPrice);
+    }
+
+    // Initialize the cart items on page load
+    window.onload = renderCartItems;
+</script>
+<script>
+    const phoneInputField = document.querySelector("#phone");
+   
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        preferredCountries: ["gh"],
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+</script>
+</html>

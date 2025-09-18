@@ -1,0 +1,471 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Checkout Page" />
+    <meta name="author" content="" />
+    <title>Checkout - Responsive Design</title>
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/img/logo.jpg' %}" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'css/productDetail.css' %}" rel="stylesheet" />
+    <style>
+        /* Basic layout styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000;
+
+        }
+
+
+        /* Cart items styling */
+        .cart-items h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+            margin-left: 15px;
+        }
+
+        .cart-item-name {
+            font-size: 16px;
+
+        }
+
+        .cart-item-price {
+            font-size: 14px;
+            color: #555;
+        }
+
+
+        /* Media query for responsive design */
+        @media (max-width: 768px) {
+            .checkout-container {
+                flex-direction: column;
+            }
+
+            .slide-cart,
+            .slide-menu {
+                width: 100%;
+            }
+
+            .checkout-form,
+            .cart-items {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+        }
+
+        .slide-menu,
+        .slide-cart {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            max-width: 400px;
+            background-color: #000;
+            color:white;
+
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 10;
+        }
+
+        .slide-cart {
+            right: 0;
+            transform: translateX(100%);
+        }
+
+        .slide-menu.active {
+            transform: translateX(0);
+        }
+
+        .slide-cart.active {
+            transform: translateX(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        body {
+            margin-bottom: 0px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 2;
+        }
+
+
+        .slide-menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .slide-menu ul li {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .slide-menu ul li a {
+            color: #fff;
+            text-decoration: none;
+
+            transition: color 0.2s ease;
+            line-height: 1rem;
+        }
+
+
+
+
+        /* Header styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            padding: 0 20px;
+            background-color: #000;
+
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding-top: 11px;
+            padding-bottom: 11px;
+            border-bottom: 1px solid #cccccc;
+            z-index: 1;
+            
+        }
+
+        .header-logo {
+            text-align: center;
+        }
+
+        .header-logo h1 {
+            margin: 0;
+        }
+
+        /* Hamburger menu for mobile */
+        .menu-button {
+            cursor: pointer;
+        }
+
+        #main-menu {
+            display: block;
+        }
+
+        .menu-button div {
+            width: 30px;
+            height: 1px;
+            
+            background-color: #ed344d;
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+
+        #logo-footer {
+            max-width: 20%;
+            width: 33%;
+        }
+        body {
+        
+        padding: 40px 0;
+        
+      }
+        h1 {
+          color: #88B04B;
+          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+          font-weight: 900;
+          font-size: 40px;
+          margin-bottom: 10px;
+        }
+        p {
+          color: #404F5E;
+          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+          font-size:20px;
+          margin: 0;
+        }
+      i {
+        color: #9ABC66;
+        font-size: 100px;
+        line-height: 200px;
+        margin-left:-15px;
+      }
+      .card {
+        background: white;
+        padding: 60px;
+        border-radius: 4px;
+        
+        display: inline-block;
+        margin: 0 auto;
+      }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+</head>
+</head>
+
+<body>
+    <div class="overlay" id="overlay"></div>
+    <div></div>
+    <!-- Header -->
+    <header>
+        <div class="menu-button" id="menu-btn">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <a href="{% url 'homePage' %}">
+            <div class="header-logo">
+                <img src="{% static 'ab.svg' %}" alt="Footer Logo">
+            </div>
+        </a>
+        <div class="cart-button" style="visibility: hidden;">
+            <svg width="30px" height="30px" viewBox="0 0 24.00 24.00" fill="none" id="cart-btn"
+                xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path
+                        d="M3.864 16.4552C4.40967 18.6379 4.68251 19.7292 5.49629 20.3646C6.31008 21 7.435 21 9.68486 21H14.3155C16.5654 21 17.6903 21 18.5041 20.3646C19.3179 19.7292 19.5907 18.6379 20.1364 16.4552C20.9943 13.0234 21.4233 11.3075 20.5225 10.1538C19.6217 9 17.853 9 14.3155 9H9.68486C6.14745 9 4.37875 9 3.47791 10.1538C2.94912 10.831 2.87855 11.702 3.08398 13"
+                        stroke="#000000" stroke-width="0.672" stroke-linecap="round"></path>
+                    <path
+                        d="M19.5 9.5L18.7896 6.89465C18.5157 5.89005 18.3787 5.38775 18.0978 5.00946C17.818 4.63273 17.4378 4.34234 17.0008 4.17152C16.5619 4 16.0413 4 15 4M4.5 9.5L5.2104 6.89465C5.48432 5.89005 5.62128 5.38775 5.90221 5.00946C6.18199 4.63273 6.56216 4.34234 6.99922 4.17152C7.43808 4 7.95872 4 9 4"
+                        stroke="#000000" stroke-width="0.672"></path>
+                    <path
+                        d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4C15 4.55228 14.5523 5 14 5H10C9.44772 5 9 4.55228 9 4Z"
+                        stroke="#000000" stroke-width="0.672"></path>
+                </g>
+            </svg>
+
+        </div>
+    </header>
+    <div style="padding-top: 5px;">
+        <a href="{% url 'shop' %}">
+            <div style="padding-left: 17px; margin-top: 30px;">
+                <svg width="35px" height="35px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    stroke="#ed344d" stroke-width="0.00024000000000000003">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path
+                            d="M4 10L3.64645 10.3536L3.29289 10L3.64645 9.64645L4 10ZM20.5 18C20.5 18.2761 20.2761 18.5 20 18.5C19.7239 18.5 19.5 18.2761 19.5 18L20.5 18ZM8.64645 15.3536L3.64645 10.3536L4.35355 9.64645L9.35355 14.6464L8.64645 15.3536ZM3.64645 9.64645L8.64645 4.64645L9.35355 5.35355L4.35355 10.3536L3.64645 9.64645ZM4 9.5L14 9.5L14 10.5L4 10.5L4 9.5ZM20.5 16L20.5 18L19.5 18L19.5 16L20.5 16ZM14 9.5C17.5898 9.5 20.5 12.4101 20.5 16L19.5 16C19.5 12.9624 17.0376 10.5 14 10.5L14 9.5Z"
+                            fill="#ed344d"></path>
+                    </g>
+                </svg>
+            </div>
+        </a>
+    </div>
+    <!-- Sliding Menu -->
+    <div class="slide-menu" id="menu">
+        <div style="display: flex; justify-content: space-between;">
+            <span class="close-btn" id="close-menu">&times;</span>
+            <div style="padding-left: 6.5px; font-size: 20px; padding-top: 12.5px;">Menu</div>
+        </div>
+        <hr>
+        <ul>
+            <li><a href="{% url 'homePage' %}">Home</a></li>
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'gallery' %}">Gallery</a></li>
+        </ul>
+    </div>
+
+    <!-- Sliding Cart -->
+    <div class="slide-cart" id="cart">
+        <span class="close-btn" id="close-cart">&times;</span>
+        <div id="bag-header" style="padding: 6.5px; font-size: 20px;">CART</div>
+        <hr>
+        <div id="cartBox">
+
+        </div>
+    </div>
+<div style="display: flex; justify-content: center; margin-bottom: 30px;">
+    <div class="card" style="text-align: center; width: fit-content;">
+        <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
+            <i class="checkmark">✓</i>
+        </div>
+        <h1>Success</h1>
+        <p>We received your purchase request;<br /> we'll be in touch shortly!</p>
+    <p style="font-size: 18px; color: #555; margin-bottom: 20px;">Contact us on: <br>
+        +233 0537666538<br>
+        contact@activist.store
+    </p>
+    <p style="font-size: 18px; color: #555; margin-bottom: 20px;">Follow up on your order here: <a
+            href="{% url 'orderDetails' payment.ref %}">Follow up</a> </p>
+    <p style="font-size: 18px; color: #555; margin-bottom: 20px;">Order details and followup link sent to:
+        {{payment.email}}</a>
+    </p>
+    </div>
+</div>
+    <div class="alert alert-info" style="display: none;"></div>
+
+
+
+            
+    <footer style="text-align: center; padding: 20px; background-color:#ed344d;">
+        <!-- Centering the logo -->
+        <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+            <img src="{% static 'logo-white.svg' %}" id="logo-footer" alt="Footer Logo" style="max-width: 150px;">
+        </div>
+
+        <!-- Social media icons -->
+        <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+            <!-- Instagram Icon -->
+    <a href="https://www.instagram.com/acvstinsta/">
+                <span style="margin-right: 25px;">
+                    <svg width="50px" height="50px" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M15.5 5H9.5C7.29086 5 5.5 6.79086 5.5 9V15C5.5 17.2091 7.29086 19 9.5 19H15.5C17.7091 19 19.5 17.2091 19.5 15V9C19.5 6.79086 17.7091 5 15.5 5Z"
+                            stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M12.5 15C10.8431 15 9.5 13.6569 9.5 12C9.5 10.3431 10.8431 9 12.5 9C14.1569 9 15.5 10.3431 15.5 12C15.5 12.7956 15.1839 13.5587 14.6213 14.1213C14.0587 14.6839 13.2956 15 12.5 15Z"
+                            stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <rect x="15.5" y="9" width="2" height="2" rx="1" transform="rotate(-90 15.5 9)" fill="#ffffff">
+                        </rect>
+                        <rect x="16" y="8.5" width="1" height="1" rx="0.5" transform="rotate(-90 16 8.5)" stroke="#ffffff"
+                            stroke-linecap="round"></rect>
+                    </svg>
+                </span>
+    </a>
+
+<a href="https://x.com/acvstx/">
+    <!-- X (Twitter) Icon -->
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" width="30px" height="30px" style="margin-top: 9px;"
+            viewBox="0 0 150 150" version="1.1">
+            <path style=" stroke:none;fill-rule:nonzero;fill:#ffffff;fill-opacity:1;"
+                d="M 89.285156 63.574219 L 145.136719 0 L 131.90625 0 L 83.390625 55.191406 L 44.671875 0 L 0 0 L 58.566406 83.464844 L 0 150.125 L 13.230469 150.125 L 64.429688 91.828125 L 105.328125 150.125 L 150 150.125 M 18.003906 9.769531 L 38.328125 9.769531 L 131.894531 140.835938 L 111.566406 140.835938 ">
+            </path>
+        </svg>
+    </span>
+    </div>
+</a>
+
+        <!-- Footer Links -->
+        <div style="margin-bottom: 20px;">
+            <div style="color: #fff;">Cause A Change</div>
+           
+        </div>
+
+        <!-- Footer Copyright -->
+        <div>
+            <p class="copyright" style="color: #fff;">&copy; 2024 ACTIVIST</p>
+        </div>
+    </footer>
+
+</body>
+
+<script>
+    down_arrow = document.getElementById('down-arrow')
+    cart_div = document.getElementById('cart-items-container')
+    total_price_div = document.getElementById('total-price-div')
+    down_arrow.onclick = () => {
+        if (down_arrow.src.includes('down')) {
+            down_arrow.src = '{% static "up.svg" %}'
+            cart_div.style.display = 'none'
+            total_price_div.style.display = 'none'
+
+        }
+        else if (down_arrow.src.includes('up')) {
+            down_arrow.src = '{% static "down.svg" %}'
+            cart_div.style.display = 'block'
+            total_price_div.style.display = 'flex'
+        }
+    }
+</script>
+
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const cartBtn = document.getElementById('cart-btn');
+    const closeMenuBtn = document.getElementById('close-menu');
+    const closeCartBtn = document.getElementById('close-cart');
+    const menu = document.getElementById('menu');
+    const cart = document.getElementById('cart');
+    const overlay = document.getElementById('overlay');
+
+    // Footer buttons
+
+
+    // Show overlay
+    function showOverlay() {
+        overlay.style.display = 'block';
+    }
+
+    // Hide overlay
+    function hideOverlay() {
+        overlay.style.display = 'none';
+    }
+
+    // Open and close menu
+    menuBtn.addEventListener('click', () => {
+        menu.classList.add('active');
+        showOverlay();
+    });
+
+    closeMenuBtn.addEventListener('click', () => {
+        menu.classList.remove('active');
+        hideOverlay();
+    });
+
+    // Open and close cart
+    cartBtn.addEventListener('click', () => {
+        cart.classList.add('active');
+        showOverlay();
+    });
+
+    closeCartBtn.addEventListener('click', () => {
+        cart.classList.remove('active');
+        hideOverlay();
+    });
+
+
+
+    // Close the sliding menus when the overlay is clicked
+    overlay.addEventListener('click', () => {
+        menu.classList.remove('active');
+        cart.classList.remove('active');
+        hideOverlay();
+    });
+</script>
+
+</html>
