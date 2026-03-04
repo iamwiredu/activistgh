@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@2$0_1o%$cz3!&^1+lyogky93_z#(*$j)-k5d*iir2$3_7eugi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app", ".now.sh",'activist.store','www.activist.store']
 
@@ -179,13 +179,6 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Get public and secret key from env
-
-PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY')
-
-PAYSTACK_PUBLIC_KEY = os.getenv('PAYSTACK_PUBLIC_KEY')
-
-
 
 # Use Django’s SMTP backend
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -200,5 +193,3 @@ EMAIL_USE_SSL = True
 # Default from‐address for all outgoing emails
 DEFAULT_FROM_EMAIL = 'Activist <contact@activist.store>'
 
-# (Optional) address that Django will use for server‐error emails
-# SERVER_EMAIL = 'info@longlivesdl.com'
